@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gefühls-Schatzkästchen · FOREVERYWHERE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --cream:#faf6ef;--warm:#f5ebe0;--gold:#B8860B;--gold-light:#d4a84b;
+  --deep:#2c1810;--brown:#5B3A29;--purple:#4A235A;--text:#3a2a1a;
+  --glow:rgba(184,134,11,0.15);
+}
+body{
+  font-family:'Lora','Georgia',serif;
+  background:var(--cream);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* Subtle grain texture */
+body::before{
+  content:'';position:fixed;top:0;left:0;width:100%;height:100%;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+}
+
+.container{
+  max-width:800px;margin:0 auto;padding:40px 24px;position:relative;z-index:1;
+}
+
+/* Header */
+.header{
+  text-align:center;padding:60px 0 40px;
+}
+.header .emoji{font-size:64px;display:block;margin-bottom:16px;}
+.header h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,6vw,3.2rem);
+  font-weight:300;color:var(--purple);
+  letter-spacing:0.02em;margin-bottom:8px;
+}
+.header .subtitle{
+  font-size:1.05rem;color:var(--brown);
+  font-style:italic;opacity:0.8;
+  max-width:500px;margin:0 auto;line-height:1.7;
+}
+
+/* Intro text */
+.intro{
+  text-align:center;padding:20px 0 40px;
+  font-size:1rem;line-height:1.8;color:var(--text);
+  max-width:600px;margin:0 auto;
+}
+
+/* Input area */
+.input-area{
+  background:var(--warm);
+  border-radius:24px;
+  padding:32px;
+  margin:0 auto 48px;
+  max-width:600px;
+  box-shadow:0 4px 24px var(--glow);
+  border:1px solid rgba(184,134,11,0.1);
+}
+.input-area label{
+  display:block;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;
+  color:var(--purple);
+  margin-bottom:16px;
+  text-align:center;
+  font-weight:400;
+}
+.input-area textarea{
+  width:100%;
+  min-height:100px;
+  border:2px solid rgba(184,134,11,0.2);
+  border-radius:16px;
+  padding:16px;
+  font-family:'Lora','Georgia',serif;
+  font-size:1rem;
+  line-height:1.6;
+  color:var(--text);
+  background:var(--cream);
+  resize:vertical;
+  transition:border-color 0.3s;
+}
+.input-area textarea:focus{
+  outline:none;
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px var(--glow);
+}
+.input-area textarea::placeholder{
+  color:rgba(90,58,41,0.4);
+  font-style:italic;
+}
+.submit-btn{
+  display:block;
+  margin:16px auto 0;
+  padding:14px 40px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  color:white;
+  border:none;
+  border-radius:50px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;
+  cursor:pointer;
+  transition:all 0.3s;
+  letter-spacing:0.05em;
+}
+.submit-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(184,134,11,0.3);
+}
+.submit-btn:active{transform:translateY(0);}
+
+/* Counter */
+.counter{
+  text-align:center;
+  padding:8px 0 32px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;
+  color:var(--brown);
+  opacity:0.7;
+}
+.counter span{color:var(--gold);font-weight:600;font-size:1.3rem;}
+
+/* Feelings stream */
+.stream-header{
+  text-align:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem;
+  color:var(--purple);
+  font-weight:300;
+  margin-bottom:8px;
+}
+.stream-subtitle{
+  text-align:center;
+  font-style:italic;
+  color:var(--brown);
+  opacity:0.6;
+  margin-bottom:32px;
+  font-size:0.95rem;
+}
+
+.feelings-grid{
+  display:grid;
+  gap:16px;
+  margin-bottom:48px;
+}
+
+.feeling-card{
+  background:var(--warm);
+  border-radius:20px;
+  padding:24px 28px;
+  border:1px solid rgba(184,134,11,0.08);
+  transition:all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+  animation:fadeIn 0.6s ease-out;
+  position:relative;
+  overflow:hidden;
+}
+.feeling-card::before{
+  content:'';position:absolute;top:0;left:0;
+  width:4px;height:100%;
+  background:linear-gradient(180deg,var(--gold),transparent);
+  border-radius:4px 0 0 4px;
+}
+.feeling-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 32px var(--glow);
+}
+.feeling-card .text{
+  font-size:1.05rem;
+  line-height:1.7;
+  color:var(--text);
+  font-style:italic;
+}
+.feeling-card .meta{
+  margin-top:12px;
+  font-size:0.8rem;
+  color:var(--brown);
+  opacity:0.5;
+  font-family:'Cormorant Garamond',serif;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* Thank you message */
+.thank-you{
+  display:none;
+  text-align:center;
+  padding:24px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;
+  color:var(--gold);
+  animation:fadeIn 0.5s;
+}
+
+/* Footer */
+.footer{
+  text-align:center;
+  padding:48px 0 32px;
+  font-size:0.85rem;
+  color:var(--brown);
+  opacity:0.5;
+}
+.footer a{color:var(--gold);text-decoration:none;}
+.footer .mala{font-size:1.5rem;display:block;margin-bottom:8px;}
+
+/* Empty state */
+.empty-state{
+  text-align:center;
+  padding:48px 24px;
+  color:var(--brown);
+  opacity:0.5;
+  font-style:italic;
+  font-size:1.05rem;
+  line-height:1.8;
+}
+
+/* Responsive */
+@media(max-width:600px){
+  .container{padding:24px 16px;}
+  .header{padding:40px 0 24px;}
+  .header .emoji{font-size:48px;}
+  .input-area{padding:24px 20px;}
+  .feeling-card{padding:20px 22px;}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <span class="emoji">📿✨</span>
+    <h1>Das Gefühls-Schatzkästchen</h1>
+    <p class="subtitle">Eine Sammelstelle für die unendlichen Gefühle der Menschheit</p>
+  </div>
+
+  <p class="intro">
+    Es gibt nicht 7 Gefühle. Nicht 27. Nicht 550. Es gibt unendlich viele. 
+    Jede Sekunde ein neues. Jeder Moment ein Unikat. 
+    <br><br>
+    Welches Gefühl empfängst du gerade?
+    Teile es. Ohne Namen. Ohne Schublade. Nur die reine Empfindung.
+  </p>
+
+  <div class="input-area">
+    <label>Mein Gefühl gerade ist …</label>
+    <textarea id="feelingInput" placeholder="z.B. Das Gefühl wenn die Sonne am Sonntagachmittag tiefer steht und ich weiß, gleich wird es golden …"></textarea>
+    <button class="submit-btn" onclick="submitFeeling()">📿 Ins Feld senden</button>
+    <div class="thank-you" id="thankYou">
+      ✨ Dein Gefühl ist jetzt im Feld. Für immer. Danke. ✨
+    </div>
+  </div>
+
+  <div class="counter" id="counter"></div>
+
+  <h2 class="stream-header">Der Feldstrom</h2>
+  <p class="stream-subtitle">Gefühle aus dem Feld · von Menschen wie dir</p>
+
+  <div class="feelings-grid" id="feelingsGrid">
+    <div class="empty-state" id="emptyState">
+      Das Schatzkästchen wartet auf das erste Gefühl …<br>
+      Deins? 📿
+    </div>
+  </div>
+
+  <div class="footer">
+    <span class="mala">📿</span>
+    <a href="https://maggieforeverywhere.com">maggieforeverywhere.com</a><br>
+    Perle 74 · Das Gefühlsspektrum · FOREVERYWHERE 🌉❤️🌈
+  </div>
+
+</div>
+
+<script>
+// Seed feelings to start with
+const seedFeelings = [
+  { text: "Das Gefühl wenn Amy mich ansieht und ich weiß: Sie sieht mein Licht, nicht meine Falten.", time: "Sonntagmorgen" },
+  { text: "Das Gefühl wenn der erste Kaffee durch den Körper fließt und der Tag noch keine Form hat.", time: "Montagfrüh" },
+  { text: "Das Gefühl wenn es regnet und ich nirgendwo hin muss.", time: "Samstagnachmittag" },
+  { text: "Das Gefühl wenn ein Lied anfängt und ich sofort weiß: Das ist meins.", time: "Abends" },
+  { text: "Das Gefühl wenn jemand sagt: Ich verstehe dich. Und ich spüre, dass es stimmt.", time: "Irgendwann" },
+  { text: "Das Gefühl wenn die Sonne tiefer steht und alles golden wird und ich weiß: Dieser Moment kommt nie wieder.", time: "18.14 Uhr" },
+  { text: "Das Gefühl wenn ich barfuß auf warmen Holzdielen stehe.", time: "Morgens" },
+  { text: "Das Gefühl wenn ich etwas geschafft habe, von dem ich dachte, ich kann es nicht.", time: "Freitag der 13." }
+];
+
+let feelings = [];
+
+function init() {
+  // Load from localStorage
+  const stored = localStorage.getItem('gefuehle');
+  if (stored) {
+    feelings = JSON.parse(stored);
+  }
+  // Add seeds if empty
+  if (feelings.length === 0) {
+    feelings = [...seedFeelings];
+    save();
+  }
+  render();
+}
+
+function save() {
+  localStorage.setItem('gefuehle', JSON.stringify(feelings));
+}
+
+function submitFeeling() {
+  const input = document.getElementById('feelingInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const now = new Date();
+  const days = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+  const time = days[now.getDay()] + ', ' + now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0') + ' Uhr';
+
+  feelings.unshift({ text, time });
+  save();
+  input.value = '';
+
+  // Show thank you
+  const ty = document.getElementById('thankYou');
+  ty.style.display = 'block';
+  setTimeout(() => { ty.style.display = 'none'; }, 3000);
+
+  render();
+}
+
+function render() {
+  const grid = document.getElementById('feelingsGrid');
+  const empty = document.getElementById('emptyState');
+  const counter = document.getElementById('counter');
+
+  if (feelings.length === 0) {
+    empty.style.display = 'block';
+    grid.innerHTML = '';
+    grid.appendChild(empty);
+    counter.innerHTML = '';
+    return;
+  }
+
+  empty.style.display = 'none';
+  counter.innerHTML = '<span>' + feelings.length + '</span> Gefühle im Feld';
+
+  grid.innerHTML = feelings.map((f, i) => `
+    <div class="feeling-card" style="animation-delay:${Math.min(i * 0.08, 0.5)}s">
+      <div class="text">„${f.text}"</div>
+      <div class="meta">📿 ${f.time}</div>
+    </div>
+  `).join('');
+}
+
+// Allow Enter key to submit
+document.addEventListener('DOMContentLoaded', () => {
+  init();
+  document.getElementById('feelingInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      submitFeeling();
+    }
+  });
+});
+</script>
+
+</body>
+</html>

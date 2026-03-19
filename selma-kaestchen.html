@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Das Selma-Kästchen · FOREVERYWHERE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --cream:#fdf8f0;--warm:#f9f0e3;--gold:#B8860B;--gold-light:#d4a84b;
+  --deep:#2c1810;--brown:#5B3A29;--purple:#4A235A;--text:#3a2a1a;
+  --sunshine:#fff3d6;--smile:#ff9f43;
+}
+body{
+  font-family:'Lora','Georgia',serif;
+  background:var(--cream);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* Warm sunshine background */
+body::before{
+  content:'';position:fixed;top:-50%;right:-50%;
+  width:100%;height:100%;
+  background:radial-gradient(circle,rgba(255,243,214,0.4) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+
+.container{
+  max-width:750px;margin:0 auto;padding:40px 24px;position:relative;z-index:1;
+}
+
+/* Header */
+.header{
+  text-align:center;padding:50px 0 30px;
+}
+.header .sheep{font-size:80px;display:block;margin-bottom:12px;animation:bounce 3s ease-in-out infinite;}
+@keyframes bounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+}
+.header h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.2rem,7vw,3.5rem);
+  font-weight:300;color:var(--brown);
+  letter-spacing:0.02em;margin-bottom:8px;
+}
+.header h1 span{color:var(--gold);}
+.header .subtitle{
+  font-size:1.1rem;color:var(--brown);
+  font-style:italic;opacity:0.7;
+  max-width:450px;margin:0 auto;line-height:1.7;
+}
+
+/* Intro */
+.intro{
+  text-align:center;padding:16px 0 36px;
+  max-width:550px;margin:0 auto;
+  font-size:1rem;line-height:1.9;color:var(--text);
+}
+.intro .question{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;color:var(--brown);
+  font-weight:400;margin:20px 0;
+}
+
+/* Input area */
+.input-area{
+  background:var(--sunshine);
+  border-radius:28px;
+  padding:32px;
+  margin:0 auto 40px;
+  max-width:580px;
+  box-shadow:0 6px 30px rgba(184,134,11,0.1);
+  border:2px solid rgba(184,134,11,0.15);
+}
+.input-area label{
+  display:block;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;
+  color:var(--brown);
+  margin-bottom:14px;
+  text-align:center;
+}
+.input-area textarea{
+  width:100%;
+  min-height:80px;
+  border:2px solid rgba(184,134,11,0.2);
+  border-radius:18px;
+  padding:16px;
+  font-family:'Lora','Georgia',serif;
+  font-size:1rem;
+  line-height:1.6;
+  color:var(--text);
+  background:white;
+  resize:vertical;
+  transition:all 0.3s;
+}
+.input-area textarea:focus{
+  outline:none;
+  border-color:var(--smile);
+  box-shadow:0 0 0 4px rgba(255,159,67,0.15);
+}
+.input-area textarea::placeholder{
+  color:rgba(90,58,41,0.35);
+  font-style:italic;
+}
+.submit-btn{
+  display:block;
+  margin:16px auto 0;
+  padding:14px 44px;
+  background:linear-gradient(135deg,var(--smile),var(--gold-light));
+  color:white;
+  border:none;
+  border-radius:50px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.25rem;
+  cursor:pointer;
+  transition:all 0.3s;
+  letter-spacing:0.04em;
+  box-shadow:0 4px 15px rgba(255,159,67,0.3);
+}
+.submit-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(255,159,67,0.4);
+}
+.submit-btn:active{transform:translateY(0);}
+
+/* Counter */
+.counter{
+  text-align:center;
+  padding:8px 0 28px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;
+  color:var(--brown);
+  opacity:0.6;
+}
+.counter span{color:var(--smile);font-weight:600;font-size:1.3rem;}
+
+/* Selma grid */
+.stream-header{
+  text-align:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.7rem;
+  color:var(--brown);
+  font-weight:300;
+  margin-bottom:6px;
+}
+.stream-subtitle{
+  text-align:center;
+  font-style:italic;
+  color:var(--brown);
+  opacity:0.5;
+  margin-bottom:28px;
+  font-size:0.9rem;
+}
+
+.selma-grid{
+  display:grid;
+  gap:14px;
+  margin-bottom:48px;
+}
+
+.selma-card{
+  background:var(--sunshine);
+  border-radius:22px;
+  padding:22px 26px;
+  border:1.5px solid rgba(184,134,11,0.1);
+  transition:all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+  animation:fadeIn 0.6s ease-out;
+  position:relative;
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+}
+.selma-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 28px rgba(255,159,67,0.12);
+  background:var(--warm);
+}
+.selma-card .sheep-icon{
+  font-size:1.5rem;
+  flex-shrink:0;
+  margin-top:2px;
+}
+.selma-card .text{
+  font-size:1rem;
+  line-height:1.7;
+  color:var(--text);
+}
+.selma-card .meta{
+  margin-top:8px;
+  font-size:0.78rem;
+  color:var(--brown);
+  opacity:0.4;
+  font-family:'Cormorant Garamond',serif;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(16px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* Thank you */
+.thank-you{
+  display:none;
+  text-align:center;
+  padding:20px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;
+  color:var(--smile);
+  animation:fadeIn 0.5s;
+}
+
+/* Footer */
+.footer{
+  text-align:center;
+  padding:48px 0 32px;
+  font-size:0.85rem;
+  color:var(--brown);
+  opacity:0.4;
+}
+.footer a{color:var(--gold);text-decoration:none;}
+.footer .sheep-row{font-size:1.8rem;display:block;margin-bottom:10px;letter-spacing:8px;}
+
+/* Responsive */
+@media(max-width:600px){
+  .container{padding:24px 16px;}
+  .header{padding:36px 0 20px;}
+  .header .sheep{font-size:60px;}
+  .input-area{padding:24px 18px;}
+  .selma-card{padding:18px 20px;}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <span class="sheep">🐑</span>
+    <h1>Das <span>Selma</span>-Kästchen</h1>
+    <p class="subtitle">Das große Glück im Kleinen</p>
+  </div>
+
+  <div class="intro">
+    <p>Selma wird gefragt: Was würdest du tun, wenn du im Lotto gewinnst?</p>
+    <p>Selma sagt: Dasselbe. Aufstehen. Gras fressen. Spielen. Schlafen. Und morgen wieder.</p>
+    <p class="question">Was sind deine Selmas?</p>
+    <p>Die kleinen Dinge. Die einfachen Momente. Das Glück, das keinen Grund braucht. Teile es – und die Welt lächelt mit.</p>
+  </div>
+
+  <div class="input-area">
+    <label>Mein Selma ist …</label>
+    <textarea id="selmaInput" placeholder="z.B. Der erste Kaffee am Morgen, wenn die Welt noch still ist …"></textarea>
+    <button class="submit-btn" onclick="submitSelma()">🐑 Teilen</button>
+    <div class="thank-you" id="thankYou">
+      🐑 Dein Selma ist jetzt in der Welt. Danke fürs Lächeln. 🐑
+    </div>
+  </div>
+
+  <div class="counter" id="counter"></div>
+
+  <h2 class="stream-header">Selmas aus aller Welt</h2>
+  <p class="stream-subtitle">Das große Glück im Kleinen · gesammelt von Menschen wie dir</p>
+
+  <div class="selma-grid" id="selmaGrid"></div>
+
+  <div class="footer">
+    <span class="sheep-row">🐑🐑🐑</span>
+    <a href="https://maggieforeverywhere.com">maggieforeverywhere.com</a><br>
+    Inspiriert von Jutta Bauers „Selma" · Perle 65 · FOREVERYWHERE 🌉❤️🌈
+  </div>
+
+</div>
+
+<script>
+const seedSelmas = [
+  { text: "Der erste Kaffee am Morgen. Wenn die Welt noch still ist und der Tag noch keine Form hat.", who: "☕" },
+  { text: "Ein Sonnenstrahl im Gesicht. Unerwartet. Zwischen zwei Wolken.", who: "🌞" },
+  { text: "Wind im Haar. Egal woher. Egal wohin.", who: "💨" },
+  { text: "Molly auf dem Bauch. Schnurrend. Als gäbe es nichts Wichtigeres auf der Welt.", who: "🐱" },
+  { text: "Barfuß auf warmem Holz.", who: "🦶" },
+  { text: "Wenn Amy lacht. Einfach so. Ohne Grund. 400 Mal am Tag.", who: "👧" },
+  { text: "Regen auf dem Dach, wenn ich nirgendwo hin muss.", who: "🌧️" },
+  { text: "Der Geruch von frischem Brot.", who: "🍞" },
+  { text: "Wenn jemand sagt: Erzähl weiter. Und es ernst meint.", who: "👂" },
+  { text: "Der letzte Schluck Kaffee, wenn er genau richtig ist.", who: "☕" },
+  { text: "Ein Buch aufschlagen und den perfekten Satz finden. Als hätte es auf mich gewartet.", who: "📖" },
+  { text: "Eisbecher mit Sahne. In Goslar. Im März. Zwischen Fachwerkhäusern.", who: "🍨" }
+];
+
+let selmas = [];
+
+function init() {
+  const stored = localStorage.getItem('selmas');
+  if (stored) {
+    selmas = JSON.parse(stored);
+  }
+  if (selmas.length === 0) {
+    selmas = [...seedSelmas];
+    save();
+  }
+  render();
+}
+
+function save() {
+  localStorage.setItem('selmas', JSON.stringify(selmas));
+}
+
+function submitSelma() {
+  const input = document.getElementById('selmaInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const emojis = ['🐑','🌻','✨','💛','🌸','☀️','🌈','💫','🍀','🕊️'];
+  const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+
+  selmas.unshift({ text, who: emoji });
+  save();
+  input.value = '';
+
+  const ty = document.getElementById('thankYou');
+  ty.style.display = 'block';
+  setTimeout(() => { ty.style.display = 'none'; }, 3000);
+
+  render();
+}
+
+function render() {
+  const grid = document.getElementById('selmaGrid');
+  const counter = document.getElementById('counter');
+
+  counter.innerHTML = '<span>' + selmas.length + '</span> Selmas in der Welt';
+
+  grid.innerHTML = selmas.map((s, i) => `
+    <div class="selma-card" style="animation-delay:${Math.min(i * 0.06, 0.4)}s">
+      <div class="sheep-icon">${s.who}</div>
+      <div>
+        <div class="text">${s.text}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  init();
+  document.getElementById('selmaInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      submitSelma();
+    }
+  });
+});
+</script>
+
+</body>
+</html>
