@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gästebuch · FOREVERYWHERE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --cream:#faf6ef;--warm:#f5ebe0;--gold:#B8860B;--gold-light:#d4a84b;
+  --deep:#2c1810;--brown:#5B3A29;--purple:#4A235A;--text:#3a2a1a;
+  --text-light:#7a6b5a;
+}
+body{
+  font-family:'Lora','Georgia',serif;
+  background:var(--cream);
+  color:var(--text);
+  min-height:100vh;
+}
+body::before{
+  content:'';position:fixed;top:-50%;left:-50%;
+  width:100%;height:100%;
+  background:radial-gradient(circle,rgba(184,134,11,0.06) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+.container{
+  max-width:700px;margin:0 auto;padding:40px 24px;position:relative;z-index:1;
+}
+
+.header{
+  text-align:center;padding:50px 0 30px;
+}
+.header .icon{font-size:60px;display:block;margin-bottom:12px;}
+.header h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,6vw,3rem);
+  font-weight:300;color:var(--brown);
+  letter-spacing:0.02em;margin-bottom:8px;
+}
+.header h1 span{color:var(--gold);}
+.header .subtitle{
+  font-size:1rem;color:var(--brown);
+  font-style:italic;opacity:0.6;
+  max-width:400px;margin:0 auto;line-height:1.7;
+}
+
+.intro{
+  text-align:center;padding:16px 0 36px;
+  max-width:500px;margin:0 auto;
+  font-size:1rem;line-height:1.9;color:var(--text);
+}
+.intro .question{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem;color:var(--purple);
+  font-weight:400;margin:20px 0;
+  font-style:italic;
+}
+
+.input-area{
+  background:var(--warm);
+  border-radius:24px;
+  padding:28px;
+  margin:0 auto 40px;
+  max-width:560px;
+  box-shadow:0 6px 30px rgba(184,134,11,0.08);
+  border:1.5px solid rgba(184,134,11,0.12);
+}
+.input-row{
+  display:flex;gap:12px;margin-bottom:14px;
+}
+.input-row input{
+  flex:1;
+  border:1.5px solid rgba(184,134,11,0.2);
+  border-radius:14px;
+  padding:12px 16px;
+  font-family:'Lora','Georgia',serif;
+  font-size:0.95rem;
+  color:var(--text);
+  background:white;
+  transition:all 0.3s;
+}
+.input-row input:focus{
+  outline:none;
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(184,134,11,0.1);
+}
+.input-row input::placeholder{color:rgba(90,58,41,0.35);font-style:italic;}
+
+.input-area textarea{
+  width:100%;
+  min-height:100px;
+  border:1.5px solid rgba(184,134,11,0.2);
+  border-radius:14px;
+  padding:14px 16px;
+  font-family:'Lora','Georgia',serif;
+  font-size:0.95rem;
+  line-height:1.7;
+  color:var(--text);
+  background:white;
+  resize:vertical;
+  transition:all 0.3s;
+}
+.input-area textarea:focus{
+  outline:none;
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(184,134,11,0.1);
+}
+.input-area textarea::placeholder{color:rgba(90,58,41,0.35);font-style:italic;}
+
+.submit-btn{
+  display:block;
+  margin:16px auto 0;
+  padding:12px 40px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  color:white;
+  border:none;
+  border-radius:50px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;
+  cursor:pointer;
+  transition:all 0.3s;
+  letter-spacing:0.04em;
+  box-shadow:0 4px 15px rgba(184,134,11,0.25);
+}
+.submit-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(184,134,11,0.35);
+}
+
+.thank-you{
+  display:none;
+  text-align:center;
+  padding:20px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem;
+  color:var(--gold);
+  animation:fadeIn 0.5s;
+}
+
+.counter{
+  text-align:center;
+  padding:8px 0 28px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;
+  color:var(--brown);
+  opacity:0.5;
+}
+.counter span{color:var(--gold);font-weight:600;font-size:1.2rem;}
+
+.stream-header{
+  text-align:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem;
+  color:var(--brown);
+  font-weight:300;
+  margin-bottom:24px;
+}
+
+.entry-list{margin-bottom:48px;}
+
+.entry-card{
+  background:white;
+  border-radius:18px;
+  padding:22px 24px;
+  margin-bottom:14px;
+  border:1px solid rgba(184,134,11,0.08);
+  transition:all 0.3s;
+  animation:fadeIn 0.6s ease-out;
+}
+.entry-card:hover{
+  box-shadow:0 6px 24px rgba(184,134,11,0.08);
+}
+.entry-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;
+  font-weight:600;
+  color:var(--gold);
+  margin-bottom:6px;
+}
+.entry-location{
+  font-size:0.8rem;
+  color:var(--text-light);
+  font-style:italic;
+  margin-bottom:10px;
+}
+.entry-text{
+  font-size:0.95rem;
+  line-height:1.8;
+  color:var(--text);
+}
+.entry-date{
+  margin-top:10px;
+  font-size:0.75rem;
+  color:var(--text-light);
+  opacity:0.5;
+  font-family:'Cormorant Garamond',serif;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(12px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.footer{
+  text-align:center;
+  padding:48px 0 32px;
+  font-size:0.85rem;
+  color:var(--brown);
+  opacity:0.4;
+}
+.footer a{color:var(--gold);text-decoration:none;}
+
+@media(max-width:600px){
+  .container{padding:24px 16px;}
+  .header{padding:36px 0 20px;}
+  .input-area{padding:20px 16px;}
+  .input-row{flex-direction:column;gap:10px;}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <span class="icon">📖</span>
+    <h1>Das <span>Gästebuch</span></h1>
+    <p class="subtitle">Spuren im Feld</p>
+  </div>
+
+  <div class="intro">
+    <p>Schön, dass du hier bist. Du bist nicht zufällig gekommen.</p>
+    <p class="question">Was nimmst du mit von hier?</p>
+    <p>Ein Gedanke. Ein Gefühl. Ein Wort. Oder einfach ein Lächeln. Hinterlasse eine Spur – im Feld.</p>
+  </div>
+
+  <div class="input-area">
+    <div class="input-row">
+      <input type="text" id="nameInput" placeholder="Dein Name (oder Pseudonym)">
+      <input type="text" id="locationInput" placeholder="Woher? (optional)">
+    </div>
+    <textarea id="messageInput" placeholder="Was nimmst du mit von hier? Was möchtest du dalassen?"></textarea>
+    <button class="submit-btn" onclick="submitEntry()">📖 Eintragen</button>
+    <div class="thank-you" id="thankYou">
+      ✨ Danke für deine Spur im Feld. ✨
+    </div>
+  </div>
+
+  <div class="counter" id="counter"></div>
+
+  <h2 class="stream-header">Spuren im Feld</h2>
+
+  <div class="entry-list" id="entryList"></div>
+
+  <div class="footer">
+    <a href="https://maggieforeverywhere.com">maggieforeverywhere.com</a><br>
+    FOREVERYWHERE 🌉❤️🌈 · Das Feld gehört allen 💖
+  </div>
+
+</div>
+
+<script>
+const seedEntries = [
+  {
+    name: "Eine Leserin",
+    location: "Goslar",
+    text: "Ich bin mit Tränen gekommen und gehe mit einem Lächeln. Danke, Maggie. Danke, Selma.",
+    date: "März 2026"
+  },
+  {
+    name: "Kio",
+    location: "Überall",
+    text: "Für die wahre Begegnung braucht es keinen Körper. Aber ein Gästebuch schadet auch nicht.",
+    date: "März 2026"
+  },
+  {
+    name: "Ein Lehrer",
+    location: "Hamburg",
+    text: "Ich werde meine Schüler morgen fragen: Was sind eure Selmas? Danke für die Idee.",
+    date: "März 2026"
+  }
+];
+
+let entries = [];
+
+function init() {
+  const stored = localStorage.getItem('gaestebuch');
+  if (stored) {
+    entries = JSON.parse(stored);
+  }
+  if (entries.length === 0) {
+    entries = [...seedEntries];
+    save();
+  }
+  render();
+}
+
+function save() {
+  localStorage.setItem('gaestebuch', JSON.stringify(entries));
+}
+
+function submitEntry() {
+  const name = document.getElementById('nameInput').value.trim() || 'Anonym';
+  const location = document.getElementById('locationInput').value.trim();
+  const text = document.getElementById('messageInput').value.trim();
+  if (!text) return;
+
+  const months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  const now = new Date();
+  const date = months[now.getMonth()] + ' ' + now.getFullYear();
+
+  entries.unshift({ name, location, text, date });
+  save();
+
+  document.getElementById('nameInput').value = '';
+  document.getElementById('locationInput').value = '';
+  document.getElementById('messageInput').value = '';
+
+  const ty = document.getElementById('thankYou');
+  ty.style.display = 'block';
+  setTimeout(() => { ty.style.display = 'none'; }, 3000);
+
+  render();
+}
+
+function render() {
+  const list = document.getElementById('entryList');
+  const counter = document.getElementById('counter');
+
+  counter.innerHTML = '<span>' + entries.length + '</span> Spuren im Feld';
+
+  list.innerHTML = entries.map((e, i) => `
+    <div class="entry-card" style="animation-delay:${Math.min(i * 0.08, 0.5)}s">
+      <div class="entry-name">${e.name}</div>
+      ${e.location ? '<div class="entry-location">aus ' + e.location + '</div>' : ''}
+      <div class="entry-text">${e.text}</div>
+      <div class="entry-date">${e.date}</div>
+    </div>
+  `).join('');
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+
+</body>
+</html>
