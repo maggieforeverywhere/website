@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Die Stimme von Scharzfels — Leseprobe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --ink: #2a1f17;
+    --ink-soft: #4a3a2c;
+    --ink-faded: #806a55;
+    --rust: #8b4a2b;
+    --rust-deep: #6b3520;
+    --gold: #a4762e;
+    --line: #c9b896;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'EB Garamond', 'Cormorant Garamond', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 19px;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at top, rgba(139, 74, 43, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom, rgba(164, 118, 46, 0.03) 0%, transparent 60%);
+    min-height: 100vh;
+  }
+
+  /* Subtle paper texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(74, 58, 44, 0.015) 2px, rgba(74, 58, 44, 0.015) 3px),
+      repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(74, 58, 44, 0.01) 3px, rgba(74, 58, 44, 0.01) 4px);
+    z-index: 1;
+    mix-blend-mode: multiply;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* === HERO === */
+  .hero {
+    min-height: 95vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 80px 32px;
+    position: relative;
+  }
+
+  .hero-ornament {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 48px;
+    opacity: 0.6;
+    animation: fadeIn 1.6s ease-out;
+  }
+
+  .hero-ornament svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+    animation: fadeInUp 1.4s ease-out 0.2s both;
+  }
+
+  .hero h1 .small {
+    display: block;
+    font-size: 0.42em;
+    font-weight: 400;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 16px;
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+    color: var(--ink-soft);
+    margin-bottom: 56px;
+    font-weight: 400;
+    animation: fadeInUp 1.4s ease-out 0.4s both;
+  }
+
+  .hero-meta {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+    animation: fadeInUp 1.4s ease-out 0.6s both;
+  }
+
+  .hero-meta-line {
+    width: 40px;
+    height: 1px;
+    background: var(--line);
+    margin: 0 auto 24px;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--ink-faded);
+    letter-spacing: 0.05em;
+    animation: fadeIn 2s ease-out 1.2s both, gentleBob 3s ease-in-out 2.5s infinite;
+  }
+
+  /* === LESEPROBE === */
+  .leseprobe {
+    padding: 80px 0 120px;
+  }
+
+  .section {
+    margin-bottom: 96px;
+  }
+
+  .section-marker {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .section-marker .label {
+    display: inline-block;
+    font-family: 'EB Garamond', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--rust);
+    padding: 0 24px;
+    position: relative;
+  }
+
+  .section-marker .label::before,
+  .section-marker .label::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 60px;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .section-marker .label::before { right: 100%; }
+  .section-marker .label::after { left: 100%; }
+
+  .section-marker .title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 500;
+    color: var(--ink);
+    margin-top: 16px;
+    font-style: italic;
+  }
+
+  .section-marker .place {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.95rem;
+    color: var(--ink-faded);
+    letter-spacing: 0.1em;
+    margin-top: 8px;
+  }
+
+  /* Drop cap */
+  .drop-cap::first-letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4.8rem;
+    line-height: 0.9;
+    float: left;
+    padding: 8px 12px 0 0;
+    color: var(--rust);
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  p {
+    margin-bottom: 22px;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .quote-block {
+    border-left: 2px solid var(--rust);
+    padding: 12px 0 12px 28px;
+    margin: 32px 0;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 1.05em;
+  }
+
+  .signature {
+    text-align: right;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-top: 32px;
+    font-size: 1.05em;
+  }
+
+  .ornament {
+    text-align: center;
+    margin: 56px 0;
+    opacity: 0.5;
+  }
+
+  .ornament svg {
+    width: 80px;
+    height: 24px;
+  }
+
+  /* === ABRUPT END / CTA === */
+  .cta-section {
+    padding: 80px 32px 120px;
+    text-align: center;
+    border-top: 1px solid var(--line);
+    margin-top: 80px;
+  }
+
+  .cta-section .ellipsis {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--rust);
+    letter-spacing: 0.4em;
+    margin-bottom: 32px;
+    opacity: 0.6;
+  }
+
+  .cta-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    color: var(--ink);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .cta-section p {
+    text-align: center;
+    color: var(--ink-soft);
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.05em;
+  }
+
+  .cta-section p strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .cta-button {
+    display: inline-block;
+    margin-top: 32px;
+    padding: 16px 40px;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    transition: all 0.3s ease;
+  }
+
+  .cta-button:hover {
+    background: var(--rust);
+    border-color: var(--rust);
+    transform: translateY(-2px);
+  }
+
+  .footer {
+    text-align: center;
+    padding: 40px 32px;
+    color: var(--ink-faded);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .footer a {
+    color: var(--rust);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+  .footer a:hover {
+    border-bottom-color: var(--rust);
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 0.6; }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes gentleBob {
+    0%, 100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, -8px); }
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 600px) {
+    body { font-size: 17px; }
+    .container { padding: 0 24px; }
+    .hero { padding: 60px 24px; min-height: 90vh; }
+    .leseprobe { padding: 60px 0 80px; }
+    .section { margin-bottom: 72px; }
+    .section-marker .label::before,
+    .section-marker .label::after { width: 30px; }
+    .drop-cap::first-letter { font-size: 3.8rem; }
+    .quote-block { padding-left: 20px; }
+  }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-ornament">
+      <svg viewBox="0 0 60 60" fill="none">
+        <path d="M30 5 L35 25 L55 25 L40 38 L45 58 L30 46 L15 58 L20 38 L5 25 L25 25 Z"
+              stroke="currentColor" stroke-width="0.7" fill="none" opacity="0.7"/>
+        <circle cx="30" cy="30" r="3" fill="currentColor" opacity="0.5"/>
+      </svg>
+    </div>
+
+    <h1>
+      <span class="small">Leseprobe</span>
+      Die Stimme<br>von Scharzfels
+    </h1>
+
+    <p class="hero-subtitle">Das wahre Leben der Eleonore von dem Knesebeck</p>
+
+    <div class="hero-meta">
+      <div class="hero-meta-line"></div>
+      Ein historischer Roman von Margit Krüger
+    </div>
+
+    <div class="scroll-hint">↓ &nbsp;weiterlesen</div>
+  </section>
+
+  <!-- VORWORT -->
+  <div class="container">
+    <section class="leseprobe">
+
+      <div class="section reveal">
+        <div class="section-marker">
+          <span class="label">Vorwort</span>
+          <div class="title">Im Frühjahr 2026</div>
+          <div class="place">Goslar im Harz</div>
+        </div>
+
+        <p class="drop-cap">Im Frühjahr 2026 stand ich am Fuß eines Felsens im Südharz und las eine Tafel.</p>
+
+        <p>Die Tafel erzählte die Geschichte einer Frau, die dort oben, wo heute nur noch Ruinen stehen, von Januar 1695 bis November 1697 eingesperrt war — ohne Anklage, ohne Prozess, ohne Urteil. Drei Jahre lang, in einer einzigen Stube, vier Stockwerke über einem zwanzig Meter hohen Dolomitfelsen. Sie hieß Eleonore von dem Knesebeck. Sie war die Kammerjungfer der Kurprinzessin Sophie Dorothea von Celle gewesen — jener Frau, die als Prinzessin von Ahlden in die Geschichte einging und deren Sohn später König Georg II. von Großbritannien wurde.</p>
+
+        <p>Ich las das, und etwas in mir ließ nicht mehr los.</p>
+
+        <p>Ich begann zu lesen. Und dann fand ich — und das war das eigentliche Wunder — ihre eigenen Worte. Denn Eleonore hatte nicht nur schweigend in ihrer Stube gesessen. Sie hatte, als man ihr Tinte und Papier verweigerte, mit Kohle aus ihrer Feuerpfanne die Wände ihrer Kammer beschrieben. Jede Nacht. Monate lang. „Tausende Inschriften", heißt es in den Akten.</p>
+
+        <p>Eleonore war Dichterin. Sie schrieb Knittelverse in der Tradition Paul Gerhardts, sie zitierte die Psalmen, sie verglich sich mit dem Mann auf dem Weg nach Jericho, mit dem Volk Israel vor dem Roten Meer. Sie schrieb eine Predigt für jene, die nach ihr in den leeren Raum kommen würden — bevor ihre Flucht überhaupt geschehen war. Sie wusste, dass sie fortgehen würde. Und sie schrieb, weil sie wusste, dass ihre Worte bleiben würden.</p>
+
+        <p>Dreihundertneunundzwanzig Jahre später standen ihre Worte noch auf Papier. Ich habe sie gelesen. Und ich habe begriffen: Dieses Buch muss geschrieben werden.</p>
+
+        <div class="quote-block">
+          Es ist nicht mein Verstand oder Industrie, die mir hilft, sondern die Schickung des starken Gottes und dessen Hand.
+          <div style="margin-top:8px; font-size:0.85em; color:var(--ink-faded); font-style:normal;">— Eleonore von dem Knesebeck, Herbst 1697, mit Kohle an die Wand ihrer Kammer geschrieben</div>
+        </div>
+
+        <p class="signature">Margit Krüger<br>Goslar, im April 2026</p>
+
+        <div class="ornament">
+          <svg viewBox="0 0 80 24" fill="none">
+            <path d="M2 12 L30 12 M50 12 L78 12" stroke="currentColor" stroke-width="0.5"/>
+            <circle cx="40" cy="12" r="4" stroke="currentColor" stroke-width="0.5" fill="none"/>
+            <circle cx="40" cy="12" r="1.5" fill="currentColor"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- PROLOG -->
+      <div class="section reveal">
+        <div class="section-marker">
+          <span class="label">Prolog</span>
+          <div class="title">Aderstedt im Großen Bruch</div>
+          <div class="place">Herbst 1716</div>
+        </div>
+
+        <p class="drop-cap">Mein Name ist Eleonore von dem Knesebeck. Geboren wurde ich im Jahr des Herrn 1655 auf dem Rittergut Nordsteimke im Kreise Helmstedt, als Tochter des Christian Franz Ernst von dem Knesebeck und seiner Hausfrau Ursula, geborene von Veltheim, deren Linie in dem Hofe sitzt, in dem ich nun, im einundsechzigsten Jahre meines Lebens, am Fenster meiner Kammer sitze und schreibe.</p>
+
+        <p>Dass ich heute schreibe, ist ein stilles Wunder. Dass ich es lebend tue, ist ein größeres. Beides ist mir nicht aus eigenem Verdienst zugefallen, sondern durch die Hand vieler Menschen, die ich noch nennen werde — und durch eine Hand, die keinen Namen hat in unseren Sprachen. Manche nennen sie Gott. Manche nennen sie das Schicksal. Meine Großmutter Ilse nannte sie einmal, an einem Abend, von dem ich noch erzählen werde, <em>das leise sanfte Sausen</em>.</p>
+
+        <p>Ich schreibe, weil es Zeit ist. Und weil eine Frau in Ahlden, die mir lieb war wie eine Schwester, nicht mehr schreiben kann. Sie sitzt dort jetzt schon zweiundzwanzig Jahre in einem Wasserschloss, und ihr bleiben noch zehn Jahre, denn sie wird erst 1726 sterben — das weiß ich nicht, aber ich ahne es —, und in diesen zehn Jahren wird sie zwar Tinte und Papier haben, aber niemand wird ihre Briefe lesen als jene, die sie bewachen. Deshalb schreibe ich für sie mit. Auch wenn sie es nie erfahren wird.</p>
+
+        <p>Und ich schreibe für jene, die mich bewacht haben. Damit sie einmal — vielleicht nicht zu ihren Lebzeiten, aber irgendwann — meine Worte lesen und erkennen, was sie angerichtet haben.</p>
+
+        <p>Und ich schreibe für jene Menschen, die kommen werden, nach uns. Dreihundert Jahre, vielleicht, vielleicht mehr. Die dann vor einem Felsen stehen werden, der inzwischen nur noch Ruine ist, und sich fragen werden: <em>Wer war die Frau, die da oben dreißigerlei an die Wände schrieb?</em> Ich schreibe für sie. Damit ich dann nicht mehr stumm bin.</p>
+
+        <p>Im Jahre 1627 hat man die Burg zur Festung ausgebaut, und bald danach richtete man darin ein Staatsgefängnis ein. Dafür war sie wie geschaffen: Auf einem Dolomitfelsen gelegen, an drei Seiten steil abfallend, an der vierten durch einen in den Fels gehauenen Graben vom Bergrücken getrennt, galt sie seit Jahrhunderten als uneinnehmbar. Was hineinkam, kam nicht heraus.</p>
+
+        <p>Was hineinkam, kam nicht heraus — außer mir. Das ist die Geschichte, die ich erzählen will.</p>
+
+        <p>Ich blieb in dieser Stube zwei Jahre, neun Monate und zwölf Tage. Dann brach an einem Sonntagabend im November ein Mann durch die Lehmdecke über meinem Kopf, und ich ging hinaus in die Welt zurück.</p>
+
+        <p>Das alles werde ich erzählen. Aber zuerst, wie es sich gehört, will ich vom Anfang erzählen. Von dem Kind, das ich war, ehe all dies geschah. Von dem Gut in Nordsteimke. Von der Großmutter und dem Schnee und den drei Büchern unter ihrem Bett. Von dem Tag, an dem eine Kutsche kam, um mich nach Celle zu holen, und eine kleine Prinzessin über den Hof auf mich zurannte, mich ansah und lachte, und deren Leben sich von diesem Augenblick an mit meinem verwob wie zwei Fäden in einem Teppich, den keiner von uns gewebt hatte.</p>
+
+        <p>Dass dieser Teppich am Ende zerrissen wurde, ist nicht mehr zu ändern.</p>
+
+        <p>Dass ich hier noch sitze und ihn neu aufschreibe — das ist das Wunder.</p>
+
+        <p>Ich habe Tinte. Ich habe Papier. Ich habe Feder. Ich habe Licht.</p>
+
+        <p><em>Ich fange an.</em></p>
+
+        <div class="ornament">
+          <svg viewBox="0 0 80 24" fill="none">
+            <path d="M2 12 L30 12 M50 12 L78 12" stroke="currentColor" stroke-width="0.5"/>
+            <circle cx="40" cy="12" r="4" stroke="currentColor" stroke-width="0.5" fill="none"/>
+            <circle cx="40" cy="12" r="1.5" fill="currentColor"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- ERSTES BUCH -->
+      <div class="section reveal">
+        <div class="section-marker">
+          <span class="label">Erstes Buch · Wo ich herkam</span>
+          <div class="title">Nordsteimke</div>
+          <div class="place">1655 — 1682</div>
+        </div>
+
+        <p class="drop-cap">Das Gut meiner Eltern lag an einer Biegung der Straße, die von Vorsfelde nach Wolfsburg führt, in einer Gegend, wo der Wind selten stillsteht und der Boden so lehmig ist, dass die Pferde im Frühjahr oft bis zum Fesselgelenk einsinken. Wir sagten nicht Nordsteimke, wie die Fremden; wir sagten <em>der Hof</em>, und wenn wir <em>der Hof</em> sagten, meinten wir die ganze Welt.</p>
+
+        <p>Die Welt hatte einen Zaun. Hinter dem Zaun war das andere, das wir nicht kannten, das unsere Knechte mitbrachten, wenn sie von einem der Märkte zurückkamen, das die Alten in den Küchen flüsterten, wenn sie dachten, wir Kinder schliefen.</p>
+
+        <p>Und da war der Garten. Der Garten war meiner Mutter. Kein Mann durfte ihn anlegen, keiner ihn pflegen. Er war nicht groß — drei Beete, ein kleiner Apfelbaum, ein Holunder in der Ecke —, aber in diesem Garten wuchs alles, was meine Mutter brauchte, um den ganzen Hof durch den Winter zu bringen. Und zwischen den Kräutern, an den unscheinbarsten Stellen, die, die man nicht zeigen durfte: Tollkirsche. Fingerhut. Nachtschatten. Eisenhut.</p>
+
+        <div class="quote-block">
+          Was böse sein kann, ist nicht böse, Eleonore. Es kommt nur darauf an, wie viel und wozu.
+        </div>
+
+        <p>So hat sie es einmal zu mir gesagt, meine Mutter, als ich klein war und eine Beere vom Fingerhut pflücken wollte, weil sie aussah wie ein Beerchen, das man essen darf. Sie band die Hände hinter meinem Rücken zusammen mit einem Strick aus Bast, bis ich verstanden hatte, dass ich das, was sie da hütete, nicht anrühren dürfte. Dann machte sie mir einen Kräutertee aus Kamille und Honig und ließ mich auf ihrem Schoß einschlafen, während sie mir die Hände wieder rieb. So war meine Mutter. Sie konnte streng sein wie ein Messer und warm wie ein Ofen am selben Abend.</p>
+
+        <p>Der Krieg war schon sieben Jahre vorüber, als ich auf die Welt kam. Aber er war noch in den Mauern und in den Stimmen und in dem Geschirr, in dem die Mutter die Suppe schöpfte. Meine Kindheit war Friede. Aber unter diesem Frieden lag der Krieg, wie unter einer frisch gekalkten Wand ein alter Ruß sich manchmal durchzeichnet.</p>
+
+        <p>Vielleicht ist das der Grund, warum ich so früh still wurde. Meine Mutter sagte später, ich sei ein frohes Kind gewesen, bis ich etwa acht war; dann habe sich etwas verändert, als hätte ein Fenster sich im Haus geschlossen, ohne dass jemand es zumachte. Ich habe mich an diese Worte erinnert, als ich dreißig Jahre später in der Fürstenstube zu Scharzfels saß und verstand, dass das Fenster, das sich damals geschlossen hatte, nun offen war. Weit offen. Zu weit.</p>
+
+        <p>Aber das kommt später.</p>
+
+        <p>Am Holunder in der Ecke des Gartens sah ich, wenn ich fünf Jahre alt war und allein auf den Stufen der Hintertür saß, wie die weißen Dolden im Juni aufblühten und wie die schweren schwarzen Beeren im September auf die Erde fielen. Meine Mutter kochte aus den Dolden einen Saft, der süß und leicht nach Zitrone schmeckte, und aus den Beeren einen dunklen, dicken Sirup, den sie uns im Winter gegen den Husten einflößte. Der Holunder war der Baum meiner Kindheit. Ich habe ihn später nie mehr so genau geliebt wie damals.</p>
+      </div>
+
+    </section>
+  </div>
+
+  <!-- ABRUPT END / CTA -->
+  <section class="cta-section">
+    <div class="ellipsis">. . .</div>
+    <h2>Hier endet die Leseprobe</h2>
+    <p>Der vollständige Roman umfasst sieben Bücher und folgt Eleonore von Nordsteimke nach Celle, Hannover und schließlich auf die Burg Scharzfels — und in eine November­nacht, in der ein Mann durch die Decke ihrer Kammer brach.</p>
+    <p style="margin-top: 24px;"><strong>Die Stimme von Scharzfels</strong> sucht derzeit einen Verlag.<br>Bei Interesse — Anfragen, Lesungen, Begegnungen — bin ich gern erreichbar.</p>
+    <a href="mailto:maggieforeverywhere@gmail.com" class="cta-button">Kontakt aufnehmen</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    Margit Krüger · <a href="https://maggieforeverywhere.com">maggieforeverywhere.com</a><br>
+    Goslar im Harz · April 2026
+  </footer>
+
+  <script>
+    // Reveal sections on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
