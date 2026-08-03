@@ -119,6 +119,25 @@ section{max-width:820px;margin:0 auto;padding:56px 24px;}
 .log-body img{width:100%;border-radius:12px;margin-top:10px;box-shadow:0 6px 24px rgba(0,0,0,0.12);}
 .log-empty{text-align:center;color:var(--text-light);font-style:italic;padding:20px;}
 
+/* ===== FindPenguins Live-Karte ===== */
+.fp-card{
+  background:linear-gradient(135deg,#fff 0%,var(--warm) 100%);
+  border:1px solid rgba(184,134,11,0.2);border-radius:18px;
+  padding:38px 32px;text-align:center;box-shadow:0 6px 26px rgba(44,24,16,0.08);
+  max-width:640px;margin:0 auto;
+}
+.fp-icon{font-size:38px;margin-bottom:10px;}
+.fp-card h3{
+  font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--deep);margin-bottom:10px;
+}
+.fp-card p{font-size:15px;color:var(--text-light);line-height:1.7;max-width:480px;margin:0 auto 22px;}
+.fp-live{
+  display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;
+  color:#c0392b;margin-bottom:16px;font-family:'Lora',serif;
+}
+.fp-live::before{content:'';width:9px;height:9px;border-radius:50%;background:#e74c3c;animation:blink 1.6s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
 /* ===== CTA ===== */
 .cta{background:var(--warm);text-align:center;}
 .cta .btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:8px;}
@@ -174,10 +193,21 @@ footer a{color:var(--gold-light);text-decoration:none;}
   <div class="route" id="route"></div>
 </section>
 
+<!-- FindPenguins Live -->
+<section style="padding-top:0;">
+  <div class="fp-card">
+    <div class="fp-icon">🐧 📍</div>
+    <div class="fp-live">Live unterwegs</div>
+    <h3>Mein Reise-Tagebuch in Echtzeit</h3>
+    <p>Jeden Schritt dokumentiere ich live auf FindPenguins – mit Karte, Fotos und „Footprints" von unterwegs. Klick dich rein und reise in Echtzeit mit.</p>
+    <a class="btn btn-gold" href="https://findpenguins.com/0eygqsmxwmvla/trip/6a5461bbc8ce05-94117392?s=0dbd914ce1434c4aaf8d853c243d348d2692c018" target="_blank" rel="noopener">📍 Reise live verfolgen auf FindPenguins →</a>
+  </div>
+</section>
+
 <!-- Logbook -->
 <section style="padding-top:0;">
-  <h2 class="section-title">Das Logbuch</h2>
-  <p class="section-note">Dieses Logbuch wächst mit jeder Station. 🖋️</p>
+  <h2 class="section-title">Höhepunkte der Reise</h2>
+  <p class="section-note">Ausgewählte Momente – das ausführliche Live-Tagebuch führe ich auf FindPenguins. 🖋️</p>
   <div id="logbook"></div>
 </section>
 
@@ -186,10 +216,11 @@ footer a{color:var(--gold-light);text-decoration:none;}
   <h2 class="section-title">Begleite mich</h2>
   <p class="section-note">Sei dabei – im Feld, unterwegs, überall.</p>
   <div class="btns">
-    <a class="btn btn-gold" href="https://maggieforeverywhere.substack.com" target="_blank">📝 Tagebuch (Substack)</a>
+    <a class="btn btn-gold" href="https://findpenguins.com/0eygqsmxwmvla/trip/6a5461bbc8ce05-94117392?s=0dbd914ce1434c4aaf8d853c243d348d2692c018" target="_blank" rel="noopener">📍 FindPenguins (live)</a>
     <a class="btn btn-blue" href="https://www.paypal.com/pool/9nwqhFZUo0?sr=ancr" target="_blank">💖 Reise unterstützen</a>
     <a class="btn btn-orange" href="https://foreverywhere.myspreadshop.de" target="_blank">🐑 Selma-Shop</a>
   </div>
+  <p style="margin-top:20px;font-size:13px;color:var(--text-light);">Und mein geschriebenes Tagebuch findest du auf <a href="https://maggieforeverywhere.substack.com" target="_blank" style="color:var(--gold);">Substack</a> 📝</p>
 </section>
 
 <footer>
