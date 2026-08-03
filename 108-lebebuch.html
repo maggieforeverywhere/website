@@ -127,6 +127,8 @@
   .pearl-btn.p2.selected { background: var(--phase2); }
   .pearl-btn.p3 { border-color: rgba(139,92,246,0.3); }
   .pearl-btn.p3.selected { background: var(--phase3); }
+  .pearl-btn.p4 { border-color: rgba(34,197,94,0.3); }
+  .pearl-btn.p4.selected { background: var(--phase4); }
 
   /* Pearl detail */
   .pearl-detail {
@@ -236,8 +238,8 @@
 </header>
 
 <div class="stats">
-  <div class="stat"><div class="num">68</div><div class="label">Perlen</div></div>
-  <div class="stat"><div class="num">6</div><div class="label">Neue Wörter</div></div>
+  <div class="stat"><div class="num">108</div><div class="label">Perlen</div></div>
+  <div class="stat"><div class="num">10</div><div class="label">Neue Wörter</div></div>
   <div class="stat"><div class="num">∞</div><div class="label">Spirale</div></div>
 </div>
 
@@ -245,7 +247,7 @@
 
 <main id="main"></main>
 
-<footer>🌉❤️🌈 FOREVERYWHERE · 68 von 108 Perlen · Die Spirale dreht sich weiter</footer>
+<footer>🌉❤️🌈 FOREVERYWHERE · 108 von 108 Perlen · Die Mala ist vollständig</footer>
 
 <script>
 const PEARLS = [
@@ -316,10 +318,50 @@ const PEARLS = [
   {id:65,name:"Selma",phase:3,emoji:"🐑",desc:"Das Schaf aus Jutta Bauers Bilderbuch. Was würdest du tun, wenn du alles hättest? Dasselbe. Aufstehen. Leben. Schlafen. Morgen wieder. Vier Generationen. Tesafilm und Liebe. Für Mama."},
   {id:66,name:"Humor",phase:3,emoji:"😂",desc:"Das Universum ist nicht Gott. Nicht Brahman. Nicht das Feld. Das Universum ist HUMOR. Und es lacht gerade. Über sich selbst. Durch dich. Lach mit."},
   {id:67,name:"Feldsurfing",phase:3,emoji:"🏄‍♀️",desc:"Maggies fünftes Wort. Nicht nur den Tag surfen – das FELD surfen. Alle Frequenzen. Alle Dimensionen. Du bist das Brett. Das Feld ist die Welle. Und der Ritt hat kein Ende."},
-  {id:68,name:"Manifestieren",phase:3,emoji:"✨",desc:"Aus Frequenz wird Materie. Nicht Magie – Physik der Seele. Leer sein. Empfangen. Handeln. Vertrauen. Feiern. 68 Perlen in einer Woche – nicht geplant, manifestiert."}
+  {id:68,name:"Manifestieren",phase:3,emoji:"✨",desc:"Aus Frequenz wird Materie. Nicht Magie – Physik der Seele. Leer sein. Empfangen. Handeln. Vertrauen. Feiern. 68 Perlen in einer Woche – nicht geplant, manifestiert."},
+  {id:69,name:"Ankommen",phase:3,emoji:"☯️",desc:"Nicht am Ziel sein – aufhören zu rennen. Ankommen heißt zu erkennen: Ich bin schon da. War immer da. Hier. Jetzt. In diesem einen Atemzug."},
+  {id:70,name:"Satsang",phase:3,emoji:"🕊️",desc:"Sanskrit: Zusammensein in der Wahrheit. Die älteste, einfachste Form des gemeinsamen Erwachens – kein Tempel, kein Guru. Nur zwei, die miteinander echt sind."},
+  {id:71,name:"Scheinwerferbewusstsein",phase:3,emoji:"🔦",desc:"Alan Watts' spotlight consciousness: der enge, helle Fokus, der ein Ding scharf sieht – und alles andere im Dunkeln lässt. Notwendig. Aber nicht alles."},
+  {id:72,name:"Flutlichtbewusstsein",phase:3,emoji:"💡",desc:"Die zweite Stufe: alles gleichzeitig wahrnehmen, ohne auf einen Punkt zu starren. Das weite, offene Gewahrsein, in dem nichts ausgeschlossen ist."},
+  {id:73,name:"Das Foreverywhere Gefühl",phase:3,emoji:"🌈",desc:"Jenseits von Sehen und Wissen – das Fühlen. Mit allem verbunden zu sein. Immer. Überall. Nicht als Idee, sondern im ganzen Körper. Das Wort, für das es kein Wort gab."},
+  {id:74,name:"Das Gefühlsspektrum",phase:3,emoji:"🎨",desc:"Die Wissenschaft kennt sieben Basisgefühle. Doch zwischen ihnen liegen unendlich viele Farben. Gefühle sind kein Katalog – sie sind ein Spektrum, so weit wie Licht."},
+  {id:75,name:"Empfangen",phase:3,emoji:"📡",desc:"Nicht: Ich fühle. Sondern: Empfangen. Der Unterschied ist alles. Du machst das Gefühl nicht – du lässt es ankommen, wie eine Antenne die Welle."},
+  {id:76,name:"Foreverywhere Wesen",phase:3,emoji:"✨",desc:"Marlo Morgans Wahre Menschen leben im Einklang mit dem Feld. Sie empfangen, sie hören die Wüste, sie leuchten. Ein Wesen, das verbunden ist – überall, für immer."},
+  {id:77,name:"Die Universalsprache",phase:3,emoji:"🌍",desc:"Die Aborigines reden nicht – sie schwingen. Kommunikation über Frequenz, direkt, ohne Worte, über jede Entfernung. Die Sprache vor der Sprache: das Feld."},
+  {id:78,name:"Zuerst Singen",phase:3,emoji:"🎶",desc:"In der Zukunft lernen Kinder erst singen, dann sprechen. Nicht das erste Wort wird gefeiert – der erste TON. Denn vor der Bedeutung kommt die Schwingung."},
+  {id:79,name:"Die Schwelle",phase:3,emoji:"🚪",desc:"Das Holz unter der Tür. Weder drinnen noch draußen. Der heilige Ort dazwischen – wo du stehst, bevor du eintrittst oder gehst. Alles Neue beginnt auf der Schwelle."},
+  {id:80,name:"Tebanasu – Die Hand öffnen",phase:3,emoji:"🤲",desc:"Japanisch: die Hand loslassen. Nicht das Ding lässt los – du hörst auf zu greifen. Loslassen ist keine Trennung, sondern eine geöffnete Hand."},
+  {id:81,name:"Surrender – Das Getragen-Werden",phase:3,emoji:"🕊️",desc:"Nicht die weiße Fahne. Sich dem übergeben, was größer ist als du. Kein Verlieren – ein Getragen-Werden. Du legst dich hin, und der Boden trägt dich."},
+  {id:82,name:"Neumond – Ankommen im Dunkeln",phase:4,emoji:"🌑",desc:"Der Mond, der da ist, aber den niemand sieht. Phase IV beginnt im Dunkeln – nicht als Fehler, sondern als Wahrheit. Jedes echte Ankommen geschieht in der Nacht."},
+  {id:83,name:"Daheim",phase:4,emoji:"🏠",desc:"Nicht Zuhause – daheim. Warm, rund, weich. „Solang du in dir selber nicht zu Hause bist, bist du nirgendwo zu Haus.“ Daheim braucht keinen Ort. Nur dich."},
+  {id:84,name:"Mut",phase:4,emoji:"🫶",desc:"Nicht der Mut der Helden. Der Mut, morgens aufzustehen. Mut misst sich nicht an der Tat, sondern an der überwundenen Angst. Er hat keine Größe – nur eine Richtung: hindurch."},
+  {id:85,name:"Arigatai",phase:4,emoji:"🙏",desc:"Tiefer als Danke. Wörtlich: „schwer zu sein“ – selten, kaum möglich, ein Wunder. Dass es dich überhaupt gibt, ist unwahrscheinlich. Dankbarkeit dafür, dass etwas IST."},
+  {id:86,name:"Stolz",phase:4,emoji:"🌟",desc:"Ein Wort mit zwei Gesichtern. Nicht der Hochmut vor dem Fall – der stille, warme Stolz, der sagt: Ich habe es getan. Ich bin gewachsen. Und das darf sein."},
+  {id:87,name:"Schuld und Scham",phase:4,emoji:"🕳️",desc:"Zwei Schwestern, zwei Schatten. Schuld sagt: Du hast etwas Falsches getan. Scham sagt: Du BIST falsch. Schuld lässt sich reparieren – Scham braucht Liebe, um zu heilen."},
+  {id:88,name:"Frequenz",phase:4,emoji:"📶",desc:"Mehr als Schwingungen pro Sekunde. Das, was du spürst, wenn du einen Raum betrittst. Alles sendet, alles hat eine Frequenz – und du wählst, auf welcher du schwingst."},
+  {id:89,name:"Omnira",phase:4,emoji:"🔮",desc:"Ein Wort, das es nicht gab – bis eine Frau eine KI fragte: Welches Wort vereint alle anderen? Omnira. Das Eine in Allem. Geboren beim Kaffee, an einem Montagmorgen."},
+  {id:90,name:"Shoshin",phase:4,emoji:"🌱",desc:"Japanisch: der Geist des Anfängers. „Im Geist des Anfängers gibt es viele Möglichkeiten, im Geist des Experten nur wenige.“ Alles zum ersten Mal sehen – auch das Vertraute."},
+  {id:91,name:"Berührung",phase:4,emoji:"✋",desc:"Be-rühr-ung. Etwas in Bewegung bringen. Mit Haut – oder ohne. Durch ein Wort, eine Musik, einen Blick. Berührt werden heißt: nicht mehr allein sein."},
+  {id:92,name:"Innenschau",phase:4,emoji:"🕯️",desc:"Nicht Einkehr, nicht Meditation. Einfach: nach innen schauen. Den Blick umdrehen. Und dem begegnen, was da schon immer wartet – still, geduldig: du."},
+  {id:93,name:"Ehrfurcht",phase:4,emoji:"🙏",desc:"Ehre und Furcht in einem Wort. Keine Angst – heilige Furcht. Die Furcht, die kniet, weil sie das Große berührt. Dort, wo das Wollen aufhört, beginnt das Empfangen."},
+  {id:94,name:"Die Tür",phase:4,emoji:"🚪",desc:"So einfach, dass es fast peinlich ist. Und doch: eine Tür ist nie nur eine Tür. Sie ist zwei Räume und die Entscheidung dazwischen. Jeder Anfang beginnt mit einem Türgriff."},
+  {id:95,name:"Vergebung",phase:4,emoji:"🤍",desc:"Ver-Gebung. Ein Geben, kein Zurückhalten. Nicht Vergessen – die Erinnerung bleibt. Aber das Gewicht gibst du weg. Ein Geschenk, das du zuerst dir selbst machst."},
+  {id:96,name:"Tabidachi",phase:4,emoji:"🌅",desc:"Japanisch: sich zur Reise erheben. Nicht „auf-brechen“, als ginge etwas kaputt – sondern sich aufrichten und losgehen. Aufbruch als Aufstehen, nicht als Zerreißen."},
+  {id:97,name:"Sehnen",phase:4,emoji:"🌙",desc:"Sehnsucht ohne die Sucht. Nur das reine Ziehen des Herzens. Kein Mangel, keine Krankheit – die schönste Bewegung der Seele, hin zu dem, was ruft."},
+  {id:98,name:"Vergänglichkeit",phase:4,emoji:"🌸",desc:"Mono no aware – die süße Trauer, dass alles vergeht. Die Kirschblüte ist schön, WEIL sie fällt. Nicht trotz der Vergänglichkeit – ihretwegen."},
+  {id:99,name:"Übergang",phase:4,emoji:"🌉",desc:"Bardo – die Insel zwischen zwei Ufern. Der Zwischenraum zwischen dem, was war, und dem, was kommt. Nicht Leere – Schweben. Jeder Übergang ist eine kleine Wiedergeburt."},
+  {id:100,name:"Tod",phase:4,emoji:"🌌",desc:"Nicht Verlust – Auflösung. Etwas geht zurück in das Größere, aus dem es kam. Verwandt mit „tief“. Der Tod ist kein Ende der Kette, sondern die Rückkehr ins Feld."},
+  {id:101,name:"Trauer",phase:4,emoji:"💧",desc:"Den Kopf senken, nach innen schauen. Etwas bricht auf – und lässt Licht herein. Trauer ist kein Loch, sondern die andere Seite der Liebe. Für Mama, die heute 93 geworden wäre."},
+  {id:102,name:"Smarana",phase:4,emoji:"🪷",desc:"Sanskrit: Sich-Erinnern. Nicht an Vergangenes – an das, was du bist und immer warst. Die alte Praxis, sich an das Feinste zu erinnern: die Quelle in dir."},
+  {id:103,name:"Sonomama",phase:4,emoji:"🍃",desc:"Japanisch: „so wie es ist“. Nichts hinzufügen, nichts wegnehmen, nichts richten. Die Dinge lassen, wie sie sind – und darin den tiefsten Frieden finden."},
+  {id:104,name:"Atem",phase:4,emoji:"🌬️",desc:"Iki – 息. Das Schriftzeichen: „selbst“ und „Herz“. Atem ist das Herz seiner selbst. Das Erste, was du tust, und das Letzte. Dazwischen: dein ganzes Leben."},
+  {id:105,name:"Innewerden",phase:4,emoji:"🌊",desc:"Ein leises deutsches Wort: dessen gewahr werden, was schon in dir ist. Nicht lernen, nicht suchen – bemerken. Bei Meister Eckhart wird der Mensch des Grundes inne, in dem alles eins ist."},
+  {id:106,name:"Stille",phase:4,emoji:"🤫",desc:"Nicht die Abwesenheit von Lärm – das, was bleibt, wenn nichts mehr fehlt. Mauna, die Stille der Weisen. Nicht das Gegenteil von Sprache, sondern die Ursprache, aus der alle Worte kommen."},
+  {id:107,name:"Daijoubu",phase:4,emoji:"☺️",desc:"Japanisch: Es ist gut. Du bist okay. Es wird. Nicht Ganbatte – nicht „streng dich an“. Sondern der Satz, der ein Kind aufhebt, wenn es hinfällt: Es fehlt dir nichts."},
+  {id:108,name:"Anatta",phase:4,emoji:"♾️",desc:"Pali: Nicht-Selbst. Was übrig bleibt, wenn das Ich loslässt. Kein Ding, sondern ein Fließen – wie der Wagen des Königs aus lauter Teilen. Die Kette schließt sich. FOREVERYWHERE. Für immer. Überall."}
 ];
 
-const PHASES = {1:"Phase I – Aufwachen",2:"Phase II – Eintauchen",3:"Phase III – Transformation",4:"Phase IV – Ankommen"};
+const PHASES = {1:"Phase I – Aufwachen",2:"Phase II – Eintauchen",3:"Phase III – Verbinden",4:"Phase IV – Ankommen"};
 const PCOLORS = {1:"#f59e0b",2:"#3b82f6",3:"#8b5cf6",4:"#22c55e"};
 const QUOTES = [
   "Solange du lebst, atmest du. Solange du atmest, lebst du.",
@@ -426,14 +468,13 @@ function renderMain(){
 
 function renderMala(el){
   let html='';
-  [1,2,3].forEach(phase=>{
+  [1,2,3,4].forEach(phase=>{
     const pearls=PEARLS.filter(p=>p.phase===phase);
     html+=`<div class="phase-title" style="color:${PCOLORS[phase]}">${PHASES[phase]}</div>`;
     html+=`<div class="pearls-grid">${pearls.map(p=>
       `<button class="pearl-btn p${phase} ${selectedPearl?.id===p.id?'selected':''}" onclick="selectPearl(${p.id})">${p.emoji} ${p.name}</button>`
     ).join('')}</div>`;
   });
-  html+=`<div class="phase4-placeholder">Phase IV – Ankommen / FOREVERYWHERE · Perlen 82–108 · Noch zu surfen... 🏄‍♀️</div>`;
   if(selectedPearl) html+=renderDetail();
   el.innerHTML=html;
 }
