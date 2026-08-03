@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Die Reise · Feldsurfing um die Welt · Margit Krüger</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="Family goes FOREVERYWHERE – Margit Krügers Weltreise. Von Goslar über Seoul, Bali, Australien nach Neuseeland. Ein Reise-Logbuch, das mit jeder Station wächst.">
+<meta property="og:title" content="Die Reise · Feldsurfing um die Welt">
+<meta property="og:description" content="Family goes FOREVERYWHERE – von Goslar über Seoul, Bali und Australien nach Neuseeland. Ein wachsendes Reise-Logbuch.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://maggieforeverywhere.com/reise.html">
+<meta property="og:image" content="https://maggieforeverywhere.com/maggie-foto.jpg">
+<meta property="og:locale" content="de_DE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Die Reise · Feldsurfing um die Welt">
+<meta name="twitter:description" content="Family goes FOREVERYWHERE – ein wachsendes Reise-Logbuch um die Welt.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --cream:#faf6ef;--warm:#f5ebe0;--gold:#B8860B;--gold-light:#d4a84b;
+  --deep:#2c1810;--brown:#5B3A29;--purple:#4A235A;--text:#3a2a1a;
+  --text-light:#7a6b5a;--accent:#c17f3e;
+}
+body{
+  font-family:'Lora','Georgia',serif;color:var(--text);
+  background:var(--cream);line-height:1.7;overflow-x:hidden;
+}
+::selection{background:var(--gold-light);color:#fff;}
+a{color:inherit;}
+
+/* Top bar */
+.topbar{
+  position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center;
+  padding:14px 28px;background:rgba(250,246,239,0.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(184,134,11,0.12);
+}
+.topbar .logo{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--deep);text-decoration:none;letter-spacing:1px;}
+.topbar .logo span{color:var(--gold);}
+.topbar .home{font-size:13px;color:var(--text-light);text-decoration:none;letter-spacing:1px;}
+.topbar .home:hover{color:var(--gold);}
+
+/* Hero */
+.reise-hero{
+  text-align:center;padding:70px 24px 40px;
+  background:linear-gradient(180deg,var(--cream) 0%,var(--warm) 100%);
+}
+.reise-hero .label{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.reise-hero h1{
+  font-family:'Cormorant Garamond',serif;font-weight:300;
+  font-size:clamp(36px,7vw,60px);letter-spacing:2px;color:var(--deep);line-height:1.1;
+}
+.reise-hero .sub{font-style:italic;color:var(--brown);font-size:clamp(16px,2.5vw,20px);margin-top:14px;}
+.reise-hero .route-line{margin-top:18px;font-size:13px;letter-spacing:2px;color:var(--text-light);}
+
+section{max-width:820px;margin:0 auto;padding:56px 24px;}
+.section-title{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,36px);font-weight:300;
+  color:var(--deep);text-align:center;margin-bottom:8px;
+}
+.section-note{text-align:center;color:var(--text-light);font-size:14px;font-style:italic;margin-bottom:40px;}
+
+/* ===== Route ===== */
+.route{display:flex;justify-content:space-between;position:relative;gap:8px;}
+.route::before{
+  content:'';position:absolute;top:29px;left:8%;right:8%;height:2px;
+  background:repeating-linear-gradient(90deg,var(--gold-light) 0 8px,transparent 8px 16px);
+  opacity:0.6;z-index:0;
+}
+.station{flex:1;text-align:center;position:relative;z-index:1;min-width:0;}
+.node{
+  width:60px;height:60px;border-radius:50%;margin:0 auto 12px;
+  display:flex;align-items:center;justify-content:center;font-size:26px;
+  background:var(--cream);border:2px solid var(--gold-light);
+  box-shadow:0 4px 14px rgba(184,134,11,0.12);
+}
+.station[data-status="current"] .node{
+  border-color:var(--gold);background:#fff;
+  box-shadow:0 0 0 0 rgba(184,134,11,0.5);animation:pulse 2.2s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(184,134,11,0.45);}
+  70%{box-shadow:0 0 0 14px rgba(184,134,11,0);}
+  100%{box-shadow:0 0 0 0 rgba(184,134,11,0);}
+}
+.station[data-status="done"] .node{background:var(--gold);border-color:var(--gold);}
+.st-place{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--deep);}
+.st-date{font-size:12px;color:var(--gold);margin:2px 0 6px;letter-spacing:0.5px;}
+.st-note{font-size:12px;color:var(--text-light);line-height:1.5;padding:0 4px;}
+.st-badge{
+  display:inline-block;margin-top:8px;padding:2px 10px;border-radius:20px;
+  font-size:10px;letter-spacing:1px;text-transform:uppercase;
+  background:var(--gold);color:#fff;
+}
+
+/* ===== Logbook ===== */
+.log-entry{
+  display:flex;gap:22px;margin-bottom:34px;padding-bottom:34px;
+  border-bottom:1px solid rgba(184,134,11,0.12);
+}
+.log-entry:last-child{border-bottom:none;}
+.log-when{
+  min-width:120px;text-align:right;padding-top:2px;
+}
+.log-when .date{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--gold);}
+.log-when .place{font-size:13px;color:var(--text-light);margin-top:2px;}
+.log-body{flex:1;}
+.log-body h3{
+  font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--deep);margin-bottom:8px;
+}
+.log-body p{font-size:15px;color:var(--text);line-height:1.8;margin-bottom:10px;}
+.log-body img{width:100%;border-radius:12px;margin-top:10px;box-shadow:0 6px 24px rgba(0,0,0,0.12);}
+.log-empty{text-align:center;color:var(--text-light);font-style:italic;padding:20px;}
+
+/* ===== CTA ===== */
+.cta{background:var(--warm);text-align:center;}
+.cta .btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:8px;}
+.btn{
+  display:inline-block;padding:13px 30px;border-radius:30px;text-decoration:none;
+  font-family:'Cormorant Garamond',serif;font-size:17px;letter-spacing:0.5px;
+  transition:transform 0.3s,box-shadow 0.3s;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.1);}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#fff;}
+.btn-blue{background:linear-gradient(135deg,#0070ba,#00a2e8);color:#fff;}
+.btn-orange{background:linear-gradient(135deg,#ff9f43,#d4a84b);color:#fff;}
+
+footer{text-align:center;padding:36px 24px;background:var(--deep);color:rgba(255,255,255,0.45);font-size:12px;}
+footer .symbols{font-size:20px;margin-bottom:10px;letter-spacing:4px;}
+footer a{color:var(--gold-light);text-decoration:none;}
+
+@media(max-width:640px){
+  /* Route becomes a vertical timeline */
+  .route{flex-direction:column;gap:0;}
+  .route::before{top:0;bottom:0;left:29px;right:auto;width:2px;height:auto;
+    background:repeating-linear-gradient(180deg,var(--gold-light) 0 8px,transparent 8px 16px);}
+  .station{display:flex;align-items:flex-start;text-align:left;gap:16px;padding:10px 0;}
+  .node{margin:0;flex-shrink:0;width:58px;height:58px;}
+  .st-place{font-size:19px;}
+  .st-note{padding:0;}
+  .log-entry{flex-direction:column;gap:6px;}
+  .log-when{text-align:left;min-width:0;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="logo">Margit <span>Krüger</span></a>
+  <a href="index.html" class="home">← Startseite</a>
+</div>
+
+<div class="reise-hero">
+  <div class="label">Family goes FOREVERYWHERE</div>
+  <h1>Die Reise</h1>
+  <p class="sub">Feldsurfing um die Welt 🌏</p>
+  <p class="route-line">Goslar → Seoul → Bali → Australien → Neuseeland</p>
+</div>
+
+<!-- Route -->
+<section>
+  <h2 class="section-title">Die Route</h2>
+  <p class="section-note">Fünf Stationen. Drei Generationen. Ein offenes Herz.</p>
+  <div class="route" id="route"></div>
+</section>
+
+<!-- Logbook -->
+<section style="padding-top:0;">
+  <h2 class="section-title">Das Logbuch</h2>
+  <p class="section-note">Dieses Logbuch wächst mit jeder Station. 🖋️</p>
+  <div id="logbook"></div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2 class="section-title">Begleite mich</h2>
+  <p class="section-note">Sei dabei – im Feld, unterwegs, überall.</p>
+  <div class="btns">
+    <a class="btn btn-gold" href="https://maggieforeverywhere.substack.com" target="_blank">📝 Tagebuch (Substack)</a>
+    <a class="btn btn-blue" href="https://www.paypal.com/pool/9nwqhFZUo0?sr=ancr" target="_blank">💖 Reise unterstützen</a>
+    <a class="btn btn-orange" href="https://foreverywhere.myspreadshop.de" target="_blank">🐑 Selma-Shop</a>
+  </div>
+</section>
+
+<footer>
+  <div class="symbols">🌉 ❤️ 🌈</div>
+  <p>FOREVERYWHERE · Margit Krüger · <a href="index.html">Startseite</a></p>
+  <p style="margin-top:6px;">Goslar → Seoul → Bali → Australien → Neuseeland 🌏</p>
+</footer>
+
+<script>
+/* ====== Reise-Daten – hier einfach neue Stationen/Einträge ergänzen ====== */
+
+// Stationen der Route. status: "done" | "current" | "upcoming"
+const STATIONS = [
+  {flag:"🇩🇪", place:"Goslar",      date:"Aug 2026",       note:"Der Aufbruch. Wo alles begann.",              status:"current"},
+  {flag:"🇰🇷", place:"Seoul",       date:"ab Aug 2026",    note:"Mit Marie & Amy. Drei Generationen.",         status:"upcoming"},
+  {flag:"🇮🇩", place:"Bali",        date:"Herbst 2026",    note:"Allein weiter. Insel der Götter.",            status:"upcoming"},
+  {flag:"🇦🇺", place:"Australien",  date:"Jahresende 2026",note:"Ans andere Ende der Welt.",                   status:"upcoming"},
+  {flag:"🇳🇿", place:"Neuseeland",  date:"2027",           note:"Das Abenteuer geht weiter.",                  status:"upcoming"},
+];
+
+// Logbuch-Einträge (neueste zuerst). img ist optional ("" = kein Foto).
+const LOG = [
+  {
+    date:"7. August 2026",
+    place:"🇩🇪 Goslar",
+    title:"Der Aufbruch",
+    text:["Heute geht es los. Der Koffer ist gepackt, 108 Perlen im Gepäck, das Herz weit offen.",
+          "Von Goslar im Harz hinaus in die Welt – nach Seoul, mit Marie und Amy. Drei Generationen, ein Versprechen. Family goes FOREVERYWHERE. 🌉"],
+    img:""
+  },
+];
+
+/* ====== Rendering ====== */
+function renderRoute(){
+  document.getElementById("route").innerHTML = STATIONS.map(s => `
+    <div class="station" data-status="${s.status}">
+      <div class="node">${s.flag}</div>
+      <div>
+        <div class="st-place">${s.place}</div>
+        <div class="st-date">${s.date}</div>
+        <div class="st-note">${s.note}</div>
+        ${s.status==="current" ? '<span class="st-badge">Gerade hier</span>' : ''}
+      </div>
+    </div>`).join("");
+}
+function renderLog(){
+  const el = document.getElementById("logbook");
+  if(!LOG.length){ el.innerHTML = '<div class="log-empty">Die erste Station folgt bald … 🌱</div>'; return; }
+  el.innerHTML = LOG.map(e => `
+    <div class="log-entry">
+      <div class="log-when">
+        <div class="date">${e.date}</div>
+        <div class="place">${e.place}</div>
+      </div>
+      <div class="log-body">
+        <h3>${e.title}</h3>
+        ${(Array.isArray(e.text)?e.text:[e.text]).map(p=>`<p>${p}</p>`).join("")}
+        ${e.img ? `<img src="${e.img}" alt="${e.title}" loading="lazy">` : ''}
+      </div>
+    </div>`).join("");
+}
+renderRoute();
+renderLog();
+</script>
+</body>
+</html>
