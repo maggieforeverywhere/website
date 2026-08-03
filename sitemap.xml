@@ -2,22 +2,52 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://maggieforeverywhere.com/</loc>
-    <lastmod>2026-03-19</lastmod>
+    <lastmod>2026-08-03</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://maggieforeverywhere.com/108-lebebuch.html</loc>
-    <lastmod>2026-03-19</lastmod>
+    <lastmod>2026-08-03</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://maggieforeverywhere.com/leseprobe-foreverywhere.html</loc>
+    <lastmod>2026-08-03</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maggieforeverywhere.com/leseprobe-108.html</loc>
+    <lastmod>2026-08-03</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maggieforeverywhere.com/leseprobe-interpretability.html</loc>
+    <lastmod>2026-08-03</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maggieforeverywhere.com/leseprobe-drei-saeulen.html</loc>
+    <lastmod>2026-08-03</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://maggieforeverywhere.com/leseprobe-eleonore.html</loc>
+    <lastmod>2026-08-03</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://maggieforeverywhere.com/selma-kaestchen.html</loc>
-    <lastmod>2026-03-19</lastmod>
-    <priority>0.8</priority>
+    <lastmod>2026-08-03</lastmod>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://maggieforeverywhere.com/gefuehls-schatzkaestchen.html</loc>
-    <lastmod>2026-03-19</lastmod>
-    <priority>0.8</priority>
+    <lastmod>2026-08-03</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://maggieforeverywhere.com/gaestebuch.html</loc>
+    <lastmod>2026-08-03</lastmod>
+    <priority>0.6</priority>
   </url>
 </urlset>
