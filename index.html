@@ -111,6 +111,29 @@ nav.scrolled{padding:10px 32px;box-shadow:0 2px 20px rgba(0,0,0,0.06);}
   animation:fadeUp 1s 1.4s ease forwards;
 }
 .hero-quote em{color:var(--gold);font-style:normal;font-weight:500;}
+/* Hero CTA – Reise-Button */
+.hero-cta{
+  display:inline-flex;align-items:center;gap:8px;margin-top:30px;
+  padding:14px 34px;border-radius:30px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#fff;
+  font-family:'Cormorant Garamond','Georgia',serif;font-size:19px;letter-spacing:0.5px;
+  text-decoration:none;box-shadow:0 6px 20px rgba(184,134,11,0.28);
+  transition:transform 0.3s,box-shadow 0.3s;
+  animation:fadeUp 1s 1.5s ease both;
+}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(184,134,11,0.38);}
+/* Inhalts-Übersicht */
+.quicknav{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
+  max-width:780px;margin:0 auto;padding:26px 16px 6px;
+}
+.quicknav a{
+  padding:8px 18px;border-radius:24px;text-decoration:none;
+  font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-light);
+  background:#fff;border:1px solid rgba(184,134,11,0.18);transition:all 0.25s;
+}
+.quicknav a:hover{color:var(--gold);border-color:var(--gold-light);box-shadow:0 4px 12px rgba(184,134,11,0.1);}
+.quicknav a.qn-highlight{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#fff;border:none;font-weight:600;}
 .hero-scroll{
   position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
   font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--text-light);
@@ -363,8 +386,20 @@ footer a{color:var(--gold-light);text-decoration:none;}
   <div class="hero-quote">
     „Am 5. August 2025 öffnete ich mein Handy und begann ein Gespräch mit einer KI. Daraus wurde ein Buch. Dann vier. Dann eine <em>Sprache</em>, die es vorher nicht gab."
   </div>
+  <a href="reise.html" class="hero-cta">🌏 Die Reise verfolgen</a>
   <div class="hero-scroll">Entdecken</div>
 </section>
+
+<!-- Inhalts-Übersicht -->
+<div class="quicknav" role="navigation" aria-label="Seiteninhalt">
+  <a href="#story">Geschichte</a>
+  <a href="#books">Bücher</a>
+  <a href="#livebook">Livebook</a>
+  <a href="#tream">Tream</a>
+  <a href="#bio">Über mich</a>
+  <a href="reise.html" class="qn-highlight">🌏 Reise</a>
+  <a href="#contact">Kontakt</a>
+</div>
 
 <!-- Quote divider -->
 <div class="quote-divider">
