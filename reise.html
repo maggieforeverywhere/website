@@ -244,8 +244,8 @@ footer a{color:var(--gold-light);text-decoration:none;}
 
 // Stationen der Route. status: "done" | "current" | "upcoming"
 const STATIONS = [
-  {flag:"🇩🇪", place:"Goslar",      date:"Aug 2026",       note:"Der Aufbruch. Wo alles begann.",              status:"current"},
-  {flag:"🇰🇷", place:"Seoul",       date:"ab Aug 2026",    note:"Mit Marie & Amy. Drei Generationen.",         status:"upcoming"},
+  {flag:"🇩🇪", place:"Goslar",      date:"Aug 2026",       note:"Der Aufbruch. Wo alles begann.",              status:"done"},
+  {flag:"🇰🇷", place:"Seoul",       date:"seit Aug 2026",  note:"Angekommen! Drei Generationen in Korea.",     status:"current"},
   {flag:"🇮🇩", place:"Bali",        date:"Herbst 2026",    note:"Allein weiter. Insel der Götter.",            status:"upcoming"},
   {flag:"🇦🇺", place:"Australien",  date:"Jahresende 2026",note:"Ans andere Ende der Welt.",                   status:"upcoming"},
   {flag:"🇳🇿", place:"Neuseeland",  date:"2027",           note:"Das Abenteuer geht weiter.",                  status:"upcoming"},
@@ -253,6 +253,17 @@ const STATIONS = [
 
 // Logbuch-Einträge (neueste zuerst). img ist optional ("" = kein Foto).
 const LOG = [
+  {
+    date:"8. August 2026",
+    place:"🇰🇷 Seoul · Incheon",
+    title:"Angekommen in Seoul!",
+    text:["Nach einem langen Flug über die Wolken: gelandet in Incheon! 🎉 Drei Generationen – und Pikachu obenauf auf dem Kofferturm. Die Reise hat die andere Seite der Welt erreicht.",
+          "Amy mit ihren rosa Katzenohr-Kopfhörern am Fenster, der Sonnenuntergang über Korea – und dann das erste Frühstück um 16:44 Uhr Ortszeit. 😄 Willkommen im Jetlag!",
+          "Marie schnuppert schon echtes Korea-Feeling: koreanische Getränke und Pocari Sweat, das isoterische Getränk 😂 – und die Erkenntnis, dass hier der Deckel nicht an der Flasche hängt. 😅",
+          "Annyeong, Seoul! Family goes FOREVERYWHERE ist angekommen. 🇰🇷💛"],
+    img:"seoul-ankunft.jpg",
+    imgs:["seoul-flug.jpg","seoul-fenster.jpg","seoul-fruehstueck.jpg","seoul-pocari.jpg"]
+  },
   {
     date:"7. August 2026",
     place:"🇩🇪 Flughafen Frankfurt",
