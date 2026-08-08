@@ -304,7 +304,7 @@ function renderRoute(){
 function renderLog(){
   const el = document.getElementById("logbook");
   if(!LOG.length){ el.innerHTML = '<div class="log-empty">Die erste Station folgt bald … 🌱</div>'; return; }
-  el.innerHTML = LOG.map(e => `
+  el.innerHTML = LOG.slice().reverse().map(e => `
     <div class="log-entry">
       <div class="log-when">
         <div class="date">${e.date}</div>
