@@ -133,6 +133,9 @@ section{max-width:820px;margin:0 auto;padding:56px 24px;}
 .log-gallery{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
 .log-gallery img{width:100%;height:210px;object-fit:cover;border-radius:12px;margin-top:0;box-shadow:0 6px 20px rgba(0,0,0,0.12);}
 .log-gallery img:last-child:nth-child(odd){grid-column:1 / -1;height:300px;}
+.log-audio{margin-top:14px;background:linear-gradient(135deg,#fff,var(--warm));border:1px solid rgba(184,134,11,0.2);border-radius:14px;padding:14px 16px;box-shadow:0 4px 16px rgba(44,24,16,0.06);}
+.log-audio-label{display:block;font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--brown);font-style:italic;margin-bottom:8px;}
+.log-audio audio{width:100%;height:40px;}
 .log-empty{text-align:center;color:var(--text-light);font-style:italic;padding:20px;}
 
 /* ===== FindPenguins Live-Karte ===== */
@@ -280,10 +283,13 @@ const LOG = [
     text:["Und dann rollte der nächste Stein direkt vor die Füße: der Jogyesa (조계사), der Haupttempel des koreanischen Buddhismus – mitten im Häusermeer von Seoul, zwischen Glastürmen und Verkehr. 🙏 Kaum hatte Noah einen Templestay vorgeschlagen, stand Maggie im Hof genau des Ordens, der die Templestays veranstaltet. Manchmal muss man den Tempel gar nicht suchen. Er kommt.",
           "Über dem sandigen Hof spannen sich Sonnensegel und Girlanden aus bunten Laternen, von einem uralten Baum bis zur großen Halle. Überall Lotus in Kübeln – gerade ist Lotus-Zeit: 연꽃, 마음의 평안을 주다, der Lotus, der dem Herzen Frieden schenkt.",
           "In der Haupthalle, dem Daeungjeon (大雄殿), sitzen drei riesige goldene Buddhas – und über den Gläubigen ein ganzer Himmel aus tausenden roten Gebetslaternen, jede mit einem Namen, einem Wunsch, einem Menschen daran. Ein Meer aus Licht unter dem Dach.",
+          "Zweimal am Tag kommen die Mönche in ihren safranroten Gewändern zum Gottesdienst in die große Halle – und singen. Ein tiefes, getragenes Chanten (예불, Yebul), das durch den ganzen Hof trägt. Und das Schönste: Die meisten Menschen singen einfach mit. Kein Publikum, keine Bühne – alle sind Teil davon. Hör selbst hinein. 🎧",
           "Und dann, ganz still auf seinem Plastikstuhl: ein Mann, der eine Gebetskette durch die Finger gleiten lässt. Perle um Perle. 108 davon. 📿 Ich sage nur, was ich sehe – deine Zahl, dein Buch, als lebendige Geste, mitten im Trubel. Was du damit machst, gehört dir.",
           "Draußen dann diese eine weiße Lotusblüte, aufrecht über den breiten Blättern. Der Lotus wächst im Schlamm und blüht makellos darüber – deshalb steht er für das Erwachen. Aber heute darf er auch einfach eine schöne Blüte sein, an einem grauen Nachmittag, in einem Tempel, der zu Besuch kam. 🤍"],
     img:"seoul-jogyesa-hof.jpg",
-    imgs:["seoul-jogyesa-buddhas.jpg","seoul-jogyesa-laternen.jpg","seoul-jogyesa-mala.jpg","seoul-jogyesa-bodhisattva.jpg","seoul-jogyesa-lotus.jpg","seoul-jogyesa-tor.jpg"]
+    imgs:["seoul-jogyesa-moenche.jpg","seoul-jogyesa-buddhas.jpg","seoul-jogyesa-laternen.jpg","seoul-jogyesa-mala.jpg","seoul-jogyesa-bodhisattva.jpg","seoul-jogyesa-lotus.jpg","seoul-jogyesa-tor.jpg"],
+    audio:"seoul-jogyesa-gesang.m4a",
+    audioLabel:"Mönchsgesang im Jogyesa (예불) – aufgenommen am 14. August"
   },
   {
     date:"12. August 2026 · Mittwoch · gegen Abend",
@@ -592,6 +598,7 @@ function renderLog(){
         ${(Array.isArray(e.text)?e.text:[e.text]).map(p=>`<p>${p}</p>`).join("")}
         ${e.img ? `<img class="log-hero" src="${e.img}" alt="${e.title}" loading="lazy">` : ''}
         ${(e.imgs&&e.imgs.length) ? `<div class="log-gallery">${e.imgs.map(g=>`<img src="${g}" alt="${e.title}" loading="lazy">`).join("")}</div>` : ''}
+        ${e.audio ? `<div class="log-audio"><span class="log-audio-label">🎧 ${e.audioLabel || 'Zum Anhören'}</span><audio controls preload="none" src="${e.audio}"></audio></div>` : ''}
       </div>
     </div>`).join("");
 }
