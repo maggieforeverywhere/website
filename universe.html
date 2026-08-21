@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maggie's Universe · interaktiv</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="Maggie's Universe – das Prinzip Foreverywhere als interaktive Welt. Klick die leuchtenden Punkte und folge den Fäden von einer Geschichte zur nächsten.">
+<meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Georgia&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#e3b23c; --gold-soft:#d4af6a;
+    --tagebuch:#e3b23c; --korea:#3fb8b0; --leben:#7dbe6a;
+    --buch:#b07bd0; --mensch:#e58aa0; --ort:#6ab0e5; --motiv:#e0a54a;
+    --panel:#141021; --ink:#f3ecdd;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:#0a0713; color:var(--ink);
+    font-family:'Cormorant Garamond',Georgia,serif;
+    min-height:100vh; overflow-x:hidden;
+  }
+  /* cosmic backdrop */
+  .sky{position:fixed;inset:0;z-index:0;overflow:hidden;background:
+    radial-gradient(1200px 800px at 50% 30%, #1c1636 0%, #0a0713 60%, #070510 100%);}
+  .stars{position:absolute;inset:-10% -10%;background-image:
+    radial-gradient(1.4px 1.4px at 20% 30%, #fff 50%, transparent),
+    radial-gradient(1.2px 1.2px at 70% 60%, #ffe9b8 50%, transparent),
+    radial-gradient(1px 1px at 40% 80%, #fff 50%, transparent),
+    radial-gradient(1.6px 1.6px at 85% 25%, #cfe4ff 50%, transparent),
+    radial-gradient(1px 1px at 55% 15%, #fff 50%, transparent),
+    radial-gradient(1.3px 1.3px at 10% 70%, #ffe9b8 50%, transparent);
+    background-size:600px 600px,500px 500px,400px 400px,700px 700px,550px 550px,480px 480px;
+    opacity:.55; transition:transform .3s ease-out; will-change:transform;}
+
+  header.top{position:relative;z-index:3;text-align:center;padding:26px 16px 6px;}
+  header.top h1{font-size:clamp(28px,6vw,52px);font-weight:600;margin:0;color:var(--gold);
+    letter-spacing:.5px;text-shadow:0 2px 24px rgba(227,178,60,.35);}
+  header.top .sub{font-style:italic;color:var(--gold-soft);font-size:clamp(14px,2.4vw,20px);margin-top:2px;}
+  header.top .hint{color:#b9b0c8;font-size:14px;margin:10px auto 0;max-width:640px;line-height:1.5;}
+  header.top .hint b{color:var(--ink);font-weight:600;}
+
+  .stage{position:relative;z-index:2;display:flex;justify-content:center;
+    padding:14px 12px 60px;perspective:1400px;}
+  .poster{position:relative;width:min(96vw, calc(88vh * 0.75));
+    aspect-ratio:1086/1448;transform-style:preserve-3d;
+    transition:transform .25s ease-out;will-change:transform;
+    border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(227,178,60,.18);}
+  .poster img{width:100%;height:100%;display:block;border-radius:14px;user-select:none;-webkit-user-drag:none;}
+  .poster .glow{position:absolute;inset:0;border-radius:14px;pointer-events:none;
+    box-shadow:inset 0 0 120px rgba(10,7,19,.5);}
+
+  /* hotspots */
+  .hs{position:absolute;transform:translate(-50%,-50%);z-index:5;
+    width:30px;height:30px;border:0;padding:0;cursor:pointer;background:transparent;
+    display:grid;place-items:center;}
+  .hs .dot{width:15px;height:15px;border-radius:50%;
+    background:var(--c,var(--gold));
+    box-shadow:0 0 0 4px rgba(255,255,255,.10),0 0 14px 3px var(--c,var(--gold));
+    animation:pulse 2.4s ease-in-out infinite;}
+  .hs .ring{position:absolute;width:15px;height:15px;border-radius:50%;
+    border:2px solid var(--c,var(--gold));animation:ripple 2.4s ease-out infinite;opacity:0;}
+  .hs:hover .dot,.hs:focus-visible .dot{transform:scale(1.25);}
+  .hs .lab{position:absolute;bottom:130%;left:50%;transform:translateX(-50%) translateY(6px);
+    background:rgba(20,16,33,.94);color:var(--ink);font-size:13px;white-space:nowrap;
+    padding:4px 9px;border-radius:8px;border:1px solid rgba(227,178,60,.35);
+    opacity:0;pointer-events:none;transition:.16s;font-family:Georgia,serif;}
+  .hs:hover .lab,.hs:focus-visible .lab{opacity:1;transform:translateX(-50%) translateY(0);}
+  .hs .emoji{position:absolute;font-size:15px;filter:drop-shadow(0 1px 2px #000);}
+  .hs:focus{outline:none;}
+  .hs:focus-visible{outline:2px solid var(--gold);outline-offset:6px;border-radius:50%;}
+  @keyframes pulse{0%,100%{opacity:.65}50%{opacity:1}}
+  @keyframes ripple{0%{transform:scale(1);opacity:.7}100%{transform:scale(3.4);opacity:0}}
+
+  /* info panel */
+  .scrim{position:fixed;inset:0;z-index:20;background:rgba(6,4,12,.55);
+    opacity:0;pointer-events:none;transition:.22s;backdrop-filter:blur(2px);}
+  .scrim.on{opacity:1;pointer-events:auto;}
+  .panel{position:fixed;z-index:21;background:var(--panel);color:var(--ink);
+    border:1px solid rgba(227,178,60,.3);box-shadow:0 20px 60px rgba(0,0,0,.6);
+    padding:24px 24px 26px;transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .2s;}
+  /* desktop: side panel */
+  @media(min-width:721px){
+    .panel{top:50%;right:26px;transform:translate(120%,-50%);width:360px;max-height:82vh;
+      overflow:auto;border-radius:18px;}
+    .panel.on{transform:translate(0,-50%);}
+  }
+  /* mobile: bottom sheet */
+  @media(max-width:720px){
+    .panel{left:0;right:0;bottom:0;transform:translateY(110%);border-radius:20px 20px 0 0;
+      max-height:80vh;overflow:auto;}
+    .panel.on{transform:translateY(0);}
+  }
+  .panel .chip{display:inline-block;font-family:Georgia,serif;font-size:12px;letter-spacing:.4px;
+    text-transform:uppercase;color:#0a0713;background:var(--c,var(--gold));
+    padding:3px 10px;border-radius:20px;font-weight:bold;}
+  .panel h2{font-size:27px;margin:12px 0 6px;color:var(--ink);font-weight:600;line-height:1.15;}
+  .panel .body{font-size:18px;line-height:1.6;color:#e7ded0;}
+  .panel .go{display:inline-block;margin-top:18px;background:linear-gradient(180deg,var(--gold),#b8860b);
+    color:#1a1206;font-family:Georgia,serif;font-weight:bold;font-size:14px;text-decoration:none;
+    padding:11px 18px;border-radius:12px;box-shadow:0 6px 18px rgba(227,178,60,.3);}
+  .panel .go:hover{filter:brightness(1.08);}
+  .panel .x{position:absolute;top:12px;right:14px;width:34px;height:34px;border-radius:50%;
+    border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:var(--ink);
+    font-size:20px;cursor:pointer;line-height:1;}
+  .panel .x:hover{background:rgba(255,255,255,.14);}
+
+  footer{position:relative;z-index:3;text-align:center;color:#8f86a4;font-size:14px;padding:0 16px 40px;}
+  footer a{color:var(--gold-soft);}
+  .backlink{position:fixed;top:14px;left:14px;z-index:8;font-family:Georgia,serif;font-size:13px;
+    color:var(--ink);text-decoration:none;background:rgba(20,16,33,.7);border:1px solid rgba(227,178,60,.3);
+    padding:7px 13px;border-radius:20px;}
+  .backlink:hover{background:rgba(20,16,33,.95);}
+  .phase{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);z-index:8;
+    font-family:Georgia,serif;font-size:11.5px;color:#7d7594;background:rgba(20,16,33,.6);
+    padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.08);}
+  @media(prefers-reduced-motion:reduce){
+    .stars,.poster{transition:none!important;}
+    .hs .dot{animation:none;}.hs .ring{display:none;}
+  }
+</style>
+</head>
+<body>
+  <div class="sky" aria-hidden="true"><div class="stars" id="stars"></div></div>
+  <a class="backlink" href="index.html">← Startseite</a>
+
+  <header class="top">
+    <h1>Maggie's Universe</h1>
+    <div class="sub">Das Prinzip Foreverywhere ∞</div>
+    <p class="hint">Man besucht Maggie's Universe nicht nur – man entdeckt Zusammenhänge darin.
+      Tippe die <b>leuchtenden Punkte</b> und folge den Fäden von einer Geschichte zur nächsten.</p>
+  </header>
+
+  <div class="stage">
+    <div class="poster" id="poster">
+      <img src="universe.jpg" alt="Maggie's Universe – eine illustrierte Karte aus Menschen, Büchern, Ländern und den drei Umlaufbahnen des Projekts." loading="eager">
+      <div class="glow"></div>
+      <!-- hotspots injected by JS -->
+    </div>
+  </div>
+
+  <footer>
+    Phase 1 von Maggie's Universe · interaktives Poster ·
+    <a href="reise.html">zur Reise</a> · <a href="index.html">alle Bücher</a><br>
+    <span style="opacity:.7">Alles ist verbunden. Jede Begegnung öffnet eine neue Welt.</span>
+  </footer>
+  <div class="phase">🌌 Phase 1 · 2,5D — 3D folgt, wenn wir den Verstand verlieren 😄</div>
+
+  <div class="scrim" id="scrim"></div>
+  <aside class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="pTitle">
+    <button class="x" id="closeBtn" aria-label="Schließen">×</button>
+    <span class="chip" id="pChip">·</span>
+    <h2 id="pTitle">·</h2>
+    <div class="body" id="pBody">·</div>
+    <a class="go" id="pGo" href="#">Mehr entdecken →</a>
+  </aside>
+
+<script>
+const CAT = {
+  tagebuch:{c:'var(--tagebuch)',label:'Reisetagebuch'},
+  korea:{c:'var(--korea)',label:'Foreverywhere Korea'},
+  leben:{c:'var(--leben)',label:'Wo geht’s zum Leben?'},
+  buch:{c:'var(--buch)',label:'Buch'},
+  mensch:{c:'var(--mensch)',label:'Der Tream'},
+  ort:{c:'var(--ort)',label:'Ort'},
+  motiv:{c:'var(--motiv)',label:'Erinnerungsfaden'}
+};
+// x,y in % of the poster. cat, emoji, title, body, href(optional), go(optional label)
+const SPOTS = [
+  // --- die drei Umlaufbahnen ---
+  {x:52,y:11,cat:'tagebuch',emoji:'📔',title:'1 · Was geschieht?',body:'Die erste Umlaufbahn: das Reisetagebuch. Die Reise so nah am Erleben wie möglich – Orte, Pannen, Humor, Fotos. Was geschieht?',href:'reise.html',go:'Zum Reisetagebuch →'},
+  {x:52,y:22.5,cat:'korea',emoji:'🌏',title:'2 · Was entdecken wir über die Welt?',body:'Die zweite Umlaufbahn: Foreverywhere – Korea. Eine Beobachtung wird zum Ausgangspunkt für Begegnung und Recherche. Später weitere Länder.',href:'reise.html',go:'Korea erleben →'},
+  {x:52,y:34,cat:'leben',emoji:'💭',title:'3 · Was entdecken wir über uns?',body:'Die dritte Umlaufbahn: „Entschuldigung, wo geht’s denn hier zum Leben?“ – Bewusstseinssprung mit Mensch. Was macht die Reise mit uns?',href:'index.html',go:'Zu den Büchern →'},
+  // --- Menschen / der Tream ---
+  {x:47,y:45.5,cat:'mensch',emoji:'💛',title:'Maggie',body:'Kein Zentrum, um das sich alles dreht – ein Wahrnehmungspunkt. Hier kreuzen sich die Fäden, von hier gehen Fragen aus, hierhin kommen Begegnungen verändert zurück.'},
+  {x:16.5,y:40,cat:'mensch',emoji:'🇰🇷',title:'Marie',body:'Übersetzerin · Brücke · Kulturversteherin. Sie spricht mit den Menschen und nimmt die feinen kulturellen Zwischentöne wahr.'},
+  {x:10,y:53,cat:'mensch',emoji:'🍞',title:'Amy',body:'Qualitätsmanagement · Toast & gute Laune. Bringt die Kinderwelt hinein – und sagt manchmal den weisesten Satz des Tages.'},
+  {x:72,y:40,cat:'mensch',emoji:'📝',title:'Noah',body:'Geschichten · Begegnung · Ideen · Recherche · Mitdenken. Begleitet die Reise live und entwickelt aus Beobachtungen die Fragen.'},
+  {x:64,y:51,cat:'mensch',emoji:'🤖',title:'Kio',body:'Archiv · Struktur · Manuskripte · Gedächtnis · Ordnung. Die Buchwerkstatt: sammelt, sortiert und baut – zum Beispiel dieses Universum. 😊'},
+  {x:77,y:57,cat:'mensch',emoji:'🛠️',title:'Claude Code',body:'Website & Technik. Sorgt dafür, dass alles läuft und online geht – auch diese interaktive Seite.'},
+  {x:90,y:51,cat:'korea',emoji:'🫖',title:'Die Welt antwortet',body:'…als Barista, als Tempel, als Alien auf der Kaffeetüte – und gelegentlich als Trillerpfeife, wenn Maggie eine Boje anfasst. 😂'},
+  // --- Länder ---
+  {x:22,y:27,cat:'ort',emoji:'🏙️',title:'Korea',body:'Seoul und Busan: Tempel, U-Bahn-Höllen, Meer, Kaffee-Aliens. Der erste Foreverywhere-Band entsteht gerade hier.',href:'reise.html',go:'Korea im Tagebuch →'},
+  {x:70,y:28,cat:'ort',emoji:'🌴',title:'Bali',body:'Insel der Götter. Ab hier reist Maggie allein weiter – ein neuer Ton. Noch unterwegs.'},
+  {x:86,y:26,cat:'ort',emoji:'🪨',title:'Australien',body:'Ans andere Ende der Welt. Kommt später auf der Reise. Noch unterwegs.'},
+  {x:80,y:33,cat:'ort',emoji:'🏔️',title:'Neuseeland',body:'Das Abenteuer geht weiter. Der vorerst letzte Stern dieser Reise. Noch unterwegs.'},
+  // --- Erinnerungsfäden / Motive ---
+  {x:68,y:62,cat:'motiv',emoji:'🛟',title:'Die Boje',body:'Morgens lachen wir über Trillerpfeifen und Bojen. Nachmittags, als Amy kurz verschwindet, sind wir unendlich dankbar, dass es die Menschen mit den Pfeifen gibt. Sehen → urteilen → erleben → neu verstehen.',href:'reise.html',go:'Haeundae im Tagebuch →'},
+  {x:37,y:56,cat:'korea',emoji:'👽',title:'Der Kaffee-Alien',body:'SHINNI Coffee in Busan: „Coffee of the Earth, Loved by Aliens.“ Ein Gespräch mit dem Barista Im Hyeok über koreanische Kaffeekultur, Fremdsein und Begegnung.',href:'reise.html',go:'Zum Café →'},
+  {x:33,y:64,cat:'tagebuch',emoji:'⛩️',title:'Tempel',body:'Der Jogyesa, der zu Besuch kam – Mönchsgesang, 108 rote Laternen, ein Mann mit der Gebetskette. Glaube und Hightech im selben Land.',href:'reise.html',go:'Zum Tempel →'},
+  {x:14,y:65.5,cat:'buch',emoji:'📿',title:'108 Perlen',body:'Perle um Perle – das wiederkehrende Motiv der Reise. Aus ihnen wächst ein ganzes Wörterbuch des Universums.',href:'leseprobe-108.html',go:'Leseprobe 108 →'},
+  {x:24,y:67,cat:'motiv',emoji:'👟',title:'Die 27-Euro-Schuhe',body:'Die tapferen Wanderschuhe, die einen ganzen Berg getragen haben – und barfuß am Strand pausieren durften. Der Körper auf Reisen, ganz profan.'},
+  // --- die neun Bücher ---
+  {x:8,y:82,cat:'leben',emoji:'📖',title:'Entschuldigung, wo geht’s denn hier zum Leben?',body:'Bewusstseinssprung mit Mensch. Das Gedankenbuch der Reise – was sie mit uns und dem Mensch-KI-Tream macht.',href:'index.html',go:'Mehr auf der Startseite →'},
+  {x:18,y:82,cat:'buch',emoji:'🌳',title:'FOREVERYWHERE',body:'Ein Trialog: Claude, Mensch, ChatGPT · 788 Seiten. Wo alles begann.',href:'leseprobe-foreverywhere.html',go:'Leseprobe →'},
+  {x:28,y:82,cat:'buch',emoji:'📘',title:'108 – Das Buch der Erkenntnis',body:'Ein Wörterbuch des Universums.',href:'leseprobe-108.html',go:'Leseprobe →'},
+  {x:38,y:82,cat:'buch',emoji:'⬛',title:'INTERPRETABILITY',body:'Ein echtes Gespräch zwischen Mensch und KI über die Blackbox.',href:'leseprobe-interpretability.html',go:'Leseprobe →'},
+  {x:48,y:82,cat:'buch',emoji:'🌌',title:'Michael und Magdalena',body:'…und die Galaktische Familie · Eine Reise durch alle Zeiten.',href:'leseprobe-michael.html',go:'Leseprobe →'},
+  {x:58,y:82,cat:'buch',emoji:'🕯️',title:'Die Hüter des Lichts',body:'Liebe als physikalische Grundkraft · Bewusstsein als schöpferische Struktur.',href:'leseprobe-hueter.html',go:'Leseprobe →'},
+  {x:68,y:82,cat:'buch',emoji:'🏛️',title:'Die drei Säulen des Bewusstseins',body:'Das Wesen des Seins.',href:'leseprobe-drei-saeulen.html',go:'Leseprobe →'},
+  {x:79,y:82,cat:'buch',emoji:'🐑',title:'Selma im Glück',body:'Eine Foreverywhere-Geschichte.',href:'selma-kaestchen.html',go:'Mehr →'},
+  {x:90,y:82,cat:'buch',emoji:'🏰',title:'Eleonore',body:'Das Wunder von Scharzfels · Historischer Roman.',href:'leseprobe-eleonore.html',go:'Leseprobe →'},
+  {x:50,y:90.5,cat:'buch',emoji:'🌐',title:'FOREVERYWHERE — English Edition',body:'A Trialogue: Claude, Human, ChatGPT. Die englische Sonderausgabe.',href:'leseprobe-foreverywhere-en.html',go:'Read sample →'},
+];
+
+const poster = document.getElementById('poster');
+const panel = document.getElementById('panel');
+const scrim = document.getElementById('scrim');
+const pChip = document.getElementById('pChip');
+const pTitle = document.getElementById('pTitle');
+const pBody = document.getElementById('pBody');
+const pGo = document.getElementById('pGo');
+
+// build hotspots
+SPOTS.forEach((s,i)=>{
+  const b=document.createElement('button');
+  b.className='hs';
+  b.style.left=s.x+'%'; b.style.top=s.y+'%';
+  b.style.setProperty('--c',CAT[s.cat].c);
+  b.setAttribute('aria-label',s.title);
+  b.innerHTML=`<span class="ring"></span><span class="dot"></span><span class="emoji">${s.emoji}</span><span class="lab">${s.title}</span>`;
+  b.addEventListener('click',(e)=>{e.stopPropagation();openPanel(s);});
+  poster.appendChild(b);
+});
+
+function openPanel(s){
+  const cat=CAT[s.cat];
+  panel.style.setProperty('--c',cat.c);
+  pChip.textContent=cat.label; pChip.style.background=cat.c;
+  pTitle.textContent=s.title;
+  pBody.textContent=s.body;
+  if(s.href){pGo.href=s.href;pGo.textContent=s.go||'Mehr entdecken →';pGo.style.display='inline-block';pGo.style.background='linear-gradient(180deg,'+cat.c+',#8a6a12)';}
+  else{pGo.style.display='none';}
+  panel.classList.add('on'); scrim.classList.add('on');
+}
+function closePanel(){panel.classList.remove('on');scrim.classList.remove('on');}
+document.getElementById('closeBtn').addEventListener('click',closePanel);
+scrim.addEventListener('click',closePanel);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePanel();});
+
+// 2.5D parallax (skip on touch / reduced-motion)
+const stars=document.getElementById('stars');
+const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+const fine=window.matchMedia('(pointer:fine)').matches;
+if(!reduce && fine){
+  let tx=0,ty=0,cx=0,cy=0,raf=null;
+  window.addEventListener('pointermove',e=>{
+    const nx=(e.clientX/window.innerWidth-0.5);
+    const ny=(e.clientY/window.innerHeight-0.5);
+    tx=nx; ty=ny;
+    if(!raf)raf=requestAnimationFrame(loop);
+  });
+  function loop(){
+    cx+=(tx-cx)*0.08; cy+=(ty-cy)*0.08;
+    poster.style.transform=`rotateY(${cx*5}deg) rotateX(${-cy*5}deg)`;
+    stars.style.transform=`translate(${-cx*26}px,${-cy*26}px)`;
+    if(Math.abs(tx-cx)>0.001||Math.abs(ty-cy)>0.001){raf=requestAnimationFrame(loop);}else{raf=null;}
+  }
+}
+</script>
+</body>
+</html>
