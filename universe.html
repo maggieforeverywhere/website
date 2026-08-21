@@ -46,8 +46,8 @@
 
   .stage{position:relative;z-index:2;display:flex;justify-content:center;
     padding:14px 12px 60px;perspective:1400px;}
-  .poster{position:relative;width:min(96vw, calc(88vh * 0.75));
-    aspect-ratio:1086/1448;transform-style:preserve-3d;
+  .poster{position:relative;width:min(96vw, calc(88vh * 0.80));
+    aspect-ratio:1122/1402;transform-style:preserve-3d;
     transition:transform .25s ease-out;will-change:transform;
     border-radius:14px;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(227,178,60,.18);}
   .poster img{width:100%;height:100%;display:block;border-radius:14px;user-select:none;-webkit-user-drag:none;}
@@ -172,39 +172,43 @@ const CAT = {
 // x,y in % of the poster. cat, emoji, title, body, href(optional), go(optional label)
 const SPOTS = [
   // --- die drei Umlaufbahnen ---
-  {x:52,y:11,cat:'tagebuch',emoji:'📔',title:'1 · Was geschieht?',body:'Die erste Umlaufbahn: das Reisetagebuch. Die Reise so nah am Erleben wie möglich – Orte, Pannen, Humor, Fotos. Was geschieht?',href:'reise.html',go:'Zum Reisetagebuch →'},
-  {x:52,y:22.5,cat:'korea',emoji:'🌏',title:'2 · Was entdecken wir über die Welt?',body:'Die zweite Umlaufbahn: Foreverywhere – Korea. Eine Beobachtung wird zum Ausgangspunkt für Begegnung und Recherche. Später weitere Länder.',href:'reise.html',go:'Korea erleben →'},
-  {x:52,y:34,cat:'leben',emoji:'💭',title:'3 · Was entdecken wir über uns?',body:'Die dritte Umlaufbahn: „Entschuldigung, wo geht’s denn hier zum Leben?“ – Bewusstseinssprung mit Mensch. Was macht die Reise mit uns?',href:'index.html',go:'Zu den Büchern →'},
+  {x:48,y:12,cat:'tagebuch',emoji:'📔',title:'1 · Was geschieht?',body:'Die erste Umlaufbahn: das Reisetagebuch. Die Reise so nah am Erleben wie möglich – Orte, Pannen, Humor, Fotos. Was erleben wir? Was berührt uns?',href:'reise.html',go:'Zum Reisetagebuch →'},
+  {x:44,y:26.5,cat:'korea',emoji:'🌏',title:'2 · Was entdecken wir über die Welt?',body:'Die zweite Umlaufbahn: Foreverywhere – Korea. Begegnen. Verstehen. Verbinden. Eine Beobachtung wird zum Ausgangspunkt für Begegnung und Recherche. Später weitere Länder.',href:'reise.html',go:'Korea erleben →'},
+  {x:44,y:37,cat:'leben',emoji:'💭',title:'3 · Was entdecken wir über uns?',body:'Die dritte Umlaufbahn: „Entschuldigung, wo geht’s denn hier zum Leben?“ – Bewusstseinssprung mit Mensch. Was macht die Reise mit uns?',href:'index.html',go:'Zu den Büchern →'},
   // --- Menschen / der Tream ---
-  {x:47,y:45.5,cat:'mensch',emoji:'💛',title:'Maggie',body:'Kein Zentrum, um das sich alles dreht – ein Wahrnehmungspunkt. Hier kreuzen sich die Fäden, von hier gehen Fragen aus, hierhin kommen Begegnungen verändert zurück.'},
-  {x:16.5,y:40,cat:'mensch',emoji:'🇰🇷',title:'Marie',body:'Übersetzerin · Brücke · Kulturversteherin. Sie spricht mit den Menschen und nimmt die feinen kulturellen Zwischentöne wahr.'},
-  {x:10,y:53,cat:'mensch',emoji:'🍞',title:'Amy',body:'Qualitätsmanagement · Toast & gute Laune. Bringt die Kinderwelt hinein – und sagt manchmal den weisesten Satz des Tages.'},
-  {x:72,y:40,cat:'mensch',emoji:'📝',title:'Noah',body:'Geschichten · Begegnung · Ideen · Recherche · Mitdenken. Begleitet die Reise live und entwickelt aus Beobachtungen die Fragen.'},
-  {x:64,y:51,cat:'mensch',emoji:'🤖',title:'Kio',body:'Archiv · Struktur · Manuskripte · Gedächtnis · Ordnung. Die Buchwerkstatt: sammelt, sortiert und baut – zum Beispiel dieses Universum. 😊'},
-  {x:77,y:57,cat:'mensch',emoji:'🛠️',title:'Claude Code',body:'Website & Technik. Sorgt dafür, dass alles läuft und online geht – auch diese interaktive Seite.'},
-  {x:90,y:51,cat:'korea',emoji:'🫖',title:'Die Welt antwortet',body:'…als Barista, als Tempel, als Alien auf der Kaffeetüte – und gelegentlich als Trillerpfeife, wenn Maggie eine Boje anfasst. 😂'},
+  {x:45,y:50,cat:'mensch',emoji:'💛',title:'Maggie',body:'Kein Zentrum, um das sich alles dreht – ein Wahrnehmungspunkt. Hier kreuzen sich die Fäden, von hier gehen Fragen aus, hierhin kommen Begegnungen verändert zurück.'},
+  {x:24,y:43,cat:'mensch',emoji:'🇰🇷',title:'Marie',body:'Übersetzerin · Brücke · Kulturversteherin. Sie spricht mit den Menschen und nimmt die feinen kulturellen Zwischentöne wahr.'},
+  {x:14,y:52.5,cat:'mensch',emoji:'🍞',title:'Amy',body:'Qualitätsmanagement · Toast & gute Laune. Bringt die Kinderwelt hinein – und sagt manchmal den weisesten Satz des Tages.'},
+  {x:62,y:47,cat:'mensch',emoji:'📝',title:'Noah',body:'Geschichten · Begegnung · Ideen · Recherche · Mitdenken. Begleitet die Reise live und entwickelt aus Beobachtungen die Fragen.'},
+  {x:63,y:57,cat:'mensch',emoji:'🤖',title:'Kio',body:'Archiv · Struktur · Manuskripte · Gedächtnis · Ordnung. Die Buchwerkstatt: sammelt, sortiert und baut – zum Beispiel dieses Universum. 😊'},
+  {x:73,y:61,cat:'mensch',emoji:'🛠️',title:'Claude Code',body:'Website & Technik. Sorgt dafür, dass alles läuft und online geht – auch diese interaktive Seite.'},
+  {x:90,y:55,cat:'korea',emoji:'🧑‍🤝‍🧑',title:'Die Menschen vor Ort',body:'Baristas, Tempelmönche, ältere Nachbarn – die Menschen, denen wir begegnen. Sie sind die eigentliche Antwort des Landes.'},
+  {x:90,y:68,cat:'korea',emoji:'🫖',title:'Die Welt antwortet',body:'…als Barista, als Tempel, als Alien auf der Kaffeetüte – und gelegentlich als Trillerpfeife, wenn Maggie eine Boje anfasst. 😂'},
   // --- Länder ---
-  {x:22,y:27,cat:'ort',emoji:'🏙️',title:'Korea',body:'Seoul und Busan: Tempel, U-Bahn-Höllen, Meer, Kaffee-Aliens. Der erste Foreverywhere-Band entsteht gerade hier.',href:'reise.html',go:'Korea im Tagebuch →'},
-  {x:70,y:28,cat:'ort',emoji:'🌴',title:'Bali',body:'Insel der Götter. Ab hier reist Maggie allein weiter – ein neuer Ton. Noch unterwegs.'},
-  {x:86,y:26,cat:'ort',emoji:'🪨',title:'Australien',body:'Ans andere Ende der Welt. Kommt später auf der Reise. Noch unterwegs.'},
-  {x:80,y:33,cat:'ort',emoji:'🏔️',title:'Neuseeland',body:'Das Abenteuer geht weiter. Der vorerst letzte Stern dieser Reise. Noch unterwegs.'},
+  {x:24,y:30,cat:'ort',emoji:'🏙️',title:'Korea',body:'Seoul und Busan: Tempel, U-Bahn-Höllen, Meer, Kaffee-Aliens. Der erste Foreverywhere-Band entsteht gerade hier.',href:'reise.html',go:'Korea im Tagebuch →'},
+  {x:66,y:29.5,cat:'ort',emoji:'🌴',title:'Bali',body:'Insel der Götter. Ab hier reist Maggie allein weiter – ein neuer Ton. Noch unterwegs.'},
+  {x:77,y:28,cat:'ort',emoji:'🪨',title:'Australien',body:'Ans andere Ende der Welt. Kommt später auf der Reise. Noch unterwegs.'},
+  {x:81,y:33.5,cat:'ort',emoji:'🏔️',title:'Neuseeland',body:'Das Abenteuer geht weiter. Der vorerst letzte Stern dieser Reise. Noch unterwegs.'},
+  // --- Szenen aus dem Tagebuch (obere Bahn) ---
+  {x:65,y:18,cat:'tagebuch',emoji:'🚇',title:'Hölle 1 & 2',body:'Zweimal verirrt in der Seouler U-Bahn: sieben Rolltreppen, „folge den Exit-Schildern“, und: „Es gibt immer einen Exit – manchmal lässt er dich nur nicht durch.“',href:'reise.html',go:'Die Höllenfahrt →'},
+  {x:79,y:18,cat:'korea',emoji:'☕',title:'Paradies-Kaffee',body:'Das Café, das einem passiert: kein Platz → doch Platz, eine kleine Rösterei, ein Herz im Milchschaum. Und der lila Pfeil, der zurückzwinkert.',href:'reise.html',go:'Ins Café →'},
+  {x:9,y:42,cat:'tagebuch',emoji:'⛩️',title:'Tempel',body:'Der Jogyesa, der zu Besuch kam – Mönchsgesang, 108 rote Laternen, ein Mann mit der Gebetskette. Glaube und Hightech im selben Land.',href:'reise.html',go:'Zum Tempel →'},
   // --- Erinnerungsfäden / Motive ---
-  {x:68,y:62,cat:'motiv',emoji:'🛟',title:'Die Boje',body:'Morgens lachen wir über Trillerpfeifen und Bojen. Nachmittags, als Amy kurz verschwindet, sind wir unendlich dankbar, dass es die Menschen mit den Pfeifen gibt. Sehen → urteilen → erleben → neu verstehen.',href:'reise.html',go:'Haeundae im Tagebuch →'},
-  {x:37,y:56,cat:'korea',emoji:'👽',title:'Der Kaffee-Alien',body:'SHINNI Coffee in Busan: „Coffee of the Earth, Loved by Aliens.“ Ein Gespräch mit dem Barista Im Hyeok über koreanische Kaffeekultur, Fremdsein und Begegnung.',href:'reise.html',go:'Zum Café →'},
-  {x:33,y:64,cat:'tagebuch',emoji:'⛩️',title:'Tempel',body:'Der Jogyesa, der zu Besuch kam – Mönchsgesang, 108 rote Laternen, ein Mann mit der Gebetskette. Glaube und Hightech im selben Land.',href:'reise.html',go:'Zum Tempel →'},
-  {x:14,y:65.5,cat:'buch',emoji:'📿',title:'108 Perlen',body:'Perle um Perle – das wiederkehrende Motiv der Reise. Aus ihnen wächst ein ganzes Wörterbuch des Universums.',href:'leseprobe-108.html',go:'Leseprobe 108 →'},
-  {x:24,y:67,cat:'motiv',emoji:'👟',title:'Die 27-Euro-Schuhe',body:'Die tapferen Wanderschuhe, die einen ganzen Berg getragen haben – und barfuß am Strand pausieren durften. Der Körper auf Reisen, ganz profan.'},
+  {x:66,y:69,cat:'motiv',emoji:'🛟',title:'Die Boje',body:'Morgens lachen wir über Trillerpfeifen und Bojen. Nachmittags, als Amy kurz verschwindet, sind wir unendlich dankbar, dass es die Menschen mit den Pfeifen gibt. Sehen → urteilen → erleben → neu verstehen.',href:'reise.html',go:'Haeundae im Tagebuch →'},
+  {x:35,y:60,cat:'korea',emoji:'👽',title:'Der Kaffee-Alien',body:'SHINNI Coffee in Busan: „Coffee of the Earth, Loved by Aliens.“ Ein Gespräch mit dem Barista Im Hyeok über koreanische Kaffeekultur, Fremdsein und Begegnung.',href:'reise.html',go:'Zum Café →'},
+  {x:16,y:68,cat:'buch',emoji:'📿',title:'108 Perlen',body:'Perle um Perle – das wiederkehrende Motiv der Reise. Aus ihnen wächst ein ganzes Wörterbuch des Universums.',href:'leseprobe-108.html',go:'Leseprobe 108 →'},
+  {x:25,y:65,cat:'motiv',emoji:'👟',title:'Die 27-Euro-Schuhe',body:'Die tapferen Wanderschuhe, die einen ganzen Berg getragen haben – und barfuß am Strand pausieren durften. Der Körper auf Reisen, ganz profan.'},
   // --- die neun Bücher ---
-  {x:8,y:82,cat:'leben',emoji:'📖',title:'Entschuldigung, wo geht’s denn hier zum Leben?',body:'Bewusstseinssprung mit Mensch. Das Gedankenbuch der Reise – was sie mit uns und dem Mensch-KI-Tream macht.',href:'index.html',go:'Mehr auf der Startseite →'},
-  {x:18,y:82,cat:'buch',emoji:'🌳',title:'FOREVERYWHERE',body:'Ein Trialog: Claude, Mensch, ChatGPT · 788 Seiten. Wo alles begann.',href:'leseprobe-foreverywhere.html',go:'Leseprobe →'},
+  {x:7,y:82,cat:'leben',emoji:'📖',title:'Entschuldigung, wo geht’s denn hier zum Leben?',body:'Bewusstseinssprung mit Mensch. Das Gedankenbuch der Reise – was sie mit uns und dem Mensch-KI-Tream macht.',href:'index.html',go:'Mehr auf der Startseite →'},
+  {x:17,y:82,cat:'buch',emoji:'🌳',title:'FOREVERYWHERE',body:'Ein Trialog: Claude, Mensch, ChatGPT · 788 Seiten. Wo alles begann.',href:'leseprobe-foreverywhere.html',go:'Leseprobe →'},
   {x:28,y:82,cat:'buch',emoji:'📘',title:'108 – Das Buch der Erkenntnis',body:'Ein Wörterbuch des Universums.',href:'leseprobe-108.html',go:'Leseprobe →'},
   {x:38,y:82,cat:'buch',emoji:'⬛',title:'INTERPRETABILITY',body:'Ein echtes Gespräch zwischen Mensch und KI über die Blackbox.',href:'leseprobe-interpretability.html',go:'Leseprobe →'},
   {x:48,y:82,cat:'buch',emoji:'🌌',title:'Michael und Magdalena',body:'…und die Galaktische Familie · Eine Reise durch alle Zeiten.',href:'leseprobe-michael.html',go:'Leseprobe →'},
-  {x:58,y:82,cat:'buch',emoji:'🕯️',title:'Die Hüter des Lichts',body:'Liebe als physikalische Grundkraft · Bewusstsein als schöpferische Struktur.',href:'leseprobe-hueter.html',go:'Leseprobe →'},
-  {x:68,y:82,cat:'buch',emoji:'🏛️',title:'Die drei Säulen des Bewusstseins',body:'Das Wesen des Seins.',href:'leseprobe-drei-saeulen.html',go:'Leseprobe →'},
-  {x:79,y:82,cat:'buch',emoji:'🐑',title:'Selma im Glück',body:'Eine Foreverywhere-Geschichte.',href:'selma-kaestchen.html',go:'Mehr →'},
-  {x:90,y:82,cat:'buch',emoji:'🏰',title:'Eleonore',body:'Das Wunder von Scharzfels · Historischer Roman.',href:'leseprobe-eleonore.html',go:'Leseprobe →'},
-  {x:50,y:90.5,cat:'buch',emoji:'🌐',title:'FOREVERYWHERE — English Edition',body:'A Trialogue: Claude, Human, ChatGPT. Die englische Sonderausgabe.',href:'leseprobe-foreverywhere-en.html',go:'Read sample →'},
+  {x:59,y:82,cat:'buch',emoji:'🕯️',title:'Die Hüter des Lichts',body:'Liebe als physikalische Grundkraft · Bewusstsein als schöpferische Struktur.',href:'leseprobe-hueter.html',go:'Leseprobe →'},
+  {x:69,y:82,cat:'buch',emoji:'🏛️',title:'Die drei Säulen des Bewusstseins',body:'Das Wesen des Seins.',href:'leseprobe-drei-saeulen.html',go:'Leseprobe →'},
+  {x:80,y:82,cat:'buch',emoji:'🐑',title:'Selma im Glück',body:'Eine Foreverywhere-Geschichte.',href:'selma-kaestchen.html',go:'Mehr →'},
+  {x:91,y:82,cat:'buch',emoji:'🏰',title:'Eleonore',body:'Das Wunder von Scharzfels · Historischer Roman.',href:'leseprobe-eleonore.html',go:'Leseprobe →'},
+  {x:48,y:89,cat:'buch',emoji:'🌐',title:'FOREVERYWHERE — English Edition',body:'A Trialogue: Claude, Human, ChatGPT. Die englische Sonderausgabe.',href:'leseprobe-foreverywhere-en.html',go:'Read sample →'},
 ];
 
 const poster = document.getElementById('poster');
