@@ -246,15 +246,11 @@ body::before{
   </div>
 
   <div class="input-area">
-    <div class="input-row">
-      <input type="text" id="nameInput" placeholder="Dein Name (oder Pseudonym)">
-      <input type="text" id="locationInput" placeholder="Woher? (optional)">
+    <p style="text-align:center;margin:0 0 16px;color:var(--brown);opacity:0.85;">Trag dich unten ein – deine Spur kommt bei Maggie an. Die schönsten erscheinen hier im Feld. 🌿</p>
+    <div style="border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 4px 18px rgba(0,0,0,0.08);">
+      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfnKDA8DVJPS1rUoodBm68SlTerP05Tsawawd_gZLmf75CdEQ/viewform?embedded=true" width="100%" height="900" frameborder="0" marginheight="0" marginwidth="0" title="Hinterlasse eine Spur im Feld" loading="lazy" style="display:block;width:100%;border:0;">Wird geladen …</iframe>
     </div>
-    <textarea id="messageInput" placeholder="Was nimmst du mit von hier? Was möchtest du dalassen?"></textarea>
-    <button class="submit-btn" onclick="submitEntry()">📖 Eintragen</button>
-    <div class="thank-you" id="thankYou">
-      ✨ Danke für deine Spur im Feld. ✨
-    </div>
+    <p style="margin-top:12px;font-size:13px;text-align:center;">Formular wird nicht angezeigt? <a href="https://docs.google.com/forms/d/e/1FAIpQLSfnKDA8DVJPS1rUoodBm68SlTerP05Tsawawd_gZLmf75CdEQ/viewform" target="_blank" rel="noopener" style="color:var(--gold);">Hier im neuen Tab öffnen →</a></p>
   </div>
 
   <div class="counter" id="counter"></div>
@@ -271,7 +267,9 @@ body::before{
 </div>
 
 <script>
-const seedEntries = [
+// Kuratierte "Spuren im Feld". Neue Einträge kommen über das Google-Formular bei
+// Maggie an; die von ihr freigegebenen fügen wir hier zur Liste hinzu.
+const entries = [
   {
     name: "Eine Leserin",
     location: "Goslar",
@@ -292,47 +290,7 @@ const seedEntries = [
   }
 ];
 
-let entries = [];
-
-function init() {
-  const stored = localStorage.getItem('gaestebuch');
-  if (stored) {
-    entries = JSON.parse(stored);
-  }
-  if (entries.length === 0) {
-    entries = [...seedEntries];
-    save();
-  }
-  render();
-}
-
-function save() {
-  localStorage.setItem('gaestebuch', JSON.stringify(entries));
-}
-
-function submitEntry() {
-  const name = document.getElementById('nameInput').value.trim() || 'Anonym';
-  const location = document.getElementById('locationInput').value.trim();
-  const text = document.getElementById('messageInput').value.trim();
-  if (!text) return;
-
-  const months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
-  const now = new Date();
-  const date = months[now.getMonth()] + ' ' + now.getFullYear();
-
-  entries.unshift({ name, location, text, date });
-  save();
-
-  document.getElementById('nameInput').value = '';
-  document.getElementById('locationInput').value = '';
-  document.getElementById('messageInput').value = '';
-
-  const ty = document.getElementById('thankYou');
-  ty.style.display = 'block';
-  setTimeout(() => { ty.style.display = 'none'; }, 3000);
-
-  render();
-}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 function render() {
   const list = document.getElementById('entryList');
@@ -342,15 +300,15 @@ function render() {
 
   list.innerHTML = entries.map((e, i) => `
     <div class="entry-card" style="animation-delay:${Math.min(i * 0.08, 0.5)}s">
-      <div class="entry-name">${e.name}</div>
-      ${e.location ? '<div class="entry-location">aus ' + e.location + '</div>' : ''}
-      <div class="entry-text">${e.text}</div>
-      <div class="entry-date">${e.date}</div>
+      <div class="entry-name">${esc(e.name)}</div>
+      ${e.location ? '<div class="entry-location">aus ' + esc(e.location) + '</div>' : ''}
+      <div class="entry-text">${esc(e.text)}</div>
+      <div class="entry-date">${esc(e.date)}</div>
     </div>
   `).join('');
 }
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', render);
 </script>
 
 </body>
