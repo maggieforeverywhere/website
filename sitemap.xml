@@ -86,4 +86,6 @@
     <priority>0.6</priority>
   </url>
   <url><loc>https://maggieforeverywhere.com/neue-galaxie-verlag.html</loc></url>
+  <url><loc>https://maggieforeverywhere.com/impressum.html</loc><priority>0.3</priority></url>
+  <url><loc>https://maggieforeverywhere.com/datenschutz.html</loc><priority>0.3</priority></url>
 </urlset>
