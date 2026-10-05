@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://maggieforeverywhere.com/sitemap.xml
