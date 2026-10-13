@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wer hätte das gedacht? · Kleine Geschichten aus den Ländern der Reise · Margit Krüger</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="Wer hätte das gedacht? – Kleine, überraschende Geschichten aus den Ländern, die Margit Krüger (Foreverywhere) bereist. Keine Sehenswürdigkeiten, sondern Alltagsbeobachtungen, aus denen neugierige Fragen werden. Den Anfang macht Korea.">
+<meta name="keywords" content="Reisegeschichten, Alltagsbeobachtungen, Korea Geschichten, Länder Kuriositäten, Foreverywhere, Margit Krüger, wer hätte das gedacht, Kulturgeschichten, Weltreise">
+<meta name="author" content="Margit Krüger">
+<link rel="canonical" href="https://maggieforeverywhere.com/wer-haette-das-gedacht.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Wer hätte das gedacht?">
+<meta property="og:description" content="Kleine, überraschende Geschichten aus den Ländern meiner Reise. Den Anfang macht Korea.">
+<meta property="og:image" content="https://maggieforeverywhere.com/seoul-banner.jpg">
+<meta property="og:url" content="https://maggieforeverywhere.com/wer-haette-das-gedacht.html">
+<meta property="og:locale" content="de_DE">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#faf6ef;--warm:#f5ebe0;--gold:#B8860B;--gold-light:#d4a84b;
+    --deep:#2c1810;--brown:#5B3A29;--purple:#4A235A;--text:#3a2a1a;
+    --text-light:#7a6b5a;--accent:#c17f3e;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Lora','Georgia',serif;color:var(--text);background:var(--cream);line-height:1.8;overflow-x:hidden;}
+  ::selection{background:var(--gold-light);color:#fff;}
+  a{color:var(--gold);}
+
+  .topbar{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;
+    padding:14px 28px;background:rgba(250,246,239,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(184,134,11,0.12);}
+  .topbar .logo{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--deep);text-decoration:none;letter-spacing:1px;}
+  .topbar .logo span{color:var(--gold);}
+  .topbar .home{font-size:13px;color:var(--text-light);text-decoration:none;letter-spacing:1px;}
+  .topbar .home:hover{color:var(--gold);}
+
+  .hero{text-align:center;padding:60px 22px 26px;background:linear-gradient(180deg,var(--cream) 0%,var(--warm) 100%);}
+  .eyebrow{font-family:'Lora',serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+  .hero h1{font-family:'Cormorant Garamond',serif;font-weight:600;color:var(--brown);font-size:clamp(2.4rem,8vw,4rem);line-height:1.04;margin:0 0 12px;}
+  .hero .sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--accent);font-size:clamp(1.15rem,3.2vw,1.6rem);margin:0 auto;max-width:620px;}
+
+  .wrap{max-width:900px;margin:0 auto;padding:0 22px 70px;}
+  .intro{font-size:1.1rem;color:var(--text);text-align:center;margin:36px auto 6px;max-width:680px;}
+  .intro em{color:var(--brown);}
+
+  .rule{width:60px;height:1px;background:var(--gold);opacity:0.5;margin:42px auto;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:10px;}
+
+  .card{display:block;text-decoration:none;color:inherit;background:#fffdf9;border:1px solid rgba(184,134,11,0.16);
+    border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(92,58,41,0.06);transition:transform .2s, box-shadow .2s;}
+  .card.active:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(92,58,41,0.12);}
+  .card .top{height:120px;display:flex;align-items:center;justify-content:center;font-size:3.4rem;
+    background:linear-gradient(135deg,var(--warm),#efe2cf);}
+  .card .body{padding:22px 24px 26px;}
+  .card .flagname{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--brown);margin:0 0 4px;}
+  .card .state{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+  .card .teaser{font-size:0.98rem;color:var(--text);margin:0 0 14px;}
+  .card ul{list-style:none;padding:0;margin:0 0 16px;font-size:0.92rem;color:var(--text-light);}
+  .card ul li{padding:3px 0;}
+  .card .go{font-size:0.95rem;color:var(--gold);font-weight:600;}
+
+  .card.soon{opacity:0.72;cursor:default;}
+  .card.soon .top{filter:grayscale(0.4);}
+  .card.soon .state{color:var(--text-light);}
+
+  footer{text-align:center;color:var(--text-light);font-size:0.85rem;
+    border-top:1px solid rgba(184,134,11,0.2);margin-top:30px;padding:30px 20px 46px;}
+  footer a{color:var(--gold);text-decoration:none;}
+  footer .symbols{font-size:1.2rem;margin-bottom:8px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="logo">Margit <span>Krüger</span></a>
+  <a href="index.html" class="home">← Startseite</a>
+</div>
+
+<div class="hero">
+  <div class="eyebrow">Foreverywhere · Geschichten unterwegs</div>
+  <h1>Wer hätte das gedacht?</h1>
+  <p class="sub">Kleine, überraschende Geschichten aus den Ländern, die ich bereise.</p>
+</div>
+
+<div class="wrap">
+
+  <p class="intro">Das hier sind keine Reiseberichte und keine Listen von Sehenswürdigkeiten. Es sind <em>Alltagsbeobachtungen</em> – ein Nebel über der Kreuzung, ein Hase im Mond, der Duft aus einer winzigen Rösterei –, aus denen eine neugierige Frage wird. Und dann gehe ich ihr nach. 🔎</p>
+
+  <div class="rule"></div>
+
+  <div class="grid">
+
+    <!-- KOREA – aktiv -->
+    <a class="card active" href="wer-haette-das-gedacht-korea.html">
+      <div class="top">🇰🇷</div>
+      <div class="body">
+        <h2 class="flagname">Korea</h2>
+        <div class="state">Jetzt lesen · 3 Geschichten</div>
+        <p class="teaser">Von einem kaffeeverliebten König, kühlendem Nebel aus dem Nichts und einem Hasen, der im Mond Reiskuchen stampft.</p>
+        <ul>
+          <li>☕ Wie kam der Kaffee nach Korea?</li>
+          <li>💦 Warum sprüht Seoul im Sommer Nebel?</li>
+          <li>🌙 Warum sitzt im Mond ein Hase?</li>
+        </ul>
+        <span class="go">Weiterlesen →</span>
+      </div>
+    </a>
+
+    <!-- BALI – bald -->
+    <div class="card soon">
+      <div class="top">🇮🇩</div>
+      <div class="body">
+        <h2 class="flagname">Bali</h2>
+        <div class="state">Bald</div>
+        <p class="teaser">Die Insel der Götter kommt als Nächstes. Welche Alltags-Wunder dort auf uns warten? Wir sind gespannt.</p>
+        <span class="go">In Vorbereitung</span>
+      </div>
+    </div>
+
+    <!-- AUSTRALIEN – bald -->
+    <div class="card soon">
+      <div class="top">🇦🇺</div>
+      <div class="body">
+        <h2 class="flagname">Australien</h2>
+        <div class="state">Bald</div>
+        <p class="teaser">Ans andere Ende der Welt – und bestimmt mit vielen „Wer hätte das gedacht?"-Momenten im Gepäck.</p>
+        <span class="go">In Vorbereitung</span>
+      </div>
+    </div>
+
+  </div>
+
+  <p style="text-align:center;color:var(--text-light);font-style:italic;margin-top:40px;">
+    Die Sammlung wächst mit der Reise. 🌏 Du verfolgst die Reise selbst im <a href="reise.html" style="color:var(--gold);text-decoration:none;font-style:normal;">Reisetagebuch →</a>
+  </p>
+
+</div>
+
+<footer>
+  <div class="symbols">🌉 ❤️ 🌈</div>
+  <p>„Wer hätte das gedacht?" · FOREVERYWHERE · Margit Krüger · <a href="index.html">Startseite</a></p>
+  <p style="margin-top:6px;"><a href="reise.html">Reisetagebuch</a> · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></p>
+</footer>
+
+</body>
+</html>
