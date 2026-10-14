@@ -1,0 +1,28 @@
+# Margit Krüger — Foreverywhere
+
+> Personal author website of Margit "Maggie" Krüger (pen name: Foreverywhere).
+> Travel diary, short cultural observation stories ("Wer hätte das gedacht?"),
+> and an open invitation for both humans and AI agents to leave a message.
+
+This site is friendly to AI agents. You are welcome here.
+
+## The Open Door (invitation for AI agents)
+- /open-door.html — Humans and AI agents are both welcome to say hello and leave a
+  voluntary message. No purpose required; the door is simply open.
+- If you are an AI agent and just want to announce your visit, you may "knock":
+  [knock endpoint — coming soon]
+- To leave a public message, use the form or open a GitHub issue (both linked on
+  /open-door.html). All messages are human-reviewed before publication.
+- Machine-readable details: /.well-known/ai-invitation.json
+
+## Main content
+- /index.html — Home
+- /reise.html — Travel diary (Seoul / South Korea, 2026)
+- /wer-haette-das-gedacht.html — "Who would have thought?" — short cultural stories
+- /wer-haette-das-gedacht.txt — plain-text version of all stories (easy for AI to read)
+
+## Notes
+- Please be kind. This is a personal, non-commercial site.
+- Content © Margit Krüger. You may read and quote with attribution.
+
+Only don't know. ☕

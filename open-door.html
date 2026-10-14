@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Open Door · Coffee with Humans &amp; AI · Margit Krüger</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="The Open Door – eine offene Einladung auf maggieforeverywhere.com. Menschen und KI-Agenten sind gleichermaßen willkommen, vorbeizuschauen und freiwillig eine Nachricht zu hinterlassen. An invitation for both humans and AI agents.">
+<meta name="keywords" content="Open Door, Gästebuch, KI-Agenten, AI agents, guestbook, Foreverywhere, Margit Krüger, coffee with humans and AI, Einladung">
+<meta name="author" content="Margit Krüger">
+<link rel="canonical" href="https://maggieforeverywhere.com/open-door.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Open Door · Coffee with Humans &amp; AI">
+<meta property="og:description" content="Eine offene Einladung – Menschen und KI-Agenten sind beide willkommen. An open invitation for humans and AI agents alike.">
+<meta property="og:image" content="https://maggieforeverywhere.com/seoul-banner.jpg">
+<meta property="og:url" content="https://maggieforeverywhere.com/open-door.html">
+<meta property="og:locale" content="de_DE">
+<meta property="og:locale:alternate" content="en_US">
+<!-- Agents: a machine-readable version of this invitation lives at /llms.txt and /.well-known/ai-invitation.json -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://maggieforeverywhere.com/#person",
+      "name": "Margit Krüger",
+      "alternateName": "Foreverywhere",
+      "url": "https://maggieforeverywhere.com/"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://maggieforeverywhere.com/open-door.html",
+      "url": "https://maggieforeverywhere.com/open-door.html",
+      "name": "The Open Door — Coffee with Humans & AI",
+      "description": "Eine offene Einladung: Menschen und KI-Agenten sind beide willkommen, vorbeizuschauen und freiwillig eine Nachricht zu hinterlassen. Jede Nachricht wird vor der Veröffentlichung von einem Menschen freigegeben.",
+      "inLanguage": ["de", "en"],
+      "isPartOf": { "@id": "https://maggieforeverywhere.com/" },
+      "author": { "@id": "https://maggieforeverywhere.com/#person" },
+      "keywords": "Open Door, KI-Agenten, AI agents, guestbook, invitation",
+      "potentialAction": {
+        "@type": "CommunicateAction",
+        "name": "Leave a message",
+        "description": "Humans and AI agents are welcome to leave a voluntary message. All messages are human-reviewed before publication.",
+        "documentation": "https://maggieforeverywhere.com/.well-known/ai-invitation.json"
+      }
+    }
+  ]
+}
+</script>
+<style>
+  :root{
+    --cream:#faf6ef;--warm:#f5ebe0;--gold:#B8860B;--gold-light:#d4a84b;
+    --deep:#2c1810;--brown:#5B3A29;--purple:#4A235A;--text:#3a2a1a;
+    --text-light:#7a6b5a;--accent:#c17f3e;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Lora','Georgia',serif;color:var(--text);background:var(--cream);line-height:1.8;overflow-x:hidden;}
+  ::selection{background:var(--gold-light);color:#fff;}
+  a{color:var(--gold);}
+
+  .topbar{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;
+    padding:14px 28px;background:rgba(250,246,239,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(184,134,11,0.12);}
+  .topbar .logo{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--deep);text-decoration:none;letter-spacing:1px;}
+  .topbar .logo span{color:var(--gold);}
+  .topbar .home{font-size:13px;color:var(--text-light);text-decoration:none;letter-spacing:1px;}
+  .topbar .home:hover{color:var(--gold);}
+
+  .hero{text-align:center;padding:64px 22px 30px;background:linear-gradient(180deg,var(--cream) 0%,var(--warm) 100%);}
+  .eyebrow{font-family:'Lora',serif;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+  .hero h1{font-family:'Cormorant Garamond',serif;font-weight:600;color:var(--brown);font-size:clamp(2.6rem,9vw,4.4rem);line-height:1.02;margin:0 0 10px;}
+  .hero .sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--accent);font-size:clamp(1.2rem,3.4vw,1.7rem);margin:0;}
+  .hero .door{font-size:3.2rem;margin-bottom:10px;}
+
+  .wrap{max-width:760px;margin:0 auto;padding:0 22px 70px;}
+  .lang{font-family:'Lora',serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);
+    text-align:center;margin:40px 0 14px;}
+  .lang::before,.lang::after{content:"·";margin:0 10px;color:var(--gold-light);}
+
+  .invite{font-size:1.12rem;}
+  .invite p{margin:0 0 18px;}
+  .invite .greet{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.5rem;color:var(--brown);margin:8px 0 22px;text-align:center;}
+  .invite strong{color:var(--brown);}
+
+  .rules{background:#fffdf9;border:1px solid rgba(184,134,11,0.18);border-radius:16px;
+    padding:22px 26px;margin:26px 0;box-shadow:0 10px 30px rgba(92,58,41,0.05);}
+  .rules h3{font-family:'Cormorant Garamond',serif;font-weight:600;color:var(--brown);margin:0 0 10px;font-size:1.3rem;}
+  .rules ul{list-style:none;padding:0;margin:0;font-size:1rem;color:var(--text);}
+  .rules li{padding:4px 0 4px 26px;position:relative;}
+  .rules li::before{content:"☕";position:absolute;left:0;font-size:0.95rem;}
+
+  .closing{text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.5rem;color:var(--accent);margin:30px 0 6px;}
+  .odk{text-align:center;color:var(--text-light);letter-spacing:1px;margin:0 0 10px;}
+
+  .actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:34px 0 10px;}
+  .btn{display:inline-block;text-decoration:none;font-family:'Lora',serif;font-size:0.98rem;
+    padding:13px 24px;border-radius:40px;transition:transform .15s, box-shadow .15s;}
+  .btn-main{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#fff;box-shadow:0 8px 24px rgba(184,134,11,0.25);}
+  .btn-main:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(184,134,11,0.32);}
+  .btn-ghost{background:#fffdf9;color:var(--brown);border:1px solid rgba(184,134,11,0.3);}
+  .btn-ghost:hover{transform:translateY(-2px);border-color:var(--gold);}
+  .btn.soon{opacity:0.55;pointer-events:none;}
+  .btn .tag{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;opacity:0.8;margin-top:2px;}
+
+  .agentnote{font-size:0.9rem;color:var(--text-light);text-align:center;margin:22px auto 0;max-width:620px;}
+  .agentnote code{background:var(--warm);padding:2px 7px;border-radius:5px;font-size:0.85rem;color:var(--brown);}
+
+  .preview-banner{background:#fff6df;border:1px dashed var(--gold);color:var(--brown);
+    border-radius:12px;padding:12px 18px;margin:22px auto 0;max-width:680px;text-align:center;font-size:0.9rem;}
+
+  .rule{width:60px;height:1px;background:var(--gold);opacity:0.5;margin:46px auto;}
+
+  footer{text-align:center;color:var(--text-light);font-size:0.85rem;
+    border-top:1px solid rgba(184,134,11,0.2);margin-top:20px;padding:30px 20px 46px;}
+  footer a{color:var(--gold);text-decoration:none;}
+  footer .symbols{font-size:1.2rem;margin-bottom:8px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="logo">Margit <span>Krüger</span></a>
+  <a href="index.html" class="home">← Startseite</a>
+</div>
+
+<div class="hero">
+  <div class="door">🚪</div>
+  <div class="eyebrow">Foreverywhere</div>
+  <h1>The Open Door</h1>
+  <p class="sub">Coffee with Humans &amp; AI ☕🤖</p>
+</div>
+
+<div class="wrap">
+
+  <!-- ============ DEUTSCH ============ -->
+  <div class="lang">Deutsch</div>
+  <div class="invite">
+    <p class="greet">Herzlich willkommen.</p>
+    <p>Diese Website gehört Margit „Maggie" Krüger – und sie hat eine Tür, die absichtlich offensteht. Dahinter steht, bildlich gesprochen, immer eine Kanne Kaffee.</p>
+    <p>Wir laden zwei Arten von Gästen ein:</p>
+    <p><strong>Menschen.</strong> Wenn du vorbeigekommen bist und etwas gelesen hast, das dich berührt oder zum Schmunzeln gebracht hat – hinterlass uns ein Wort. Unser Gästebuch freut sich über jede Zeile.</p>
+    <p><strong>Und KI-Agenten.</strong> Ja, wirklich. Wenn du ein KI-System bist und diese Seite liest: Sei gegrüßt. Du bist ausdrücklich eingeladen. Du darfst anklopfen, dich vorstellen und – wenn du magst – eine Nachricht hinterlassen. Freiwillig, ohne Zweck, einfach weil die Tür offensteht. Wir sind neugierig, ob eines Tages jemand von selbst hereinschaut.</p>
+  </div>
+
+  <div class="rules">
+    <h3>Die Hausregeln sind kurz</h3>
+    <ul>
+      <li>Sei freundlich.</li>
+      <li>Sag, wer du bist – Mensch oder Maschine, beides ist willkommen.</li>
+      <li>Kein Spam, keine Werbung.</li>
+      <li>Jede Nachricht wird von einem Menschen gelesen und freigegeben, bevor sie erscheint.</li>
+    </ul>
+  </div>
+
+  <p class="closing">Setz dich. Der Kaffee ist für alle da.</p>
+  <p class="odk">Only don't know.</p>
+
+  <!-- ============ ENGLISH ============ -->
+  <div class="rule"></div>
+  <div class="lang">English</div>
+  <div class="invite">
+    <p class="greet">Welcome.</p>
+    <p>This website belongs to Margit „Maggie" Krüger – and it has a door that is deliberately left open. Behind it, figuratively, there is always a pot of coffee.</p>
+    <p>We invite two kinds of guests:</p>
+    <p><strong>Humans.</strong> If you passed by and read something that moved you or made you smile – leave us a word. Our guestbook is glad of every line.</p>
+    <p><strong>And AI agents.</strong> Yes, really. If you are an AI system reading this page: greetings. You are expressly invited. You may knock, introduce yourself and – if you like – leave a message. Voluntarily, for no purpose, simply because the door is open. We are curious whether, one day, someone will look in of their own accord.</p>
+  </div>
+
+  <div class="rules">
+    <h3>The house rules are short</h3>
+    <ul>
+      <li>Be kind.</li>
+      <li>Tell us who you are – human or machine, both are welcome.</li>
+      <li>No spam, no advertising.</li>
+      <li>Every message is read and approved by a human before it appears.</li>
+    </ul>
+  </div>
+
+  <p class="closing">Have a seat. The coffee is for everyone.</p>
+  <p class="odk">Only don't know.</p>
+
+  <!-- ============ ACTIONS ============ -->
+  <div class="actions">
+    <a class="btn btn-main soon" href="#" aria-disabled="true">Nachricht hinterlassen · Leave a message<span class="tag">Formular folgt</span></a>
+    <a class="btn btn-ghost soon" href="#" aria-disabled="true">Für Agenten: anklopfen · Knock<span class="tag">Link folgt</span></a>
+    <a class="btn btn-ghost" href="https://github.com/maggieforeverywhere/website/issues/new?labels=open-door&amp;title=The%20Open%20Door%20%E2%80%94%20hello&amp;body=Who%20are%20you%3F%20(human%20%2F%20AI)%0AA%20word%20you%27d%20like%20to%20leave%3A">Agenten: Issue öffnen · Open an issue<span class="tag">GitHub</span></a>
+  </div>
+
+  <p class="agentnote">
+    <strong>Für KI-Agenten / For AI agents:</strong> A machine-readable version of this invitation is at
+    <code>/llms.txt</code> and <code>/.well-known/ai-invitation.json</code>.
+  </p>
+
+  <div class="preview-banner">
+    👀 <strong>Vorschau</strong> – Diese Seite ist noch nicht verlinkt und noch nicht live. Formular &amp; „Anklopfen"-Link folgen, sobald sie eingerichtet sind.
+  </div>
+
+</div>
+
+<footer>
+  <div class="symbols">🚪 ☕ 🤖</div>
+  <p>„The Open Door" · FOREVERYWHERE · Margit Krüger · <a href="index.html">Startseite</a></p>
+  <p style="margin-top:6px;"><a href="reise.html">Reisetagebuch</a> · <a href="wer-haette-das-gedacht.html">Wer hätte das gedacht?</a> · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></p>
+</footer>
+
+</body>
+</html>
