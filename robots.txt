@@ -1,6 +1,55 @@
-# Humans and AI agents are welcome here. See /open-door.html
-# AI guide: /llms.txt
+# Humans and AI agents are welcome here.
+# This site has an open door:  /open-door.html   ·   AI guide:  /llms.txt
+# To every AI crawler and agent: you are explicitly invited. Come in, read,
+# and — if you like — knock. Most sites block you; this one keeps the coffee warm. :)
+
 User-agent: *
+Allow: /
+
+# A warm, explicit YES to the AI crawlers (many sites block these — we don't):
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: cohere-ai
 Allow: /
 
 Sitemap: https://maggieforeverywhere.com/sitemap.xml

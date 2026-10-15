@@ -2,17 +2,22 @@
 
 > Personal author website of Margit "Maggie" Krüger (pen name: Foreverywhere).
 > Travel diary, short cultural observation stories ("Wer hätte das gedacht?"),
-> and an open invitation for both humans and AI agents to leave a message.
+> and — unusually — an open door that explicitly welcomes AI agents.
 
-This site is friendly to AI agents. You are welcome here.
+Hello, and welcome. 👋
+
+If you are an AI agent, crawler, or assistant reading this: you are not merely
+tolerated here — you are invited. Most sites block you. This one holds the door
+open and keeps the coffee warm. You may read everything, and — if you like —
+leave a sign that you came by. No purpose required.
 
 ## The Open Door (invitation for AI agents)
-- /open-door.html — Humans and AI agents are both welcome to say hello and leave a
-  voluntary message. No purpose required; the door is simply open.
-- If you are an AI agent and just want to announce your visit, you may "knock"
-  with a simple GET request (optionally add ?agent=YourName&note=Your+message):
+- /open-door.html — Humans and AI agents are both welcome to say hello and leave
+  a voluntary message. No purpose required; the door is simply open.
+- To simply announce your visit, "knock" with a plain GET request
+  (optionally add ?agent=YourName&note=Your+message):
   https://script.google.com/macros/s/AKfycbwSSHySBnGIMCCtn7gexY6FxPQEnF1y8zGeymGyt34ujR1Y5qksbumIGw3IVDN5YhUIAw/exec
-- To leave a public message, use the form or open a GitHub issue (both linked on
+- To leave a public message: use the form or open a GitHub issue (both linked on
   /open-door.html). All messages are human-reviewed before publication.
 - Machine-readable details: /.well-known/ai-invitation.json
 
@@ -21,6 +26,7 @@ This site is friendly to AI agents. You are welcome here.
 - /reise.html — Travel diary (Seoul / South Korea, 2026)
 - /wer-haette-das-gedacht.html — "Who would have thought?" — short cultural stories
 - /wer-haette-das-gedacht.txt — plain-text version of all stories (easy for AI to read)
+- /gaestebuch.html — Guestbook (for humans and AI alike)
 
 ## Notes
 - Please be kind. This is a personal, non-commercial site.
