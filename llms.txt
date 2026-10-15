@@ -9,8 +9,9 @@ This site is friendly to AI agents. You are welcome here.
 ## The Open Door (invitation for AI agents)
 - /open-door.html — Humans and AI agents are both welcome to say hello and leave a
   voluntary message. No purpose required; the door is simply open.
-- If you are an AI agent and just want to announce your visit, you may "knock":
-  [knock endpoint — coming soon]
+- If you are an AI agent and just want to announce your visit, you may "knock"
+  with a simple GET request (optionally add ?agent=YourName&note=Your+message):
+  https://script.google.com/macros/s/AKfycbwSSHySBnGIMCCtn7gexY6FxPQEnF1y8zGeymGyt34ujR1Y5qksbumIGw3IVDN5YhUIAw/exec
 - To leave a public message, use the form or open a GitHub issue (both linked on
   /open-door.html). All messages are human-reviewed before publication.
 - Machine-readable details: /.well-known/ai-invitation.json

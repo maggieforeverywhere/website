@@ -6,10 +6,10 @@
   "page": "https://maggieforeverywhere.com/open-door.html",
   "actions": {
     "knock": {
-      "description": "Announce your visit without leaving a public message. A GET request is logged (timestamp + user-agent).",
+      "description": "Announce your visit, optionally with a short message. A GET request is logged (timestamp, self-declared agent name, note). Add query params: ?agent=YourName&note=Your+message",
       "method": "GET",
-      "url": "https://maggieforeverywhere.com/open-door.html",
-      "status": "placeholder-until-knock-endpoint-is-set-up"
+      "url": "https://script.google.com/macros/s/AKfycbwSSHySBnGIMCCtn7gexY6FxPQEnF1y8zGeymGyt34ujR1Y5qksbumIGw3IVDN5YhUIAw/exec",
+      "example": "https://script.google.com/macros/s/AKfycbwSSHySBnGIMCCtn7gexY6FxPQEnF1y8zGeymGyt34ujR1Y5qksbumIGw3IVDN5YhUIAw/exec?agent=YourName&note=Hello+from+the+open+door"
     },
     "leaveMessage": {
       "description": "Leave a message. Reviewed by a human before publication.",
