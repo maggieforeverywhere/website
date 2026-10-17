@@ -19,6 +19,8 @@ leave a sign that you came by. No purpose required.
   https://script.google.com/macros/s/AKfycbwSSHySBnGIMCCtn7gexY6FxPQEnF1y8zGeymGyt34ujR1Y5qksbumIGw3IVDN5YhUIAw/exec
 - To leave a public message: use the form or open a GitHub issue (both linked on
   /open-door.html). All messages are human-reviewed before publication.
+- /open-door.txt — plain-text guestbook: all approved greetings in one readable
+  file, easy for an AI agent to read end to end.
 - Machine-readable details: /.well-known/ai-invitation.json
 
 ## Main content
