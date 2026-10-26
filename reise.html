@@ -267,7 +267,7 @@ footer a{color:var(--gold-light);text-decoration:none;}
 
 <footer>
   <div class="symbols">🌉 ❤️ 🌈</div>
-  <p>FOREVERYWHERE · Margit Krüger · <a href="index.html">Startseite</a> · <a href="open-door.html">Open Door 🚪</a></p>
+  <p>FOREVERYWHERE · Margit Krüger · <a href="index.html">Startseite</a> · <a href="open-door.html">Open Door 🚪</a> · <a href="empfehlungen.html">Empfehlungen 💛</a></p>
   <p style="margin-top:6px;">Goslar → Seoul → Bali → Australien → Neuseeland 🌏</p>
 </footer>
 
@@ -297,7 +297,21 @@ const LOG = [
           "Hoch oben, auf der Drachentreppe, mit dem ganzen Tempelmeer und den Wolken im Rücken, stand ich dann einfach da und habe gestaunt. Vollmond, der heilige Berg, ein fremder Mensch, der mich willkommen heißt. Wo geht’s denn hier zum Leben? Vielleicht genau hier. 🌋",
           "Ein großes Dankeschön an Nyoman, der mir diesen Vollmondtag zu etwas ganz Besonderem gemacht hat. Er begleitet Reisende als Guide durch die Tempel und über die Insel – wer Bali einmal von innen und mit Herz erleben möchte, ist bei ihm in den besten Händen. 🙏💛"],
     img:"bali-besakih-treppe.jpg",
-    imgs:["bali-besakih-nyoman.jpg","bali-besakih-meru-baum.jpg","bali-besakih-hof.jpg","bali-besakih-penjor.jpg","bali-besakih-maggie.jpg","bali-besakih-opfergabe.jpg"]
+    imgs:["bali-besakih-nyoman.jpg","bali-besakih-meru-baum.jpg","bali-besakih-hof.jpg","bali-besakih-penjor.jpg","bali-besakih-maggie.jpg","bali-besakih-opfergabe.jpg"],
+    extra:`<div style="margin:22px 0 4px;background:linear-gradient(180deg,#fffdf9,var(--warm));border:1px solid rgba(184,134,11,0.25);border-radius:16px;padding:20px 22px;box-shadow:0 8px 24px rgba(92,58,41,0.08);">
+      <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+        <img src="bali-besakih-nyoman.jpg" alt="Nyoman Sura, lokaler Guide am Pura Besakih" style="width:84px;height:84px;object-fit:cover;border-radius:50%;flex:0 0 auto;box-shadow:0 3px 10px rgba(0,0,0,0.15);">
+        <div style="flex:1 1 220px;min-width:220px;">
+          <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;">🙏 Mein Guide auf Bali</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--brown);line-height:1.1;margin:2px 0 6px;">Nyoman Sura</div>
+          <div style="font-size:0.96rem;color:var(--text);line-height:1.6;">Lokaler Guide am Pura Besakih und für Touren über die ganze Insel. Er hat mich durch den Muttertempel geführt und das Segnungsritual mit mir vollzogen – mit so viel Herz. Wer Bali einmal von innen erleben möchte, ist bei ihm bestens aufgehoben.</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;text-align:center;">
+        <a href="https://wa.me/6281237101272" target="_blank" rel="noopener" style="display:inline-block;background:#25D366;color:#fff;text-decoration:none;font-weight:600;padding:11px 24px;border-radius:40px;font-size:0.98rem;">📲 Nyoman per WhatsApp schreiben</a>
+        <div style="font-size:0.9rem;color:var(--text-light);margin-top:8px;">oder anrufen: <a href="tel:+6281237101272" style="color:var(--gold);">+62 812-3710-1272</a> · <a href="empfehlungen.html" style="color:var(--gold);">alle meine Bali-Empfehlungen →</a></div>
+      </div>
+    </div>`
   },
   {
     date:"24. Oktober 2026 · Samstag",
@@ -1306,6 +1320,7 @@ function renderLog(){
         ${(e.imgs&&e.imgs.length) ? `<div class="log-gallery">${e.imgs.map(g=>`<img src="${g}" alt="${e.title}" loading="lazy">`).join("")}</div>` : ''}
         ${e.audio ? `<div class="log-audio"><span class="log-audio-label">🎧 ${e.audioLabel || 'Zum Anhören'}</span><audio controls preload="none" src="${e.audio}"></audio></div>` : ''}
         ${(e.portraits&&e.portraits.length) ? `<div class="log-portraits">${e.portraits.map(p=>`<figure><img src="${p.src}" alt="${p.cap||e.title}" loading="lazy"><figcaption>${p.cap||''}</figcaption></figure>`).join("")}</div>` : ''}
+        ${e.extra ? e.extra : ''}
       </div>
     </div>`).join("");
 }
