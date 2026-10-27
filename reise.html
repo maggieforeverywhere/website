@@ -66,6 +66,18 @@ a{color:inherit;}
 }
 .reise-hero .sub{font-style:italic;color:var(--brown);font-size:clamp(16px,2.5vw,20px);margin-top:14px;}
 .reise-hero .route-line{margin-top:18px;font-size:13px;letter-spacing:2px;color:var(--text-light);}
+/* Bildschirmfuellendes Titelbild */
+.reise-cover{position:relative;min-height:74vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:90px 24px;overflow:hidden;background:var(--deep,#2c1810);}
+.reise-cover::before{content:'';position:absolute;inset:0;z-index:0;background:url('reise-banner-bali.jpg') center/cover no-repeat;animation:reiseKen 24s ease-out both;}
+.reise-cover::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(18,11,5,0.5) 0%,rgba(18,11,5,0.28) 40%,rgba(18,11,5,0.72) 100%);}
+.reise-cover-inner{position:relative;z-index:2;max-width:720px;}
+.reise-cover .label{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:#f0cf7e;margin-bottom:14px;}
+.reise-cover h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;letter-spacing:2px;color:#fff;font-size:clamp(40px,8vw,74px);margin:0;text-shadow:0 2px 26px rgba(0,0,0,0.5);}
+.reise-cover .sub{font-style:italic;color:rgba(255,255,255,0.92);font-size:clamp(16px,2.5vw,21px);margin-top:12px;text-shadow:0 1px 12px rgba(0,0,0,0.45);}
+.reise-cover .route-line{margin-top:16px;font-size:13px;letter-spacing:2px;color:rgba(255,255,255,0.82);}
+.reise-cover .chapter-note{margin:16px auto 0;max-width:620px;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:clamp(15px,2.2vw,18px);line-height:1.5;color:rgba(255,255,255,0.9);text-shadow:0 1px 12px rgba(0,0,0,0.4);}
+@keyframes reiseKen{0%{transform:scale(1.03);}100%{transform:scale(1.13);}}
+@media(prefers-reduced-motion:reduce){.reise-cover::before{animation:none;}}
 
 section{max-width:820px;margin:0 auto;padding:56px 24px;}
 .section-title{
@@ -208,16 +220,15 @@ footer a{color:var(--gold-light);text-decoration:none;}
   <a href="index.html" class="home">← Startseite</a>
 </div>
 
-<div class="reise-banner">
-  <img src="reise-banner-bali.jpg" alt="Family goes Foreverywhere – Blick über leuchtend grüne Reisfelder und Berge in Sidemen auf Bali">
-</div>
-
-<div class="reise-hero">
-  <h1>Die Reise</h1>
-  <p class="sub">Feldsurfing um die Welt 🌏</p>
-  <p class="route-line">Goslar → Seoul → Bali → Australien → Neuseeland</p>
-  <p class="chapter-note" style="margin:14px auto 0;max-width:620px;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:clamp(15px,2.2vw,18px);line-height:1.5;color:#5B3A29;opacity:0.92;">Family goes FOREVERYWHERE 💛💙 &middot; In Seoul zu dritt, seit Bali solo weiter &ndash; die Familie bleibt Foreverywhere.</p>
-</div>
+<section class="reise-cover">
+  <div class="reise-cover-inner">
+    <div class="label">Reisetagebuch</div>
+    <h1>Die Reise</h1>
+    <p class="sub">Feldsurfing um die Welt 🌏</p>
+    <p class="route-line">Goslar → Seoul → Bali → Australien → Neuseeland</p>
+    <p class="chapter-note">Family goes FOREVERYWHERE 💛💙 &middot; In Seoul zu dritt, seit Bali solo weiter &ndash; die Familie bleibt Foreverywhere.</p>
+  </div>
+</section>
 
 <!-- Tream-Motto -->
 <div style="max-width:820px;margin:0 auto;padding:0 24px;">
