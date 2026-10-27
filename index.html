@@ -828,11 +828,15 @@ footer a{color:var(--gold-light);text-decoration:none;}
   (function(){
     if(!('IntersectionObserver' in window)) return;
     var secs = [].slice.call(document.querySelectorAll('section')).filter(function(s){return !s.classList.contains('hero');});
-    secs.forEach(function(s){ s.classList.add('reveal'); });
+    if(!secs.length) return;
+    var vh = window.innerHeight || document.documentElement.clientHeight || 800;
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
-    secs.forEach(function(s){ io.observe(s); });
+    }, {threshold:0, rootMargin:'0px 0px -5% 0px'});
+    secs.forEach(function(s){
+      var top; try{ top = s.getBoundingClientRect().top; }catch(_){ top = vh + 1; }
+      if(top >= vh * 0.9){ s.classList.add('reveal'); io.observe(s); }
+    });
   })();
   </script>
   <script defer src="translate-button.js"></script>
