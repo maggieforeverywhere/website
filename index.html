@@ -73,14 +73,19 @@ nav.scrolled{padding:10px 32px;box-shadow:0 2px 20px rgba(0,0,0,0.06);}
 /* Hero */
 .hero{
   min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
-  text-align:center;padding:120px 24px 80px;position:relative;
-  background:linear-gradient(180deg,var(--cream) 0%,var(--warm) 100%);
+  text-align:center;padding:120px 24px 90px;position:relative;overflow:hidden;
+  background:var(--deep);
 }
 .hero::before{
-  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
-  background:radial-gradient(ellipse at 50% 30%,rgba(184,134,11,0.06) 0%,transparent 70%);
-  pointer-events:none;
+  content:'';position:absolute;inset:0;z-index:0;
+  background:url('reise-banner-bali.jpg') center/cover no-repeat;
+  animation:kenburns 24s ease-out both;
 }
+.hero::after{
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(18,11,5,0.55) 0%,rgba(18,11,5,0.3) 42%,rgba(18,11,5,0.74) 100%);
+}
+.hero > *{position:relative;z-index:2;}
 /* Hero photo */
 .hero-photo{
   width:clamp(180px,30vw,260px);height:clamp(180px,30vw,260px);
@@ -145,6 +150,19 @@ nav.scrolled{padding:10px 32px;box-shadow:0 2px 20px rgba(0,0,0,0.06);}
   animation:scrollLine 2s ease-in-out infinite;
 }
 @keyframes scrollLine{0%,100%{opacity:0.3;transform:scaleY(0.6);}50%{opacity:1;transform:scaleY(1);}}
+@keyframes kenburns{0%{transform:scale(1.03);}100%{transform:scale(1.13);}}
+/* --- Mutiges Titelbild (heller Text ueber dem Foto) --- */
+.hero-name{color:#fff;text-shadow:0 2px 26px rgba(0,0,0,0.5);}
+.hero-tagline{color:rgba(255,255,255,0.9);text-shadow:0 1px 12px rgba(0,0,0,0.45);}
+.hero-sub{color:#f0cf7e;}
+.hero-quote{color:rgba(255,255,255,0.93);text-shadow:0 1px 12px rgba(0,0,0,0.4);}
+.hero-quote em{color:#f0cf7e;}
+.hero-photo{border-color:rgba(255,255,255,0.65);box-shadow:0 12px 50px rgba(0,0,0,0.5);}
+.hero-scroll{color:rgba(255,255,255,0.85);}
+/* --- Scroll-Einblendungen --- */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;transition:none;}.hero::before{animation:none;}}
 
 /* Sections */
 section{padding:100px 24px;max-width:900px;margin:0 auto;}
@@ -809,6 +827,17 @@ footer a{color:var(--gold-light);text-decoration:none;}
   }
 })();
 </script>
+  <script>
+  (function(){
+    if(!('IntersectionObserver' in window)) return;
+    var secs = [].slice.call(document.querySelectorAll('section')).filter(function(s){return !s.classList.contains('hero');});
+    secs.forEach(function(s){ s.classList.add('reveal'); });
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+    secs.forEach(function(s){ io.observe(s); });
+  })();
+  </script>
   <script defer src="translate-button.js"></script>
 </body>
 </html>
