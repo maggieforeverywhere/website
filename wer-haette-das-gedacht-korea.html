@@ -482,6 +482,14 @@
     .story{padding:24px 20px 28px;border-radius:14px;}
     .hero{padding:40px 18px 18px;}
   }
+  .like-row{margin-top:24px;text-align:center;}
+  .like-btn{display:inline-flex;align-items:center;gap:8px;cursor:pointer;background:#fff;border:1px solid rgba(184,134,11,0.35);
+    color:var(--brown);font:inherit;font-size:0.92rem;padding:9px 18px;border-radius:40px;transition:background .18s ease,border-color .18s ease,color .18s ease;-webkit-tap-highlight-color:transparent;}
+  .like-btn:hover{background:var(--warm);border-color:var(--gold);}
+  .like-btn .like-heart{font-size:1.05rem;line-height:1;display:inline-block;}
+  .like-btn[aria-pressed="true"]{background:#fff0f2;border-color:#e59aa6;color:#b04a5a;}
+  .like-btn.pop .like-heart{animation:likepop .35s ease;}
+  @keyframes likepop{0%{transform:scale(1);}40%{transform:scale(1.45);}100%{transform:scale(1);}}
 </style>
 </head>
 <body>
@@ -1251,6 +1259,37 @@
   <p style="margin-top:6px;"><a href="reise.html">Reisetagebuch</a> · <a href="open-door.html">Open Door 🚪</a> · <a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></p>
 </footer>
 
+  <script>
+  (function(){
+    function slug(s){return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60);}
+    var page = (location.pathname.split('/').pop()||'index').replace(/\.html?$/,'') || 'index';
+    function setLiked(btn, liked, animate){
+      btn.setAttribute('aria-pressed', liked?'true':'false');
+      var h=btn.querySelector('.like-heart'), l=btn.querySelector('.like-label');
+      if(h) h.textContent = liked?'❤️':'🤍';
+      if(l) l.textContent = liked?'Gefällt dir':'Gefällt mir';
+      if(animate && liked){ btn.classList.remove('pop'); void btn.offsetWidth; btn.classList.add('pop'); }
+    }
+    function init(){
+      document.querySelectorAll('article.story').forEach(function(art, i){
+        if(art.querySelector('.like-btn')) return;
+        var key = 'slike:'+page+':'+slug(art.id || ('story-'+i));
+        var row = document.createElement('div'); row.className='like-row';
+        var btn = document.createElement('button'); btn.type='button'; btn.className='like-btn'; btn.setAttribute('aria-pressed','false');
+        btn.innerHTML = '<span class="like-heart" aria-hidden="true">🤍</span><span class="like-label">Gefällt mir</span>';
+        row.appendChild(btn); art.appendChild(row);
+        var liked=false; try{ liked = localStorage.getItem(key)==='1'; }catch(_){ }
+        setLiked(btn, liked, false);
+        btn.addEventListener('click', function(){
+          var now = btn.getAttribute('aria-pressed')!=='true';
+          setLiked(btn, now, true);
+          try{ if(now){localStorage.setItem(key,'1');}else{localStorage.removeItem(key);} }catch(_){ }
+        });
+      });
+    }
+    if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
+  })();
+  </script>
   <script defer src="translate-button.js"></script>
 </body>
 </html>
