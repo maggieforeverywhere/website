@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mahavidya Tageskarte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Noto+Serif+Devanagari:wght@400;600&display=swap">
+<style>
+/* Layout: eine schmale Spalte wie ein Altartisch – Karte oben, Botschaft, Kreis der Zehn, Abendrückblick */
+:root{
+  --bg:#f3ece6; --surface:#fbf7f3; --fg:#2a1f2e; --muted:#6e5f70; --line:#dccfd4;
+  --accent:#8a2f4a; --gold:#9a6d22;
+  --display:"Marcellus","Palatino Linotype",Georgia,serif;
+  --body:"Literata",Georgia,"Times New Roman",serif;
+  --deva:"Noto Serif Devanagari","Nirmala UI",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#17121c; --surface:#211a28; --fg:#efe6ea; --muted:#ab9caf; --line:#3a2f42;
+  --accent:#e08aa3; --gold:#d9ac5c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#17121c; --surface:#211a28; --fg:#efe6ea; --muted:#ab9caf; --line:#3a2f42;
+  --accent:#e08aa3; --gold:#d9ac5c; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 48px}
+main{max-width:520px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+header{text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center}
+.cover{width:min(60%,220px);border-radius:8px;box-shadow:0 12px 30px -14px rgba(40,10,30,.5);margin-bottom:12px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1,h2{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
+h1{font-size:30px;line-height:1.2}
+h2{font-size:22px}
+.date{color:var(--muted);font-style:italic}
+
+/* Karte */
+.stage{perspective:1400px;display:flex;justify-content:center}
+.card{width:min(100%,340px);aspect-ratio:960/1639;max-width:100%;position:relative;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;-webkit-tap-highlight-color:transparent;user-select:none;
+  transition:transform .9s cubic-bezier(.2,.7,.2,1);cursor:pointer;border:0;padding:0;background:none;font:inherit;color:inherit}
+.card.open{transform:rotateY(180deg)}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:6px;border-radius:14px}
+.face{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;
+  box-shadow:0 18px 40px -18px rgba(40,10,30,.5)}
+.back{background:#22140f;display:flex;align-items:center;justify-content:center}
+.back img{width:100%;height:100%;object-fit:contain;display:block}
+.front{transform:rotateY(180deg);background:var(--c);color:var(--ink);display:flex;flex-direction:column;padding:26px 22px;gap:10px;text-align:center}
+.front.photo{padding:0;background:#0d0a10}
+.front.photo img{width:100%;height:100%;object-fit:contain;display:block}
+.front .num{font-family:var(--display);font-size:13px;letter-spacing:.2em;opacity:.8}
+.front .sym{flex:1;display:flex;align-items:center;justify-content:center}
+.front .sym svg{width:58%;max-width:100%}
+.front .deva{font-family:var(--deva);font-size:26px;line-height:1.3}
+.front .name{font-family:var(--display);font-size:30px;line-height:1.1}
+.front .essence{font-style:italic;font-size:15px;opacity:.9}
+.front .soon{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.hint{text-align:center;color:var(--muted);font-size:14px;margin:-24px 0 0}
+
+/* Vorschau aller zehn */
+.preview{display:flex;flex-direction:column;gap:8px;align-items:center;margin-top:-20px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.chip{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:4px 11px;cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chip .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:6px;vertical-align:1px}
+
+/* Botschaft */
+.message{display:flex;flex-direction:column;gap:22px}
+.block{display:flex;flex-direction:column;gap:6px}
+.label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.block p{margin:0;max-width:62ch}
+.title-line{font-family:var(--display);font-size:26px;line-height:1.2;margin:0}
+.title-line small{display:block;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-top:4px}
+.spruch{font-style:italic;font-size:19px;line-height:1.55;white-space:pre-line}
+.impuls{font-size:19px}
+.question{font-family:var(--display);font-size:21px;line-height:1.35;color:var(--accent)}
+.qs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.qs li{font-family:var(--display);font-size:19px;line-height:1.35;color:var(--accent);padding-left:22px;position:relative}
+.qs li::before{content:"";position:absolute;left:0;top:.5em;width:9px;height:9px;border:1.5px solid var(--gold);transform:rotate(45deg)}
+.words{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.schluss{font-family:var(--display);font-size:18px;line-height:1.5;text-align:center;white-space:pre-line;border-top:1px solid var(--line);padding-top:18px;margin:0}
+.btn{font:inherit;font-size:15px;border:1px solid var(--accent);color:var(--accent);background:transparent;border-radius:999px;padding:10px 20px;cursor:pointer;align-self:flex-start;transition:background .2s,color .2s}
+.btn:hover{background:var(--accent);color:var(--bg)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.btn.done{background:var(--accent);color:var(--bg);cursor:default}
+.note{font-size:13px;color:var(--muted);font-style:italic;margin:0}
+
+/* Kreis */
+.circle-wrap{display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+.circle-wrap svg{width:min(100%,300px)}
+.circle-wrap svg text{font-family:var(--display);font-size:11px;fill:var(--muted)}
+.ring{fill:none;stroke:var(--line);stroke-width:1}
+.small{color:var(--muted);font-size:14px;margin:0;max-width:44ch}
+.signature{font-family:var(--display);font-size:17px;color:var(--fg);margin:0}
+
+/* Abend */
+.evening{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 18px;display:flex;flex-direction:column;gap:16px}
+.evening label{display:flex;flex-direction:column;gap:6px;font-size:15px}
+.evening textarea{font:inherit;font-size:15px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:64px;resize:vertical;width:100%}
+.evening textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+.saved{color:var(--muted);font-size:13px;min-height:1em;margin:0}
+
+footer{text-align:center;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:18px}
+@media (prefers-reduced-motion: reduce){.card{transition:none}}
+</style>
+</head>
+<body>
+
+
+<main>
+  <header>
+    <img class="cover" src="cover.jpg" alt="Deckblatt: Die zehn Mahavidyas – Eine Landkarte der Wandlung">
+    <span class="eyebrow">Die zehn Mahavidyas · Prototyp</span>
+    <h1 id="headline">Deine Karte für heute</h1>
+    <span class="date" id="date"></span>
+  </header>
+
+  <div class="stage">
+    <div class="card" id="card" role="button" tabindex="0" aria-label="Karte umdrehen">
+      <div class="face back"><img src="rueckseite.jpg" alt="Kartenrückseite mit Sri Yantra und Lotus"></div>
+      <div class="face front" id="front"></div>
+    </div>
+  </div>
+  <p class="hint" id="hint">Tippe auf die Karte, um sie umzudrehen. Jeden Tag zeigt sich eine der zehn Göttinnen.</p>
+
+  <div class="preview">
+    <span class="eyebrow">Vorschau: alle zehn ansehen</span>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <section class="message" id="message" hidden></section>
+
+  <section class="circle-wrap">
+    <h2>Dein Kreis der Zehn</h2>
+    <svg viewBox="0 0 260 260" id="circle" role="img" aria-label="Kreis der zehn Göttinnen"></svg>
+    <p class="small" id="circleText"></p>
+    <p class="signature">Zehn Göttinnen. Zehn Wege. Ein Kreis. Du bist der Weg.</p>
+  </section>
+
+  <section class="evening">
+    <h2>Abendrückblick</h2>
+    <label for="q1">Wo ist mir die Göttin von heute begegnet?<textarea id="q1"></textarea></label>
+    <label for="q2">Was hat mich berührt oder bewegt?<textarea id="q2"></textarea></label>
+    <label for="q3">Wofür bin ich heute dankbar?<textarea id="q3"></textarea></label>
+    <p class="saved" id="saved"></p>
+  </section>
+
+  <footer>Neue Galaxie Verlag · Margit Krüger<br>Alle zehn Karten aus dem Deck „Die zehn Mahavidyas“<br><a href="../index.html" style="color:var(--gold)">← Zurück zu maggieforeverywhere.com</a></footer>
+</main>
+
+<script>
+const ROM=["I","II","III","IV","V","VI","VII","VIII","IX","X"];
+const G=[
+ {n:"Kali",d:"काली",e:"Die Befreierin",c:"#1f2340",ink:"#e7e2f5",img:"kali.jpg",
+  t:"Die Befreierin",
+  s:"Ich bin die Zeit.\nIch bin die Wandlung.\nIch bin die, die zerstört,\nwas dich bindet –\ndamit du frei wirst.",
+  x:"Kali tanzt auf dem Alten, damit das Neue geboren werden kann. Sie nimmt, was nicht mehr dienlich ist, und schenkt dir die Freiheit, du selbst zu sein.",
+  f:["Wofür bin ich bereit loszulassen?","Was will in meinem Leben sterben, damit ich neu werde?","Was darf ich durch Wandlung empfangen und leben?"],
+  w:["Zeit","Wandel","Befreiung","Wahrheit","Los lassen","Freiheit","Erneuerung","Stille"],
+  z:"Aus dem Dunkel erhebt sich das Licht.\nAus jedem Ende blüht ein Anfang.\nDu bist angekommen – und du wirst frei."},
+ {n:"Tara",d:"तारा",e:"Die Hinüberführende",c:"#2b4f7a",ink:"#eef4fb",img:"tara.jpg",
+  t:"Die Hinüberführende",
+  s:"Ich begleite dich\ndurch das Chaos.\nVertraue.\nDu bist nicht allein.",
+  f:["Wofür brauche ich heute Unterstützung?","Wem kann ich vertrauen?","Welcher kleine Schritt reicht für heute?"],
+  z:"Du wirst geführt. Du bist gehalten. Du bist sicher.\nVertraue dem Fluss des Lebens.\nDu bist nicht allein – du bist verbunden."},
+ {n:"Tripura Sundari",d:"त्रिपुरसुन्दरी",e:"Die Schöne der drei Welten",c:"#a8344e",ink:"#fff0f2",img:"tripura.jpg",
+  t:"Die Schöne der drei Welten",
+  s:"Ich erinnere dich\nan die Schönheit,\ndie du nie verloren hast.",
+  f:["Was erfüllt mich heute mit Freude?","Wo entdecke ich Schönheit, die ich sonst übersehe?","Was darf heute einfach leicht und schön sein?"],
+  z:"Schönheit entsteht nicht dadurch,\ndass du vollkommen bist. Sie beginnt in dem Moment,\nin dem du dich zeigst."},
+ {n:"Bhuvaneshwari",d:"भुवनेश्वरी",e:"Die Herrscherin des Raums",c:"#d39a3c",ink:"#2d1c06",img:"bhuvaneshvari.jpg",
+  t:"Die Herrscherin des Raums",
+  s:"Ich bin der Raum,\nin dem alles entsteht.\nIch halte dich.\nDu darfst sein.",
+  f:["Wo brauche ich heute mehr Raum, um einfach zu sein?","Was darf ich annehmen, ohne es verändern zu wollen?","Wo kann ich loslassen und dem Leben vertrauen?"],
+  z:"Erlaube dir, gehalten zu sein.\nIn der Weite des Seins findest du Frieden."},
+ {n:"Bhairavi",d:"भैरवी",e:"Die Glühende",c:"#b8431f",ink:"#fff1e8",img:"bhairavi.jpg",
+  t:"Die Glühende",
+  s:"Ich bin das Feuer,\ndas nicht zerstört, sondern wandelt.\nSpür deine Glut.\nSie ist deine Kraft.",
+  f:["Was brennt in mir – wonach sehne ich mich wirklich?","Wo habe ich mein Feuer kleingemacht?","Was will sich in mir verwandeln?"],
+  z:"Dein Feuer ist nicht dein Feind.\nEs ist dein Licht – und es will leuchten."},
+ {n:"Chinnamasta",d:"छिन्नमस्ता",e:"Die sich selbst Verschenkende",c:"#c9573a",ink:"#fff3ee",img:"chinnamasta.jpg",
+  t:"Die sich selbst Verschenkende",
+  s:"Ich gebe mich ganz –\nund nähre dabei auch\nmich selbst.\nGib aus deiner Fülle,\nnicht aus deiner Not.",
+  x:"Nach dem Feuer (Bhairavi) kommt die tiefste Hingabe. Chinnamasta erinnert dich: Du darfst dich verschenken – und dich dabei selbst nähren.",
+  f:["Wo gebe ich mich weg, bis nichts mehr bleibt?","Was möchte ich aus ganzem Herzen geben?","Wie kann ich geben und mich zugleich nähren?"],
+  w:["Hingabe","Großzügigkeit","Mut","Selbstnährung","Gleichgewicht","Vertrauen","Lebenskraft","Loslassen"],
+  z:"Wahre Hingabe leert dich nicht. Aus derselben Quelle fließt,\nwas andere nährt – und was dich nährt."},
+ {n:"Dhumavati",d:"धूमावती",e:"Die Hüterin der Leere",c:"#77707a",ink:"#f6f3f6",img:"dhumavati.jpg",
+  t:"Die Hüterin der Leere",
+  s:"Ich bin die Stille,\ndie bleibt, wenn alles\ngegangen ist.\nHab keine Angst vor\nder Leere – sie ist\nnicht das Ende, nur\nein Durchgang.",
+  x:"Nach der Hingabe (Chinnamasta) kommt die Leere. Dhumavati erinnert dich: Auch dort, wo nichts mehr trägt, bist du nicht allein – die Leere ist ein Durchgang, kein Abgrund.",
+  f:["Was ist gegangen, das ich noch betrauere?","Was bleibt, wenn alles abfällt?","Kann ich in der Leere verweilen, ohne sie sofort zu füllen?"],
+  w:["Leere","Stille","Loslassen","Abschied","Ruhe","Wahrheit","Demut","Durchgang"],
+  z:"Die Leere ist kein Abgrund. Sie ist der stille Raum,\naus dem Neues entstehen kann. Bleib, ohne zu fliehen."},
+ {n:"Bagalamukhi",d:"बगलामुखी",e:"Die Kraft des Innehaltens",c:"#e2bf3f",ink:"#2b2205",img:"bagalamukhi.jpg",
+  t:"Die Kraft des Innehaltens",
+  s:"Ich bin die Stille,\ndie alles zum Stehen bringt.\nHalt inne.\nIm Anhalten klärt sich,\nwas wirklich zählt.",
+  x:"Nach der Leere (Dhumavati) kommt die Klarheit. Bagalamukhi erinnert dich: Nicht jede Bewegung bringt dich weiter – manchmal liegt die größte Kraft im Anhalten.",
+  f:["Wo renne ich, ohne anzuhalten?","Welche Stimme in mir darf endlich schweigen?","Was sehe ich klar, sobald ich stehenbleibe?"],
+  w:["Stille","Innehalten","Klarheit","Ruhe","Grenzen","Entschlossenheit","Geduld","Gegenwart"],
+  z:"Nicht jede Bewegung bringt dich weiter.\nManchmal liegt die größte Kraft im Anhalten."},
+ {n:"Matangi",d:"मातंगी",e:"Die Herrin des Wortes",c:"#2f7a5e",ink:"#ecfaf3",img:"matangi.jpg",
+  t:"Die Herrin des Wortes",
+  s:"Ich bin die Stimme,\ndie heraus will.\nSing, sprich, gestalte –\ndeine Stimme zählt,\ngerade weil sie\ndeine ist.",
+  x:"Nach der Stille (Bagalamukhi) kehrt die Stimme zurück. Matangi erinnert dich: Du musst nicht erst dazugehören, um zu klingen – gerade das, was an dir anders ist, ist deine Kraft.",
+  f:["Was will durch mich gesagt oder gestaltet werden?","Wo halte ich meine Stimme zurück?","Welcher Teil von mir, den ich verstecke, ist in Wahrheit meine Kraft?"],
+  w:["Stimme","Ausdruck","Wahrheit","Kreativität","Musik","Mut","Eigenheit","Klang"],
+  z:"Deine Stimme muss nicht perfekt sein. Sie muss nur deine sein.\nLass sie klingen."},
+ {n:"Kamala",d:"कमला",e:"Die Lotus-Göttin",c:"#d98aa0",ink:"#3a1220",img:"kamala.jpg",
+  t:"Die Lotus-Göttin",
+  s:"Ich bin die Fülle,\ndie aus dem Dunkel blüht.\nEmpfange, was das Leben\ndir schenkt –\ndu hast den Weg gemacht.",
+  x:"Nach der Stimme (Matangi) blüht die Fülle. Kamala schließt den Kreis, den Kali öffnete: Aus jedem Ende blüht ein Anfang. Du bist angekommen.",
+  f:["Wofür bin ich heute dankbar?","Was in mir ist aufgeblüht?","Was darf ich nun in Fülle empfangen und weitergeben?"],
+  w:["Fülle","Dankbarkeit","Blüte","Freude","Wohlergehen","Gnade","Erfüllung","Ankommen"],
+  z:"Aus dem Schlamm steigt der Lotus.\nAus jedem Ende blüht ein Anfang.\nDu bist angekommen – und du blühst."}
+];
+
+const store={get(k,f){try{const v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}},
+             set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+const now=new Date();
+const key=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
+const dayNum=Math.floor(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())/864e5);
+const todayIdx=((dayNum%10)+10)%10;
+document.getElementById("date").textContent=now.toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+
+let day=store.get("mv-day-"+key,{open:false,done:false,ev:{}});
+let met=store.get("mv-met",[]);
+let shown=todayIdx;
+
+
+const card=document.getElementById("card"),front=document.getElementById("front"),msg=document.getElementById("message"),
+      hint=document.getElementById("hint"),headline=document.getElementById("headline");
+
+function renderFront(i){const g=G[i];
+  front.style.setProperty("--c",g.c);front.style.setProperty("--ink",g.ink);
+  if(g.img){front.className="face front photo";front.innerHTML=`<img src="${g.img}" alt="Karte ${ROM[i]}: ${esc(g.n)}, ${esc(g.e)}">`;return}
+  front.className="face front";
+  front.innerHTML=`<span class="num">${ROM[i]} · MAHAVIDYA</span>
+<div class="sym"><svg viewBox="0 0 120 120" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.4">
+<circle cx="60" cy="60" r="52"/>${Array.from({length:8},(_,k)=>`<ellipse cx="60" cy="34" rx="10" ry="24" transform="rotate(${k*45} 60 60)"/>`).join("")}
+<circle cx="60" cy="60" r="9" fill="currentColor"/></g></svg></div>
+<span class="deva" lang="sa">${g.d}</span><span class="name">${g.n}</span><span class="essence">${g.e}</span><span class="soon">Kartenbild folgt</span>`}
+
+function renderMessage(i){const g=G[i],isToday=i===todayIdx;let h="";
+  if(g.s){
+    h+=`<p class="title-line">${esc(g.n)}<small>${esc(g.t)}</small></p>
+<div class="block"><span class="label">Sie spricht</span><p class="spruch">${esc(g.s)}</p></div>
+${g.x?`<div class="block"><span class="label">Was sie dir schenkt</span><p>${esc(g.x)}</p></div>`:""}
+<div class="block"><span class="label">Drei Fragen für deinen Tag</span><ul class="qs">${g.f.map(q=>`<li>${esc(q)}</li>`).join("")}</ul></div>
+${g.w?`<div class="words">${g.w.map(esc).join("<span aria-hidden='true'>·</span>")}</div>`:""}`;
+  }else{
+    h+=`<p class="title-line">${esc(g.n)}<small>${esc(g.e)}</small></p>
+<div class="block"><span class="label">Impuls für heute</span><p class="impuls">${esc(g.i)}</p></div>
+<div class="block"><span class="label">Frage zum Mitnehmen</span><p class="question">${esc(g.q)}</p></div>
+<p class="note">Platzhaltertext, bis die echte Karte da ist.</p>`;
+  }
+  if(isToday) h+=`<button class="btn${day.done?" done":""}" id="doneBtn">${day.done?"Angenommen ✓":"Ich nehme die Karte an"}</button>`;
+  else h+=`<p class="note">Das ist eine Vorschau. Deine Karte für heute ist ${esc(G[todayIdx].n)}.</p>`;
+  if(g.z) h+=`<p class="schluss">${esc(g.z)}</p>`;
+  msg.innerHTML=h;msg.hidden=false;
+  const b=document.getElementById("doneBtn");
+  if(b)b.addEventListener("click",()=>{if(day.done)return;day.done=true;store.set("mv-day-"+key,day);
+    if(!met.includes(todayIdx)){met.push(todayIdx);store.set("mv-met",met)}renderMessage(todayIdx);renderCircle()});
+}
+
+let isOpen=false;
+function setOpen(o){isOpen=o;
+  card.classList.toggle("open",o);
+  card.setAttribute("aria-label",o?"Karte von "+G[shown].n+", tippen zum Zurückdrehen":"Karte umdrehen");
+  hint.hidden=o;
+  if(o)renderMessage(shown);else msg.hidden=true;
+}
+function show(i){shown=i;renderFront(i);
+  headline.textContent=i===todayIdx?"Deine Karte für heute":"Vorschau: "+G[i].n;
+  document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",String(+c.dataset.i===i)));
+  setOpen(false);
+}
+const chips=document.getElementById("chips");
+G.forEach((g,i)=>chips.insertAdjacentHTML("beforeend",`<button class="chip" data-i="${i}" aria-pressed="false" style="--c:${g.c}"><span class="dot"></span>${i===todayIdx?"Heute · ":""}${esc(g.n)}</button>`));
+chips.addEventListener("click",e=>{const c=e.target.closest(".chip");if(c)show(+c.dataset.i)});
+
+function flip(){const o=!isOpen;
+  if(o&&shown===todayIdx&&!day.open){day.open=true;store.set("mv-day-"+key,day)}
+  setOpen(o);
+}
+card.addEventListener("click",flip);
+card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();flip()}});
+
+function renderCircle(){
+  const s=document.getElementById("circle");let h=`<circle class="ring" cx="130" cy="130" r="92"/>`;
+  G.forEach((x,k)=>{const a=k/10*2*Math.PI-Math.PI/2,cx=130+92*Math.cos(a),cy=130+92*Math.sin(a),
+    lx=130+118*Math.cos(a),ly=130+118*Math.sin(a)+4,on=met.includes(k),today=k===todayIdx;
+    h+=`<circle cx="${cx}" cy="${cy}" r="${today?11:9}" fill="${on?x.c:"none"}" stroke="${x.c}" stroke-width="${today?2.5:1.5}"/>`;
+    h+=`<text x="${lx}" y="${ly}" text-anchor="middle">${x.n.length>9?x.n.slice(0,7)+"…":x.n}</text>`});
+  h+=`<text x="130" y="128" text-anchor="middle" style="font-size:28px;fill:var(--fg)">${met.length}</text><text x="130" y="148" text-anchor="middle">von 10</text>`;
+  s.innerHTML=h;
+  document.getElementById("circleText").textContent=met.length===10?"Dein Kreis ist geschlossen. Er beginnt von Neuem, so wie jeder Weg.":
+    "Jede Göttin, deren Karte du angenommen hast, leuchtet im Kreis auf. Der Kreis wächst nur und verliert nichts.";
+}
+
+show(todayIdx);if(day.open)setOpen(true);renderCircle();
+
+const saved=document.getElementById("saved");let t;
+["q1","q2","q3"].forEach(id=>{const el=document.getElementById(id);el.value=day.ev[id]||"";
+  el.addEventListener("input",()=>{day.ev[id]=el.value;store.set("mv-day-"+key,day);clearTimeout(t);
+    saved.textContent="Gespeichert, nur auf diesem Gerät";t=setTimeout(()=>saved.textContent="",2200)})});
+</script>
+
+</body>
+</html>
