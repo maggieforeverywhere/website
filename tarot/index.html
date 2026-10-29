@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tarot Tageskarte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+/* Layout: eine Spalte wie ein Legetisch – Umschalter oben, Karte(n), Deutung darunter; Farben aus Pamela Colman Smiths Flächenpalette */
+:root{
+  --bg:#eef1f4; --surface:#ffffff; --fg:#1d2330; --muted:#5d6577; --line:#d3d9e2;
+  --blue:#2c5d94; --gold:#9a7413; --red:#a8392e;
+  --display:"IM Fell English","Iowan Old Style",Georgia,serif;
+  --caps:"IM Fell English SC","Iowan Old Style",Georgia,serif;
+  --body:"Crimson Pro",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121722; --surface:#1b2130; --fg:#e9ecf2; --muted:#a3abbd; --line:#2e3648;
+  --blue:#8fb6e6; --gold:#e3c15a; --red:#e88a7e; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121722; --surface:#1b2130; --fg:#e9ecf2; --muted:#a3abbd; --line:#2e3648;
+  --blue:#8fb6e6; --gold:#e3c15a; --red:#e88a7e; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:18px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 48px}
+main{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+header{text-align:center;display:flex;flex-direction:column;gap:4px}
+.eyebrow{font-family:var(--caps);font-size:14px;letter-spacing:.12em;color:var(--muted)}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
+h1{font-size:34px;line-height:1.15}
+h2{font-size:24px}
+.date{color:var(--muted);font-style:italic}
+
+/* Umschalter */
+.tabs{display:flex;justify-content:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:4px;background:var(--surface);align-self:center}
+.tab{font:inherit;font-size:16px;border:0;background:transparent;color:var(--fg);padding:7px 16px;border-radius:999px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--blue);color:var(--bg)}
+.tab:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+.deck{display:flex;justify-content:center;gap:8px;margin-top:-18px;flex-wrap:wrap}
+.chip{font:inherit;font-size:15px;border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:4px 12px;cursor:pointer}
+.chip[aria-checked="true"]{border-color:var(--gold);color:var(--fg)}
+.chip:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.suitline{font-family:var(--caps);font-size:14px;letter-spacing:.08em;color:var(--gold);margin:0}
+/* Karten */
+.table{display:flex;justify-content:center;gap:12px;perspective:1400px}
+.slot{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;min-width:0;max-width:320px}
+.slot .pos{font-family:var(--caps);font-size:14px;letter-spacing:.08em;color:var(--muted);text-align:center}
+.card{width:100%;aspect-ratio:3/5;position:relative;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;
+  transition:transform .85s cubic-bezier(.2,.7,.2,1);cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
+.card.open{transform:rotateY(180deg)}
+.card:focus-visible{outline:2px solid var(--blue);outline-offset:5px;border-radius:8px}
+.face{position:absolute;inset:0;border-radius:8px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  box-shadow:0 14px 30px -16px rgba(20,30,60,.55);background:#fff}
+.face img{width:100%;height:100%;object-fit:cover;display:block}
+.front{transform:rotateY(180deg)}
+.front.rev img{transform:rotate(180deg)}
+.single .slot{max-width:300px}
+.hint{text-align:center;color:var(--muted);font-size:16px;margin:-16px 0 0}
+.actions{display:flex;justify-content:center}
+.btn{font:inherit;font-size:16px;border:1px solid var(--blue);color:var(--blue);background:transparent;border-radius:999px;padding:9px 20px;cursor:pointer}
+.btn:hover{background:var(--blue);color:var(--bg)}
+.btn:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+/* Deutung */
+.readings{display:flex;flex-direction:column;gap:28px}
+.reading{display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--line);padding-top:20px}
+.reading .head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.reading .num{font-family:var(--caps);color:var(--gold);font-size:18px;letter-spacing:.06em}
+.reading h3{font-size:28px;line-height:1.15}
+.state{font-family:var(--caps);font-size:14px;letter-spacing:.08em;padding:2px 10px;border-radius:999px;border:1px solid currentColor}
+.state.up{color:var(--blue)} .state.down{color:var(--red)}
+.poslabel{font-family:var(--caps);font-size:14px;letter-spacing:.1em;color:var(--muted)}
+.kw{font-style:italic;color:var(--muted);margin:0}
+.reading p{margin:0;max-width:62ch}
+.main{font-size:20px}
+.other{font-size:16px;color:var(--muted)}
+.other b{font-family:var(--caps);font-weight:400;letter-spacing:.06em}
+.qs{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.qs li{font-family:var(--display);font-style:italic;font-size:20px;line-height:1.35;color:var(--blue);padding-left:20px;position:relative}
+.qs li::before{content:"";position:absolute;left:2px;top:.55em;width:7px;height:7px;background:var(--gold);transform:rotate(45deg)}
+
+/* Notiz & Verlauf */
+.note{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 18px;display:flex;flex-direction:column;gap:10px}
+.note label{font-size:17px}
+.note textarea{font:inherit;font-size:17px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-height:84px;resize:vertical;width:100%}
+.note textarea:focus{outline:2px solid var(--blue);outline-offset:1px}
+.saved{color:var(--muted);font-size:14px;min-height:1em;margin:0}
+.history{display:flex;flex-direction:column;gap:12px}
+.hist-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px}
+.hist{flex:0 0 64px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:13px;color:var(--muted);text-align:center}
+.hist img{width:64px;aspect-ratio:3/5;object-fit:cover;border-radius:4px;box-shadow:0 4px 10px -6px rgba(20,30,60,.6)}
+.hist img.rev{transform:rotate(180deg)}
+.empty{color:var(--muted);font-style:italic;margin:0}
+
+footer{text-align:center;color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:18px;line-height:1.5}
+@media (prefers-reduced-motion: reduce){.card{transition:none}}
+</style>
+</head>
+<body>
+
+
+<main>
+  <header>
+    <span class="eyebrow">Rider-Waite-Smith-Tarot</span>
+    <h1 id="headline">Deine Tarotkarte für heute</h1>
+    <span class="date" id="date"></span>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tab-day" aria-selected="true">Tageskarte</button>
+    <button class="tab" role="tab" id="tab-three" aria-selected="false">Drei Karten</button>
+  </div>
+
+  <div class="deck" role="radiogroup" aria-label="Kartenauswahl">
+    <button class="chip" id="deck-all" role="radio">Alle 78 Karten</button>
+    <button class="chip" id="deck-major" role="radio">Nur Große Arkana</button>
+  </div>
+  <div class="table" id="table"></div>
+  <p class="hint" id="hint"></p>
+  <div class="actions" id="actions" hidden><button class="btn" id="shuffle">Neu mischen und legen</button></div>
+
+  <section class="readings" id="readings"></section>
+
+  <section class="note" id="noteBox">
+    <h2>Deine Notiz zu heute</h2>
+    <label for="note">Was löst die Karte in dir aus? Wo ist sie dir im Lauf des Tages begegnet?</label>
+    <textarea id="note"></textarea>
+    <p class="saved" id="saved"></p>
+  </section>
+
+  <section class="history">
+    <h2>Deine letzten Tageskarten</h2>
+    <div class="hist-row" id="hist"></div>
+  </section>
+
+  <footer>Karten: Rider-Waite-Smith-Tarot, gezeichnet von Pamela Colman Smith, Rider &amp; Company 1909 (gemeinfrei).<br>Scans restauriert von Steve P. (steve-p.org), bereitgestellt über die Sammlung „TarotCards“ von Mike Koz.<br>Deutungstexte: Neue Galaxie Verlag<br><a href="../index.html" style="color:var(--gold)">← Zurück zu maggieforeverywhere.com</a></footer>
+</main>
+
+<script>
+const ROM=["0","I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX","XXI"];
+const T=[
+ {n:"Der Narr",img:"00_Fool",k:"Neubeginn · Vertrauen · Unbeschwertheit",
+  a:"Ein neuer Weg beginnt. Wage den ersten Schritt mit offenem Herzen, auch wenn du noch nicht weißt, wohin er führt.",
+  u:"Achte auf Leichtsinn, oder darauf, dass die Angst dich gar nicht erst losgehen lässt.",
+  f:["Wohin würde ich gehen, wenn ich keine Angst hätte?","Was darf ich heute ohne Plan ausprobieren?","Wo halte ich zu sehr am Bekannten fest?"]},
+ {n:"Der Magier",img:"01_Magician",k:"Willenskraft · Können · Schöpfung",
+  a:"Alles, was du brauchst, liegt schon vor dir. Bündle deine Kräfte und setze deine Absicht in die Tat um.",
+  u:"Deine Kräfte verzetteln sich, oder du zweifelst an deinem Können. Achte auch auf Täuschung, bei anderen und bei dir.",
+  f:["Welche Fähigkeit nutze ich zu wenig?","Was will ich heute wirklich bewirken?","Wo bleibe ich bei Worten statt bei Taten?"]},
+ {n:"Die Hohepriesterin",img:"02_High_Priestess",k:"Intuition · Stille · verborgenes Wissen",
+  a:"Die Antwort liegt nicht draußen, sondern in dir. Werde still und lausche deiner inneren Stimme.",
+  u:"Du überhörst dein Bauchgefühl, oder du trägst ein Geheimnis, das dich belastet.",
+  f:["Was weiß ich längst, ohne es auszusprechen?","Wann habe ich zuletzt wirklich in mich hineingehört?","Was will mir mein letzter Traum sagen?"]},
+ {n:"Die Herrscherin",img:"03_Empress",k:"Fülle · Fruchtbarkeit · Fürsorge",
+  a:"Etwas will wachsen. Nähre es mit Geduld, Sinnlichkeit und Liebe, und vergiss dich selbst dabei nicht.",
+  u:"Du gibst über deine Kräfte, oder deine Kreativität stockt, weil du dich selbst zu wenig nährst.",
+  f:["Was in meinem Leben will genährt werden?","Womit kann ich heute meinem Körper etwas Gutes tun?","Wo darf ich Fülle einfach annehmen?"]},
+ {n:"Der Herrscher",img:"04_Emperor",k:"Struktur · Ordnung · Verantwortung",
+  a:"Schaffe klare Strukturen und übernimm Verantwortung. Ein festes Fundament schenkt dir Freiheit.",
+  u:"Starrheit und Kontrolle, oder im Gegenteil ein Mangel an Halt und Führung.",
+  f:["Wo brauche ich klarere Grenzen?","Welche Ordnung würde mir Ruhe schenken?","Wo will ich zu viel kontrollieren?"]},
+ {n:"Der Hierophant",img:"05_Hierophant",k:"Tradition · Lehre · Sinn",
+  a:"Verbinde dich mit überliefertem Wissen und guten Lehrern. Rituale und Gemeinschaft können dich tragen.",
+  u:"Alte Regeln engen dich ein. Es ist Zeit, deinen eigenen Glauben zu prüfen.",
+  f:["Wer oder was ist gerade mein Lehrer?","Welche Überlieferung trägt mich?","Welche Regel darf ich hinterfragen?"]},
+ {n:"Die Liebenden",img:"06_Lovers",k:"Liebe · Verbindung · Entscheidung",
+  a:"Eine Entscheidung aus dem Herzen steht an. Wähle das, was mit deinen Werten im Einklang ist.",
+  u:"Zwiespalt und Disharmonie, oder eine Wahl, die gegen dich selbst gerichtet ist.",
+  f:["Was liebe ich wirklich?","Welche Entscheidung schiebe ich vor mir her?","Wo passen Herz und Handeln nicht zusammen?"]},
+ {n:"Der Wagen",img:"07_Chariot",k:"Willenskraft · Richtung · Sieg",
+  a:"Halte die Zügel fest und richte deine Kräfte auf ein Ziel. Du kommst voran.",
+  u:"Deine Kräfte ziehen in verschiedene Richtungen. Ungeduld oder Kontrollverlust bremsen dich.",
+  f:["Wohin will ich wirklich?","Welche widerstreitenden Kräfte in mir brauchen eine gemeinsame Richtung?","Was ist mein nächster Schritt?"]},
+ {n:"Die Kraft",img:"08_Strength",k:"Sanfte Stärke · Mut · Mitgefühl",
+  a:"Wahre Stärke ist sanft. Begegne dem Wilden in dir mit Geduld und Liebe statt mit Gewalt.",
+  u:"Selbstzweifel, oder unterdrückte Gefühle, die sich Bahn brechen wollen.",
+  f:["Welche Angst darf ich heute liebevoll an die Hand nehmen?","Wo bin ich stärker, als ich glaube?","Wie kann ich heute geduldig mit mir sein?"]},
+ {n:"Der Eremit",img:"09_Hermit",k:"Rückzug · Innenschau · Weisheit",
+  a:"Zieh dich eine Weile zurück. In der Stille leuchtet deine eigene Laterne dir den Weg.",
+  u:"Aus Alleinsein wird Einsamkeit, oder du weichst der Innenschau aus.",
+  f:["Wann bin ich heute ganz für mich?","Welches Licht trage ich in mir?","Welche Frage begleitet mich gerade?"]},
+ {n:"Das Rad des Schicksals",img:"10_Wheel_of_Fortune",k:"Wandel · Zyklen · Wendepunkt",
+  a:"Das Rad dreht sich. Eine Wende kommt, nimm sie an, denn alles ist im Fluss.",
+  u:"Du wehrst dich gegen Veränderung oder fühlst dich festgefahren. Auch das geht vorüber.",
+  f:["Welcher Kreislauf wiederholt sich in meinem Leben?","Was darf sich jetzt wenden?","Wo kann ich dem Fluss vertrauen?"]},
+ {n:"Die Gerechtigkeit",img:"11_Justice",k:"Wahrheit · Klarheit · Ausgleich",
+  a:"Sieh klar und ehrlich hin. Was du säst, wirst du ernten, also handle fair und aufrichtig.",
+  u:"Unehrlichkeit oder ein Ungleichgewicht, oder eine Entscheidung, der du ausweichst.",
+  f:["Wo bin ich mir selbst gegenüber nicht ganz ehrlich?","Was braucht einen Ausgleich?","Welche Verantwortung darf ich übernehmen?"]},
+ {n:"Der Gehängte",img:"12_Hanged_Man",k:"Innehalten · neue Sicht · Hingabe",
+  a:"Halte inne und betrachte die Dinge aus einem anderen Blickwinkel. Im Loslassen liegt die Erkenntnis.",
+  u:"Stillstand ohne Sinn, ein Verharren in der Opferrolle oder zähes Festhalten.",
+  f:["Wie sähe meine Lage aus, wenn ich sie umgekehrt betrachte?","Was darf ich gerade nicht erzwingen?","Wofür lohnt sich das Warten?"]},
+ {n:"Der Tod",img:"13_Death",k:"Ende · Wandlung · Neubeginn",
+  a:"Etwas geht zu Ende, damit Neues entstehen kann. Lass los, was seine Zeit gehabt hat. Diese Karte steht fast immer für Wandlung, nicht für das Sterben.",
+  u:"Die Angst vor Veränderung hält das Alte künstlich am Leben.",
+  f:["Was ist eigentlich schon vorbei?","Wovon darf ich mich verabschieden?","Was wartet hinter diesem Ende?"]},
+ {n:"Die Mäßigkeit",img:"14_Temperance",k:"Balance · Geduld · Heilung",
+  a:"Finde das rechte Maß. Verbinde Gegensätze mit Geduld, so wie Wasser von Kelch zu Kelch fließt.",
+  u:"Übermaß und Ungeduld, oder ein Leben, das aus dem Gleichgewicht geraten ist.",
+  f:["Wo ist mir das rechte Maß verloren gegangen?","Welche Gegensätze in mir dürfen sich verbinden?","Was braucht in mir Geduld?"]},
+ {n:"Der Teufel",img:"15_Devil",k:"Bindung · Verstrickung · Schatten",
+  a:"Schau hin, was dich bindet: Gewohnheiten, Ängste, Abhängigkeiten. Die Ketten sitzen lockerer, als sie scheinen.",
+  u:"Befreiung beginnt. Du erkennst eine Verstrickung und fängst an, dich zu lösen.",
+  f:["Wovon fühle ich mich abhängig?","Welche Kette könnte ich selbst abstreifen?","Was in meinem Schatten will gesehen werden?"]},
+ {n:"Der Turm",img:"16_Tower",k:"Umbruch · Erkenntnis · Befreiung",
+  a:"Was auf falschem Grund gebaut ist, fällt. Der Blitz bringt Wahrheit, auch wenn er erschüttert.",
+  u:"Ein nötiger Umbruch wird hinausgezögert, oder er geschieht leise im Inneren.",
+  f:["Welche Fassade bröckelt gerade?","Welche plötzliche Einsicht darf ich annehmen?","Was will ich danach neu aufbauen?"]},
+ {n:"Der Stern",img:"17_Star",k:"Hoffnung · Heilung · Vertrauen",
+  a:"Nach dem Sturm kommt die Ruhe. Die Hoffnung kehrt zurück, und du darfst dich erneuern.",
+  u:"Mutlosigkeit oder fehlendes Vertrauen. Das Licht ist trotzdem da, auch hinter den Wolken.",
+  f:["Was gibt mir Hoffnung?","Wo darf ich heilen?","Welcher Stern leitet mich?"]},
+ {n:"Der Mond",img:"18_Moon",k:"Unbewusstes · Träume · Ungewissheit",
+  a:"Nicht alles ist klar. Geh behutsam durch das Zwielicht und achte auf Träume und Ahnungen.",
+  u:"Ängste lösen sich, und Täuschungen werden sichtbar.",
+  f:["Wovor fürchte ich mich im Dunkeln?","Was erzählen mir meine Träume?","Wo täusche ich mich vielleicht selbst?"]},
+ {n:"Die Sonne",img:"19_Sun",k:"Freude · Klarheit · Lebenskraft",
+  a:"Licht, Wärme und Gelingen. Zeig dich so, wie du bist, und freu dich am Leben.",
+  u:"Die Freude ist gedämpft, aber nicht verschwunden. Manchmal steckt Übermut dahinter, manchmal Selbstzweifel.",
+  f:["Was macht mich heute froh?","Wo darf ich strahlen?","Mit wem teile ich meine Freude?"]},
+ {n:"Das Gericht",img:"20_Judgement",k:"Erwachen · Ruf · Vergebung",
+  a:"Ein innerer Ruf weckt dich. Zieh Bilanz, vergib, und steh auf zu einem neuen Kapitel.",
+  u:"Selbstvorwürfe, oder ein Ruf, den du überhörst.",
+  f:["Welcher Ruf erreicht mich gerade?","Wem darf ich vergeben, vielleicht auch mir selbst?","Wofür bin ich bereit aufzuwachen?"]},
+ {n:"Die Welt",img:"21_World",k:"Vollendung · Ganzheit · Ankommen",
+  a:"Ein Kreis schließt sich. Du bist angekommen. Feiere, was gelungen ist, bevor der nächste Weg beginnt.",
+  u:"Etwas ist noch nicht ganz abgeschlossen. Ein letzter Schritt fehlt noch.",
+  f:["Was habe ich vollendet?","Wofür bin ich dankbar?","Welcher neue Kreis beginnt jetzt?"]}
+];
+const POS=["Was war","Was ist","Was werden will"];
+
+const store={get(k,f){try{const v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}},
+             set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const src=i=>"karten/"+T[i].img+".jpg";
+const SUITS=[
+ {n:"Stäbe",g:"der Stäbe",file:"Wands",el:"Feuer",th:"Tatkraft, Leidenschaft und Inspiration",c:[
+  ["Funke · Aufbruch · Inspiration","Ein neuer Funke entzündet sich: eine Idee, eine Leidenschaft, ein Anfang voller Kraft.","Die Begeisterung zögert oder verpufft, bevor sie Form annimmt.","Wofür brennt mein Herz gerade?"],
+  ["Planung · Weitblick · Entscheidung","Du hältst die Welt in der Hand und schaust in die Ferne. Plane deinen nächsten großen Schritt.","Die Angst vor dem Unbekannten hält dich im Vertrauten fest.","Welche Richtung reizt mich, obwohl sie mir Angst macht?"],
+  ["Ausblick · Wachstum · Erwartung","Deine Schiffe sind unterwegs. Was du begonnen hast, zieht Kreise, also halte Ausschau.","Verzögerungen oder enttäuschte Erwartungen. Jetzt ist Geduld gefragt.","Worauf warte ich, und was kann ich in der Zwischenzeit tun?"],
+  ["Feier · Heimat · Geborgenheit","Ein Grund zum Feiern: Gemeinschaft, Zuhause und ein erreichtes Etappenziel.","Unruhe im Zuhause, oder es fehlen dir gerade die Wurzeln.","Wo fühle ich mich wirklich zu Hause?"],
+  ["Wettstreit · Reibung · Kräftemessen","Viele Stimmen, viele Stäbe. Reibung kann Kraft freisetzen, solange alle fair bleiben.","Konflikte werden vermieden oder schwelen im Verborgenen.","Welcher Streit will in Wahrheit etwas klären?"],
+  ["Anerkennung · Erfolg · Rückenwind","Du wirst gesehen und gefeiert. Nimm die Anerkennung an, du hast sie dir verdient.","Du wartest auf Lob von außen oder fürchtest den Fall nach dem Erfolg.","Wofür darf ich mich heute selbst anerkennen?"],
+  ["Standhaftigkeit · Mut · Verteidigung","Bleib bei dir und verteidige, was dir wichtig ist, auch gegen Widerstand.","Du fühlst dich überwältigt oder gibst zu früh nach.","Wofür lohnt es sich, standzuhalten?"],
+  ["Tempo · Bewegung · Nachrichten","Die Dinge kommen in Fahrt: Nachrichten, Reisen und schnelle Entwicklungen.","Hektik, Verzögerung oder Pläne, die ins Leere laufen.","Was bewegt sich gerade schneller, als ich dachte?"],
+  ["Ausdauer · Wachsamkeit · letzte Kraft","Du bist fast am Ziel. Müde vielleicht, aber stark genug für den letzten Abschnitt.","Erschöpfung und Misstrauen. Du musst nicht alles allein tragen.","Woher nehme ich Kraft für das letzte Stück?"],
+  ["Last · Verantwortung · Überforderung","Du trägst viel, vielleicht zu viel. Prüfe, welche Last wirklich deine ist.","Du legst eine Bürde ab, oder sie wird dich erdrücken, wenn du es nicht tust.","Welche Last darf ich heute abgeben?"],
+  ["Neugier · Entdeckergeist · Botschaft","Eine neugierige, junge Energie ruft dich zu einem Abenteuer oder bringt eine gute Nachricht.","Ungeduld, Strohfeuer oder Ideen, die nie umgesetzt werden.","Was möchte ich ganz neu entdecken?"],
+  ["Abenteuer · Leidenschaft · Ungestüm","Mit Feuer und Mut stürmst du los. Nutze den Schwung, aber halte die Richtung.","Rastlosigkeit, Übereilung oder Wut, die sich verausgabt.","Wohin will mein Feuer mich tragen?"],
+  ["Ausstrahlung · Selbstvertrauen · Wärme","Warm, mutig und lebendig: Du darfst strahlen und andere mitreißen.","Eifersucht oder Selbstzweifel dämpfen dein Leuchten.","Wo darf ich heute selbstbewusst auftreten?"],
+  ["Vision · Führung · Unternehmergeist","Du siehst das große Ganze und gehst voran. Führe mit Weitblick und Herz.","Ungeduld, Überheblichkeit oder zu hohe Erwartungen an andere.","Welche Vision möchte ich in die Welt tragen?"]]},
+ {n:"Kelche",g:"der Kelche",file:"Cups",el:"Wasser",th:"Gefühl, Liebe und Beziehung",c:[
+  ["Liebe · Gefühl · Neubeginn im Herzen","Dein Herz fließt über. Neue Liebe, Mitgefühl oder tiefe Erfüllung kündigen sich an.","Gefühle stauen sich, oder du verschließt dein Herz.","Wofür ist mein Herz gerade offen?"],
+  ["Begegnung · Partnerschaft · Gegenseitigkeit","Zwei Herzen begegnen sich auf Augenhöhe. Eine Verbindung wächst.","Ungleichgewicht oder Missverständnisse in einer Beziehung.","Wem begegne ich wirklich auf Augenhöhe?"],
+  ["Freundschaft · Feiern · Gemeinschaft","Feiere mit Menschen, die dir guttun. Freude wird größer, wenn man sie teilt.","Zu viel des Guten, oder Klatsch trübt die Gemeinschaft.","Mit wem möchte ich wieder einmal feiern?"],
+  ["Überdruss · Rückzug · übersehenes Geschenk","Du bist unzufrieden und übersiehst, was dir gerade gereicht wird.","Die Lustlosigkeit weicht, und du wirst wieder offen für Neues.","Welches Angebot übersehe ich gerade?"],
+  ["Verlust · Trauer · was bleibt","Etwas ist verschüttet, und das schmerzt. Doch hinter dir stehen noch zwei volle Kelche.","Du beginnst, dich zu versöhnen und dich dem Verbliebenen zuzuwenden.","Was ist mir trotz des Verlusts geblieben?"],
+  ["Erinnerung · Kindheit · Unschuld","Schöne Erinnerungen, alte Freunde und kindliche Freude. Die Vergangenheit schenkt dir etwas.","Du hängst zu sehr am Gestern oder verklärst es.","Welche Kindheitsfreude möchte ich wiederentdecken?"],
+  ["Träume · Illusion · viele Möglichkeiten","Viele Wünsche locken, und nicht alle sind echt. Wähle mit klarem Blick.","Du findest zur Klarheit und triffst eine Entscheidung.","Welcher meiner Träume ist wirklich meiner?"],
+  ["Aufbruch · Loslassen · Suche nach Tiefe","Du lässt etwas zurück, das dich nicht mehr erfüllt, und suchst nach mehr Sinn.","Angst vor dem Gehen, oder ein Weggehen ohne Ziel.","Was erfüllt mich nicht mehr?"],
+  ["Zufriedenheit · Wunscherfüllung · Genuss","Ein Wunsch geht in Erfüllung. Genieße, was du hast.","Selbstgefälligkeit, oder eine Zufriedenheit, die nur nach außen gilt.","Welcher Wunsch hat sich mir schon erfüllt?"],
+  ["Glück · Familie · Harmonie","Ein Regenbogen über einem liebevollen Zuhause: Glück mit den Menschen, die zu dir gehören.","Spannungen in der Familie, oder ein Bild vom Glück, das nicht stimmt.","Was bedeutet Glück für mich wirklich?"],
+  ["Gefühl · Fantasie · zarte Botschaft","Eine sanfte Überraschung, eine kreative Idee oder eine liebevolle Nachricht.","Launen, oder Gefühle, die nicht ernst genommen werden.","Welches zarte Gefühl will gehört werden?"],
+  ["Romantik · Einladung · Idealismus","Jemand bringt ein Angebot aus dem Herzen, vielleicht auch du selbst. Folge deiner Sehnsucht.","Schwärmerei, unrealistische Erwartungen oder Launenhaftigkeit.","Welcher Herzensruf erreicht mich?"],
+  ["Mitgefühl · Intuition · Fürsorge","Du fühlst tief und hältst den Raum für andere. Vertraue deiner Intuition.","Du nimmst zu viel von anderen auf und verlierst dich selbst.","Wie kann ich mitfühlend und doch bei mir bleiben?"],
+  ["Emotionale Reife · Gelassenheit · Weisheit","Gefühl und Verstand im Gleichgewicht. Du bleibst ruhig, auch wenn das Meer bewegt ist.","Unterdrückte Gefühle oder Stimmungsschwankungen.","Wie bleibe ich heute ruhig im Sturm?"]]},
+ {n:"Schwerter",g:"der Schwerter",file:"Swords",el:"Luft",th:"Denken, Wahrheit und Klarheit",c:[
+  ["Klarheit · Wahrheit · Durchbruch","Ein klarer Gedanke schneidet durch den Nebel. Sprich die Wahrheit aus.","Verwirrung, oder scharfe Worte, die verletzen.","Welche Wahrheit möchte ich klar aussprechen?"],
+  ["Unentschiedenheit · Patt · Selbstschutz","Du hast die Augen verbunden und verharrst zwischen zwei Möglichkeiten.","Die Augenbinde fällt, und eine Entscheidung wird unausweichlich.","Welcher Entscheidung weiche ich aus?"],
+  ["Herzschmerz · Trauer · Erkenntnis","Ein schmerzhafter Moment. Lass die Trauer zu, sie ist ein Teil der Heilung.","Der Schmerz beginnt zu heilen, oder du hältst ihn noch fest.","Welcher Schmerz will gefühlt werden?"],
+  ["Ruhe · Erholung · Besinnung","Zeit zum Ausruhen. Leg die Schwerter nieder und sammle neue Kraft.","Unruhe und Rastlosigkeit, oder die Rückkehr aus einer Pause.","Wann gönne ich mir wirklich Ruhe?"],
+  ["Konflikt · Niederlage · leerer Sieg","Ein Streit wurde gewonnen, doch zu welchem Preis?","Versöhnung wird möglich, oder alte Wunden bleiben offen.","Ist es mir wichtiger, recht zu haben oder Frieden zu finden?"],
+  ["Übergang · Weiterziehen · ruhigeres Wasser","Du lässt schwere Zeiten hinter dir und fährst ruhigeren Ufern entgegen.","Du kommst nicht los, oder das Alte reist mit.","Was nehme ich mit, und was lasse ich zurück?"],
+  ["List · Heimlichkeit · Strategie","Jemand geht heimlich eigene Wege. Prüfe, wo du ehrlich bist und wo du klug sein musst.","Ein Geheimnis kommt ans Licht, oder du bekennst dich zu etwas.","Wo bin ich nicht ganz aufrichtig?"],
+  ["Gefangensein · Angst · Selbstbeschränkung","Du fühlst dich gefangen, doch die Fesseln sitzen lockerer, als es scheint.","Du befreist dich aus einer selbst gewählten Enge.","Welche Gedanken halten mich fest?"],
+  ["Sorgen · Schlaflosigkeit · Angst","Nächtliche Sorgen wiegen schwer. Vieles ist im Kopf größer als in Wirklichkeit.","Die Angst lässt nach, oder es ist Zeit, dir Hilfe zu holen.","Mit wem kann ich über meine Sorgen sprechen?"],
+  ["Tiefpunkt · Ende · Neubeginn","Tiefer geht es nicht. Am Horizont dämmert bereits ein neuer Tag.","Du erholst dich langsam, oder du sträubst dich gegen ein unvermeidliches Ende.","Was darf hier endgültig enden?"],
+  ["Wachheit · Neugier · Wahrheitsliebe","Ein wacher Geist will verstehen. Stelle Fragen und bleibe aufmerksam.","Klatsch, spitze Bemerkungen oder Misstrauen.","Was möchte ich wirklich verstehen?"],
+  ["Entschlossenheit · Tempo · Direktheit","Mit voller Wucht für eine Idee. Handle mutig, aber nicht rücksichtslos.","Übereilung, verletzende Worte oder ein Kampf ohne Sinn.","Wo darf ich entschlossen und doch achtsam handeln?"],
+  ["Klarheit · Unabhängigkeit · Ehrlichkeit","Klar, ehrlich und unabhängig: Du siehst die Dinge, wie sie sind.","Kälte oder Härte als Schutz vor Verletzung.","Wo darf meine Klarheit sanft sein?"],
+  ["Urteilskraft · Autorität · Vernunft","Entscheide mit klarem Verstand und gerechtem Urteil.","Kalte Strenge oder Macht ohne Mitgefühl.","Welche Entscheidung braucht meinen klaren Kopf?"]]},
+ {n:"Münzen",g:"der Münzen",file:"Pents",el:"Erde",th:"Körper, Arbeit und Wohlstand",c:[
+  ["Chance · Wohlstand · fester Boden","Eine handfeste Chance bietet sich an: Geld, Gesundheit oder ein neues Projekt.","Eine Gelegenheit wird verpasst oder steht auf wackligem Grund.","Welche Chance liegt mir gerade in der Hand?"],
+  ["Balance · Beweglichkeit · Jonglieren","Du jonglierst mit vielem. Bleib beweglich und finde deinen Rhythmus.","Überforderung, wenn zu viele Bälle in der Luft sind.","Was kann ich heute weglassen?"],
+  ["Zusammenarbeit · Handwerk · Können","Gemeinsam entsteht etwas Gutes. Deine Fähigkeiten werden gebraucht.","Fehlende Abstimmung, oder Arbeit ohne Herz.","Mit wem möchte ich zusammen etwas erschaffen?"],
+  ["Sicherheit · Festhalten · Kontrolle","Du sicherst, was du hast. Das ist gesund, solange es dich nicht verhärtet.","Du lockerst den Griff, oder Geiz und Angst nehmen zu.","Woran klammere ich mich aus Angst?"],
+  ["Mangel · Not · Ausgeschlossensein","Du fühlst dich draußen in der Kälte. Hilfe ist näher, als du denkst.","Die Not lässt nach, und du findest wieder Halt.","Wo könnte ich um Hilfe bitten?"],
+  ["Geben · Nehmen · Großzügigkeit","Geben und Nehmen sind im Gleichgewicht. Teile, was du hast, und nimm an, was dir gegeben wird.","Abhängigkeit, oder ein Geben mit Bedingungen.","Fließen Geben und Nehmen bei mir im Gleichgewicht?"],
+  ["Geduld · Wachstum · Zwischenbilanz","Die Saat wächst. Halte inne und schau, was du schon geerntet hast.","Ungeduld, oder Mühe, die keine Frucht trägt.","Was ist in meinem Garten schon gewachsen?"],
+  ["Fleiß · Übung · Meisterschaft","Mit Hingabe und Übung wächst du zur Meisterschaft in deinem Handwerk.","Routine ohne Freude, oder Perfektionismus.","Welche Fähigkeit möchte ich mit Hingabe üben?"],
+  ["Unabhängigkeit · Genuss · Selbstwert","Du hast dir etwas aufgebaut und darfst es genießen.","Abhängigkeit, oder ein Genuss, der leer bleibt.","Was habe ich mir selbst geschaffen?"],
+  ["Erbe · Familie · beständiger Wohlstand","Was über Generationen gewachsen ist, trägt dich: Familie, Tradition und Wohlstand.","Streit ums Erbe, oder die Last der Herkunft.","Was möchte ich weitergeben?"],
+  ["Lernen · Neuanfang · Bodenständigkeit","Ein neuer Lernweg oder ein praktisches Vorhaben beginnt.","Trödeln, oder Pläne ohne Umsetzung.","Was möchte ich ganz praktisch lernen?"],
+  ["Zuverlässigkeit · Ausdauer · Gründlichkeit","Langsam, aber beständig. Schritt für Schritt kommst du ans Ziel.","Stillstand, Sturheit oder Langeweile.","Welcher kleine Schritt bringt mich verlässlich weiter?"],
+  ["Fürsorge · Erdung · Großzügigkeit","Warm und geerdet sorgst du für dich und andere. Natur und Zuhause nähren dich.","Du sorgst für alle, nur nicht für dich selbst.","Wie kann ich heute gut für mich sorgen?"],
+  ["Fülle · Stabilität · Gelingen","Stabil und erfolgreich: Du hast etwas Bleibendes geschaffen.","Gier, Starrheit oder Angst vor Verlust.","Wie gehe ich mit dem um, was ich habe?"]]}
+];
+const RANKS=["Ass","Zwei","Drei","Vier","Fünf","Sechs","Sieben","Acht","Neun","Zehn","Bube","Ritter","Königin","König"];
+SUITS.forEach(s=>s.c.forEach((c,r)=>T.push({n:RANKS[r]+" "+s.g,img:s.file+String(r+1).padStart(2,"0"),k:c[0],a:c[1],u:c[2],f:[c[3]],suit:s})));
+let deckMode=store.get("tarot-deck","all");
+const deckSize=()=>deckMode==="major"?22:78;
+
+
+const now=new Date();
+const keyOf=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const key=keyOf(now);
+const dayNum=Math.floor(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())/864e5);
+
+document.getElementById("date").textContent=now.toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+
+let dayState=store.get("tarot-day-"+key,{open:false,note:""});
+if(!dayState.card){dayState.card={i:Math.floor(Math.random()*deckSize()),r:Math.random()<.3};store.set("tarot-day-"+key,dayState)}
+const today=dayState.card;
+let hist=store.get("tarot-hist",{});
+hist[key]=today;
+const keys=Object.keys(hist).sort().slice(-14); const trimmed={}; keys.forEach(k=>trimmed[k]=hist[k]); hist=trimmed; store.set("tarot-hist",hist);
+
+
+const table=document.getElementById("table"),readings=document.getElementById("readings"),hint=document.getElementById("hint"),
+      actions=document.getElementById("actions"),headline=document.getElementById("headline");
+let mode="day", layout=[], opened=[];
+
+function cardHTML(c,idx,pos){
+  return `<div class="slot">${pos?`<span class="pos">${pos}</span>`:""}
+  <div class="card" data-k="${idx}" role="button" tabindex="0" aria-label="Karte umdrehen">
+    <div class="face back"><img src="karten/rueckseite.jpg" alt=""></div>
+    <div class="face front${c.r?" rev":""}"><img src="${src(c.i)}" alt="${esc(T[c.i].n)}${c.r?", umgekehrt":""}"></div>
+  </div></div>`;
+}
+function readingHTML(c,pos){const t=T[c.i];
+  return `<article class="reading">
+  ${pos?`<span class="poslabel">${pos}</span>`:""}
+  <div class="head">${t.suit?"":`<span class="num">${ROM[c.i]}</span>`}<h3>${esc(t.n)}</h3><span class="state ${c.r?"down":"up"}">${c.r?"umgekehrt":"aufrecht"}</span></div>
+  ${t.suit?`<p class="suitline">Element ${t.suit.el} · ${esc(t.suit.th)}</p>`:""}
+  <p class="kw">${esc(t.k)}</p>
+  <p class="main">${esc(c.r?t.u:t.a)}</p>
+  <p class="other"><b>${c.r?"Aufrecht":"Umgekehrt"}:</b> ${esc(c.r?t.a:t.u)}</p>
+  ${mode==="day"?`<ul class="qs">${t.f.map(q=>`<li>${esc(q)}</li>`).join("")}</ul>`:""}
+  </article>`;
+}
+function renderReadings(){
+  readings.innerHTML=layout.map((c,k)=>opened[k]?readingHTML(c,mode==="three"?POS[k]:""):"").join("");
+  const allOpen=opened.every(Boolean);
+  hint.hidden=allOpen;
+}
+function render(){
+  table.className="table"+(mode==="day"?" single":"");
+  table.innerHTML=layout.map((c,k)=>cardHTML(c,k,mode==="three"?POS[k]:"")).join("");
+  table.querySelectorAll(".card").forEach(el=>{const k=+el.dataset.k;if(opened[k])el.classList.add("open")});
+  hint.textContent=mode==="day"?"Tippe auf die Karte, um sie umzudrehen.":"Tippe auf jede Karte, um sie aufzudecken.";
+  renderReadings();
+}
+function flip(el){const k=+el.dataset.k;opened[k]=!opened[k];el.classList.toggle("open",opened[k]);
+  el.setAttribute("aria-label",opened[k]?T[layout[k].i].n:"Karte umdrehen");
+  if(mode==="day"&&opened[k]&&!dayState.open){dayState.open=true;store.set("tarot-day-"+key,dayState);renderHist()}
+  renderReadings()}
+table.addEventListener("click",e=>{const el=e.target.closest(".card");if(el)flip(el)});
+table.addEventListener("keydown",e=>{const el=e.target.closest(".card");if(el&&(e.key==="Enter"||e.key===" ")){e.preventDefault();flip(el)}});
+
+function deal(){const pool=[...Array(deckSize()).keys()];
+  for(let k=pool.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[pool[k],pool[j]]=[pool[j],pool[k]]}
+  layout=pool.slice(0,3).map(i=>({i,r:Math.random()<.3}));opened=[false,false,false];render()}
+
+function setMode(m){mode=m;
+  document.getElementById("tab-day").setAttribute("aria-selected",String(m==="day"));
+  document.getElementById("tab-three").setAttribute("aria-selected",String(m==="three"));
+  headline.textContent=m==="day"?"Deine Tarotkarte für heute":"Drei Karten für deine Frage";
+  actions.hidden=m!=="three";
+  document.getElementById("noteBox").hidden=m!=="day";
+  if(m==="day"){layout=[today];opened=[!!dayState.open];render()}else deal();
+}
+document.getElementById("tab-day").addEventListener("click",()=>setMode("day"));
+document.getElementById("tab-three").addEventListener("click",()=>setMode("three"));
+document.getElementById("shuffle").addEventListener("click",deal);
+
+/* Notiz */
+const note=document.getElementById("note"),saved=document.getElementById("saved");let t;
+note.value=dayState.note||"";
+note.addEventListener("input",()=>{dayState.note=note.value;store.set("tarot-day-"+key,dayState);clearTimeout(t);
+  saved.textContent="Gespeichert, nur auf diesem Gerät";t=setTimeout(()=>saved.textContent="",2200)});
+
+/* Verlauf */
+function renderHist(){const row=document.getElementById("hist");const ks=Object.keys(hist).sort().reverse().filter(k=>k!==key||dayState.open);
+  row.innerHTML=ks.map(k=>{const c=hist[k],d=new Date(k+"T12:00:00");
+    return `<div class="hist"><img class="${c.r?"rev":""}" src="${src(c.i)}" alt="${esc(T[c.i].n)}"><span>${k===key?"Heute":d.toLocaleDateString("de-DE",{day:"numeric",month:"short"})}</span></div>`}).join("");
+  if(ks.length<2&&!(ks.length===1&&ks[0]!==key))row.insertAdjacentHTML("beforeend",`<p class="empty">Hier sammeln sich deine Tageskarten, Tag für Tag.</p>`);
+}
+function renderDeck(){document.getElementById("deck-all").setAttribute("aria-checked",String(deckMode==="all"));
+  document.getElementById("deck-major").setAttribute("aria-checked",String(deckMode==="major"))}
+function setDeck(m){deckMode=m;store.set("tarot-deck",m);renderDeck();if(mode==="three")deal()}
+document.getElementById("deck-all").addEventListener("click",()=>setDeck("all"));
+document.getElementById("deck-major").addEventListener("click",()=>setDeck("major"));
+renderDeck();
+setMode("day");renderHist();
+</script>
+
+</body>
+</html>
