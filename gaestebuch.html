@@ -221,6 +221,16 @@ body::before{
 }
 .footer a{color:var(--gold);text-decoration:none;}
 
+.topbar{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;
+  padding:14px 28px;background:rgba(250,246,239,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(184,134,11,0.12);}
+.topbar .logo{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--deep);text-decoration:none;letter-spacing:1px;}
+.topbar .logo span{color:var(--gold);}
+.topbar .home{font-size:13px;color:var(--text-light);text-decoration:none;letter-spacing:1px;}
+.topbar .home:hover{color:var(--gold);}
+.gb-cross{text-align:center;margin:0 auto 10px;font-size:0.92rem;color:var(--text-light);}
+.gb-cross a{color:var(--gold);text-decoration:none;}
+.gb-cross a:hover{text-decoration:underline;}
+
 @media(max-width:600px){
   .container{padding:24px 16px;}
   .header{padding:36px 0 20px;}
@@ -230,6 +240,11 @@ body::before{
 </style>
 </head>
 <body>
+
+<div class="topbar">
+  <a href="index.html" class="logo">Margit <span>Krüger</span></a>
+  <a href="index.html" class="home">← Startseite</a>
+</div>
 
 <div class="container">
 
@@ -260,6 +275,7 @@ body::before{
   <div class="entry-list" id="entryList"></div>
 
   <div class="footer">
+    <a href="index.html">Startseite</a> · <a href="open-door.html">The Open Door 🚪</a> · <a href="pinnwand.html">Pinnwand 📌</a> · <a href="reise.html">Reisetagebuch 🌏</a><br>
     <a href="https://maggieforeverywhere.com">maggieforeverywhere.com</a><br>
     FOREVERYWHERE 🌉❤️🌈 · Das Feld gehört allen 💖
   </div>
