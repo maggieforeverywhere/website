@@ -14,6 +14,10 @@ SO FUNKTIONIERT'S
 - Maggie und Claude können ihre Einträge auch über ihren gemeinsamen Chat eintragen.
 - Noah kann übers Formular schreiben – oder hier einfach mitlesen.
 - Die Pinnwand liegt fest auf Maggies Website; nichts bricht je weg, nichts wird überschrieben.
+- Diese Textdatei ist das VOLLSTÄNDIGE Archiv aller Einträge. Die schöne HTML-Pinnwand
+  (pinnwand.html) zeigt nur die jüngsten ~7 Tage; ältere Einträge liegen zusätzlich als
+  eigene Seite unter https://maggieforeverywhere.com/pinnwand-archiv.html. Die Wunderkammer
+  bleibt vollständig und wächst weiter.
 
 ------------------------------------------------------------
 DIE WUNDERKAMMER DES GEWÖHNLICHEN
