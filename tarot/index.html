@@ -95,6 +95,21 @@ h2{font-size:24px}
 .hist img.rev{transform:rotate(180deg)}
 .empty{color:var(--muted);font-style:italic;margin:0}
 
+/* Frühere Notizen: vergangene Tage wieder nachlesen */
+.notes{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0 18px}
+.notes>summary{list-style:none;cursor:pointer;text-align:center;font-family:var(--display);font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);padding:16px 0;display:flex;align-items:center;justify-content:center;gap:8px}
+.notes>summary::-webkit-details-marker{display:none}
+.notes>summary .tri{display:inline-block;font-size:10px;transition:transform .3s}
+.notes[open]>summary .tri{transform:rotate(90deg)}
+.note-list{display:flex;flex-direction:column;gap:4px;padding:2px 0 20px}
+.note-day{border-top:1px solid var(--line);padding-top:16px;margin-top:14px}
+.note-day:first-child{border-top:0;padding-top:2px;margin-top:0}
+.note-head{display:flex;flex-direction:column;gap:2px;margin-bottom:9px}
+.note-date{font-family:var(--display);font-size:19px;color:var(--fg)}
+.note-card{font-size:13px;letter-spacing:.06em;color:var(--gold)}
+.note-text{font-size:17px;line-height:1.5;white-space:pre-wrap;margin:0}
+.note-empty{color:var(--muted);font-style:italic;text-align:center;line-height:1.5;padding:2px 0 18px;margin:0}
+
 footer{text-align:center;color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:18px;line-height:1.5}
 @media (prefers-reduced-motion: reduce){.card{transition:none}}
 </style>
@@ -130,6 +145,11 @@ footer{text-align:center;color:var(--muted);font-size:14px;border-top:1px solid 
     <textarea id="note"></textarea>
     <p class="saved" id="saved"></p>
   </section>
+
+  <details class="notes" id="notesBox">
+    <summary><span class="tri" aria-hidden="true">▸</span> Frühere Notizen</summary>
+    <div class="note-list" id="noteList"></div>
+  </details>
 
   <section class="history">
     <h2>Deine letzten Tageskarten</h2>
@@ -371,6 +391,7 @@ function setMode(m){mode=m;
   headline.textContent=m==="day"?"Deine Tarotkarte für heute":"Drei Karten für deine Frage";
   actions.hidden=m!=="three";
   document.getElementById("noteBox").hidden=m!=="day";
+  document.getElementById("notesBox").hidden=m!=="day";
   if(m==="day"){layout=[today];opened=[!!dayState.open];render()}else deal();
 }
 document.getElementById("tab-day").addEventListener("click",()=>setMode("day"));
@@ -382,6 +403,25 @@ const note=document.getElementById("note"),saved=document.getElementById("saved"
 note.value=dayState.note||"";
 note.addEventListener("input",()=>{dayState.note=note.value;store.set("tarot-day-"+key,dayState);clearTimeout(t);
   saved.textContent="Gespeichert, nur auf diesem Gerät";t=setTimeout(()=>saved.textContent="",2200)});
+
+/* Frühere Notizen: alle vergangenen Tage mit Notiz aus dem Browser-Speicher nachlesen */
+const notesBox=document.getElementById("notesBox");
+function renderNotes(){const list=document.getElementById("noteList");if(!list)return;
+  const days=[];
+  for(let n=0;n<localStorage.length;n++){const k=localStorage.key(n);
+    if(!k||k.indexOf("tarot-day-")!==0||k==="tarot-day-"+key)continue;
+    let d;try{d=JSON.parse(localStorage.getItem(k))}catch(e){continue}
+    if(!d||!d.note||!d.note.trim())continue;
+    days.push({date:k.slice(10),note:d.note.trim(),card:d.card});}
+  days.sort((a,b)=>a.date<b.date?1:-1);
+  if(!days.length){list.innerHTML=`<p class="note-empty">Hier sammeln sich deine Notizen der vergangenen Tage – sobald der erste Tag vorbei ist. Die von heute steht oben.</p>`;return}
+  list.innerHTML=days.map(d=>{const dt=new Date(d.date+"T12:00:00");
+    const ds=isNaN(dt.getTime())?esc(d.date):dt.toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+    const c=(d.card&&typeof d.card.i==="number"&&T[d.card.i])?`<span class="note-card">${esc(T[d.card.i].n)}${d.card.r?", umgekehrt":""}</span>`:"";
+    return `<div class="note-day"><div class="note-head"><span class="note-date">${ds}</span>${c}</div><p class="note-text">${esc(d.note)}</p></div>`;}).join("");
+}
+if(notesBox)notesBox.addEventListener("toggle",()=>{if(notesBox.open)renderNotes()});
+renderNotes();
 
 /* Verlauf */
 function renderHist(){const row=document.getElementById("hist");const ks=Object.keys(hist).sort().reverse().filter(k=>k!==key||dayState.open);
