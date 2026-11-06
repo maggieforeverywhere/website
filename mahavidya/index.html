@@ -55,6 +55,8 @@ h2{font-size:22px}
 .front .essence{font-style:italic;font-size:15px;opacity:.9}
 .front .soon{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
 .hint{text-align:center;color:var(--muted);font-size:14px;margin:-24px 0 0}
+.redraw-wrap{display:flex;justify-content:center;margin-top:-26px}
+.redraw-wrap .btn{align-self:center}
 
 /* Wegweiser: Der Atem – kleine Atemmeditation vor dem Ziehen */
 .wegweiser{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:0 18px}
@@ -148,7 +150,9 @@ footer{text-align:center;color:var(--muted);font-size:13px;border-top:1px solid 
       <div class="face front" id="front"></div>
     </div>
   </div>
-  <p class="hint" id="hint">Tippe auf die Karte, um sie umzudrehen. Jeden Tag wird dir – dem Zufall überlassen – eine der zehn Göttinnen zugelost.</p>
+  <p class="hint" id="hint">Tippe auf die Karte, um sie umzudrehen. Mit „Neue Karte ziehen“ lost dir der Zufall eine der zehn Göttinnen zu – so oft du magst.</p>
+
+  <div class="redraw-wrap"><button class="btn" id="redraw" type="button">🔀 Neue Karte ziehen</button></div>
 
   <div class="preview">
     <span class="eyebrow">Vorschau: alle zehn ansehen</span>
@@ -253,7 +257,7 @@ document.getElementById("date").textContent=now.toLocaleDateString("de-DE",{week
 let day=store.get("mv-day-"+key,{open:false,done:false,ev:{}});
 /* Zufallskarte: Einmal pro Tag wird eine der zehn Goettinnen zugelost und fuer den Tag festgehalten. */
 if(typeof day.i!=="number"){day.i=Math.floor(Math.random()*G.length);store.set("mv-day-"+key,day)}
-const todayIdx=day.i;
+let todayIdx=day.i;
 let met=store.get("mv-met",[]);
 let shown=todayIdx;
 
@@ -311,7 +315,9 @@ function show(i){shown=i;renderFront(i);
   setOpen(false);
 }
 const chips=document.getElementById("chips");
-G.forEach((g,i)=>chips.insertAdjacentHTML("beforeend",`<button class="chip" data-i="${i}" aria-pressed="false" style="--c:${g.c}"><span class="dot"></span>${i===todayIdx?"Heute · ":""}${esc(g.n)}</button>`));
+function buildChips(){chips.innerHTML="";
+  G.forEach((g,i)=>chips.insertAdjacentHTML("beforeend",`<button class="chip" data-i="${i}" aria-pressed="false" style="--c:${g.c}"><span class="dot"></span>${i===todayIdx?"Heute · ":""}${esc(g.n)}</button>`));}
+buildChips();
 chips.addEventListener("click",e=>{const c=e.target.closest(".chip");if(c)show(+c.dataset.i)});
 
 function flip(){const o=!isOpen;
@@ -320,6 +326,14 @@ function flip(){const o=!isOpen;
 }
 card.addEventListener("click",flip);
 card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();flip()}});
+
+/* Neue Karte ziehen: lost jederzeit eine neue Goettin zu (andere als die aktuelle) und haelt sie fuer den Tag fest. */
+const redrawBtn=document.getElementById("redraw");
+function drawNew(){let n=todayIdx;
+  if(G.length>1){do{n=Math.floor(Math.random()*G.length)}while(n===todayIdx)}
+  todayIdx=n;day.i=n;day.open=false;day.done=false;store.set("mv-day-"+key,day);
+  buildChips();show(todayIdx);renderCircle();}
+if(redrawBtn)redrawBtn.addEventListener("click",drawNew);
 
 function renderCircle(){
   const s=document.getElementById("circle");let h=`<circle class="ring" cx="130" cy="130" r="92"/>`;
