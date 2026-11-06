@@ -121,7 +121,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;border-top:1px solid 
       <div class="face front" id="front"></div>
     </div>
   </div>
-  <p class="hint" id="hint">Tippe auf die Karte, um sie umzudrehen. Jeden Tag zeigt sich eine der zehn Göttinnen.</p>
+  <p class="hint" id="hint">Tippe auf die Karte, um sie umzudrehen. Jeden Tag wird dir – dem Zufall überlassen – eine der zehn Göttinnen zugelost.</p>
 
   <div class="preview">
     <span class="eyebrow">Vorschau: alle zehn ansehen</span>
@@ -221,11 +221,12 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 
 const now=new Date();
 const key=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");
-const dayNum=Math.floor(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())/864e5);
-const todayIdx=((dayNum%10)+10)%10;
 document.getElementById("date").textContent=now.toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
 
 let day=store.get("mv-day-"+key,{open:false,done:false,ev:{}});
+/* Zufallskarte: Einmal pro Tag wird eine der zehn Goettinnen zugelost und fuer den Tag festgehalten. */
+if(typeof day.i!=="number"){day.i=Math.floor(Math.random()*G.length);store.set("mv-day-"+key,day)}
+const todayIdx=day.i;
 let met=store.get("mv-met",[]);
 let shown=todayIdx;
 
