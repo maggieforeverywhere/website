@@ -114,6 +114,23 @@ h2{font-size:22px}
 .evening textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
 .saved{color:var(--muted);font-size:13px;min-height:1em;margin:0}
 
+/* Frühere Rückblicke: vergangene Tage wieder nachlesen */
+.history{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:0 18px}
+.history>summary{list-style:none;cursor:pointer;text-align:center;font-family:var(--display);font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);padding:15px 0;display:flex;align-items:center;justify-content:center;gap:8px}
+.history>summary::-webkit-details-marker{display:none}
+.history>summary .tri{display:inline-block;font-size:10px;transition:transform .3s}
+.history[open]>summary .tri{transform:rotate(90deg)}
+.hist-list{display:flex;flex-direction:column;gap:4px;padding:2px 0 22px}
+.hist-day{border-top:1px solid var(--line);padding-top:16px;margin-top:14px}
+.hist-day:first-child{border-top:0;padding-top:2px;margin-top:0}
+.hist-head{display:flex;flex-direction:column;gap:2px;margin-bottom:11px}
+.hist-date{font-family:var(--display);font-size:18px;color:var(--fg)}
+.hist-card{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+.hist-qa{display:flex;flex-direction:column;gap:3px;margin-bottom:11px}
+.hist-q{font-size:13px;color:var(--muted);font-style:italic}
+.hist-a{font-size:16px;line-height:1.5;white-space:pre-wrap}
+.hist-empty{color:var(--muted);font-size:14px;text-align:center;line-height:1.5;padding:2px 0 20px;margin:0}
+
 footer{text-align:center;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:18px}
 @media (prefers-reduced-motion: reduce){.card{transition:none}}
 </style>
@@ -175,6 +192,11 @@ footer{text-align:center;color:var(--muted);font-size:13px;border-top:1px solid 
     <label for="q3">Wofür bin ich heute dankbar?<textarea id="q3"></textarea></label>
     <p class="saved" id="saved"></p>
   </section>
+
+  <details class="history">
+    <summary><span class="tri" aria-hidden="true">▸</span> Frühere Rückblicke</summary>
+    <div class="hist-list" id="historyList"></div>
+  </details>
 
   <footer>Neue Galaxie Verlag · Margit Krüger<br>Alle zehn Karten aus dem Deck „Die zehn Mahavidyas“<br><a href="../index.html" style="color:var(--gold)">← Zurück zu maggieforeverywhere.com</a></footer>
 </main>
@@ -353,6 +375,34 @@ const saved=document.getElementById("saved");let t;
 ["q1","q2","q3"].forEach(id=>{const el=document.getElementById(id);el.value=day.ev[id]||"";
   el.addEventListener("input",()=>{day.ev[id]=el.value;store.set("mv-day-"+key,day);clearTimeout(t);
     saved.textContent="Gespeichert, nur auf diesem Gerät";t=setTimeout(()=>saved.textContent="",2200)})});
+
+/* Frühere Rückblicke: alle vergangenen Tage mit Eintraegen aus dem Browser-Speicher nachlesen */
+const EVQ={q1:"Wo ist mir die Göttin von heute begegnet?",q2:"Was hat mich berührt oder bewegt?",q3:"Wofür bin ich heute dankbar?"};
+function renderHistory(){
+  const list=document.getElementById("historyList");if(!list)return;
+  const days=[];
+  for(let n=0;n<localStorage.length;n++){
+    const k=localStorage.key(n);
+    if(!k||k.indexOf("mv-day-")!==0||k==="mv-day-"+key)continue;
+    let d;try{d=JSON.parse(localStorage.getItem(k))}catch(e){continue}
+    if(!d||!d.ev)continue;
+    if(!["q1","q2","q3"].some(id=>d.ev[id]&&d.ev[id].trim()))continue;
+    days.push({date:k.slice(7),ev:d.ev,i:d.i});
+  }
+  days.sort((a,b)=>a.date<b.date?1:-1);
+  if(!days.length){list.innerHTML=`<p class="hist-empty">Hier sammeln sich deine Rückblicke der vergangenen Tage – sobald der erste Tag vorbei ist. Der heutige steht oben in den Feldern.</p>`;return}
+  list.innerHTML=days.map(d=>{
+    const dt=new Date(d.date+"T00:00:00");
+    const ds=isNaN(dt.getTime())?esc(d.date):dt.toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+    const card=(typeof d.i==="number"&&G[d.i])?`<span class="hist-card">${esc(G[d.i].n)} · ${esc(G[d.i].e)}</span>`:"";
+    const qa=["q1","q2","q3"].filter(id=>d.ev[id]&&d.ev[id].trim()).map(id=>
+      `<div class="hist-qa"><span class="hist-q">${esc(EVQ[id])}</span><span class="hist-a">${esc(d.ev[id].trim())}</span></div>`).join("");
+    return `<div class="hist-day"><div class="hist-head"><span class="hist-date">${ds}</span>${card}</div>${qa}</div>`;
+  }).join("");
+}
+const histEl=document.querySelector(".history");
+if(histEl)histEl.addEventListener("toggle",()=>{if(histEl.open)renderHistory()});
+renderHistory();
 </script>
 
 </body>
