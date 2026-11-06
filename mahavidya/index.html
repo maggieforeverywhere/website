@@ -56,6 +56,18 @@ h2{font-size:22px}
 .front .soon{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
 .hint{text-align:center;color:var(--muted);font-size:14px;margin:-24px 0 0}
 
+/* Wegweiser: Der Atem – kleine Atemmeditation vor dem Ziehen */
+.wegweiser{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:0 18px}
+.wegweiser>summary{list-style:none;cursor:pointer;text-align:center;font-family:var(--display);font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);padding:15px 0;display:flex;align-items:center;justify-content:center;gap:8px}
+.wegweiser>summary::-webkit-details-marker{display:none}
+.wegweiser>summary .tri{display:inline-block;font-size:10px;transition:transform .3s}
+.wegweiser[open]>summary .tri{transform:rotate(90deg)}
+.atem{display:flex;flex-direction:column;align-items:center;text-align:center;gap:13px;padding:4px 4px 24px}
+.atem p{margin:0;max-width:42ch;font-size:17px;line-height:1.5}
+.atem .ma{font-style:italic;color:var(--gold)}
+.atem .sep{color:var(--gold);opacity:.5;font-size:12px;letter-spacing:.3em}
+.atem .schluss{font-family:var(--display);font-size:20px;color:var(--accent);margin-top:2px}
+
 /* Vorschau aller zehn */
 .preview{display:flex;flex-direction:column;gap:8px;align-items:center;margin-top:-20px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
@@ -114,6 +126,21 @@ footer{text-align:center;color:var(--muted);font-size:13px;border-top:1px solid 
     <h1 id="headline">Deine Karte für heute</h1>
     <span class="date" id="date"></span>
   </header>
+
+  <details class="wegweiser" open>
+    <summary><span class="tri" aria-hidden="true">▸</span> Wegweiser · Der Atem</summary>
+    <div class="atem">
+      <p>Der Atem ist der rote Faden dieser Reise.</p>
+      <span class="sep" aria-hidden="true">❖</span>
+      <p>Bevor du eine Karte ziehst, schließe einen Moment die Augen.</p>
+      <span class="sep" aria-hidden="true">❖</span>
+      <p>Nimm drei ruhige Atemzüge.</p>
+      <span class="sep" aria-hidden="true">❖</span>
+      <p>Lass beim Ausatmen leise den Laut <span class="ma">Ma</span> entstehen – den ersten Laut, den fast jedes Kind formt.</p>
+      <span class="sep" aria-hidden="true">❖</span>
+      <p class="schluss">So kommst du bei dir an.</p>
+    </div>
+  </details>
 
   <div class="stage">
     <div class="card" id="card" role="button" tabindex="0" aria-label="Karte umdrehen">
