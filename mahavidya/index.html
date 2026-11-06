@@ -261,15 +261,20 @@ let shown=todayIdx;
 const card=document.getElementById("card"),front=document.getElementById("front"),msg=document.getElementById("message"),
       hint=document.getElementById("hint"),headline=document.getElementById("headline");
 
-function renderFront(i){const g=G[i];
-  front.style.setProperty("--c",g.c);front.style.setProperty("--ink",g.ink);
-  if(g.img){front.className="face front photo";front.innerHTML=`<img src="${g.img}" alt="Karte ${ROM[i]}: ${esc(g.n)}, ${esc(g.e)}">`;return}
-  front.className="face front";
-  front.innerHTML=`<span class="num">${ROM[i]} · MAHAVIDYA</span>
+function textFront(i){const g=G[i];
+  return `<span class="num">${ROM[i]} · MAHAVIDYA</span>
 <div class="sym"><svg viewBox="0 0 120 120" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.4">
 <circle cx="60" cy="60" r="52"/>${Array.from({length:8},(_,k)=>`<ellipse cx="60" cy="34" rx="10" ry="24" transform="rotate(${k*45} 60 60)"/>`).join("")}
 <circle cx="60" cy="60" r="9" fill="currentColor"/></g></svg></div>
-<span class="deva" lang="sa">${g.d}</span><span class="name">${g.n}</span><span class="essence">${g.e}</span><span class="soon">Kartenbild folgt</span>`}
+<span class="deva" lang="sa">${g.d}</span><span class="name">${esc(g.n)}</span><span class="essence">${esc(g.e)}</span>`}
+function renderFront(i){const g=G[i];
+  front.style.setProperty("--c",g.c);front.style.setProperty("--ink",g.ink);
+  if(g.img){front.className="face front photo";
+    front.innerHTML=`<img src="${g.img}" alt="Karte ${ROM[i]}: ${esc(g.n)}, ${esc(g.e)}">`;
+    const im=front.querySelector("img");
+    if(im)im.addEventListener("error",()=>{front.className="face front";front.innerHTML=textFront(i)});
+    return}
+  front.className="face front";front.innerHTML=textFront(i)}
 
 function renderMessage(i){const g=G[i],isToday=i===todayIdx;let h="";
   if(g.s){
