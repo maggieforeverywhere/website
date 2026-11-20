@@ -39,7 +39,8 @@
       "isPartOf": { "@id": "https://maggieforeverywhere.com/wer-haette-das-gedacht.html" },
       "author": { "@id": "https://maggieforeverywhere.com/#person" },
       "hasPart": [
-        { "@id": "https://maggieforeverywhere.com/wer-haette-das-gedacht-australien.html#flatwhite" }
+        { "@id": "https://maggieforeverywhere.com/wer-haette-das-gedacht-australien.html#flatwhite" },
+        { "@id": "https://maggieforeverywhere.com/wer-haette-das-gedacht-australien.html#datumsgrenze" }
       ]
     },
     {
@@ -55,6 +56,19 @@
       "image": "https://maggieforeverywhere.com/sydney-flat-white.jpg",
       "about": ["Flat White", "Kaffeekultur Australien", "Espresso", "italienische Einwanderung", "Starbucks Australien", "Neuseeland"],
       "keywords": "Flat White Ursprung, wer hat den Flat White erfunden, Australien Neuseeland Kaffee, Kaffeekultur Australien, Starbucks gescheitert Australien, italienische Migranten Espresso, Melbourne Kaffee"
+    },
+    {
+      "@type": "Article",
+      "@id": "https://maggieforeverywhere.com/wer-haette-das-gedacht-australien.html#datumsgrenze",
+      "url": "https://maggieforeverywhere.com/wer-haette-das-gedacht-australien.html#datumsgrenze",
+      "headline": "Wer hat eigentlich bestimmt, dass in Australien die Sonne zuerst aufgeht?",
+      "inLanguage": "de",
+      "author": { "@id": "https://maggieforeverywhere.com/#person" },
+      "isPartOf": { "@id": "https://maggieforeverywhere.com/wer-haette-das-gedacht-australien.html" },
+      "datePublished": "2026-11-20",
+      "dateModified": "2026-11-20",
+      "about": ["Internationale Datumsgrenze", "Nullmeridian", "Greenwich", "Internationale Meridiankonferenz 1884", "Zeitzonen", "Kiribati"],
+      "keywords": "Internationale Datumsgrenze, Nullmeridian Greenwich, Meridiankonferenz 1884, wo beginnt der neue Tag, erster Sonnenaufgang der Welt, Kiribati UTC+14, Zeitzonen Geschichte"
     }
   ]
 }
@@ -138,6 +152,18 @@
   .like-btn[aria-pressed="true"]{background:#fff0f2;border-color:#e59aa6;color:#b04a5a;}
   .like-btn.pop .like-heart{animation:likepop .35s ease;}
   @keyframes likepop{0%{transform:scale(1);}40%{transform:scale(1.45);}100%{transform:scale(1);}}
+  .agecard{background:#fffdf9;border:1px solid rgba(184,134,11,0.2);border-radius:16px;padding:22px 20px;margin:0 0 24px;text-align:center;box-shadow:0 10px 30px rgba(92,58,41,0.06);}
+  .agecard .ah{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--brown);margin-bottom:16px;}
+  .agecard .arow{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .agecard .ai{flex:1;min-width:120px;max-width:180px;padding:16px 10px;border-radius:12px;background:var(--warm);}
+  .agecard .ai.hot{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#fff;box-shadow:0 6px 18px rgba(184,134,11,0.3);}
+  .agecard .ai .n{display:block;font-family:'Cormorant Garamond',serif;font-size:2.7rem;font-weight:600;line-height:1;color:var(--brown);}
+  .agecard .ai.hot .n{color:#fff;}
+  .agecard .ai .l{display:block;font-size:0.78rem;margin-top:8px;color:var(--text-light);line-height:1.35;}
+  .agecard .ai.hot .l{color:rgba(255,255,255,0.92);}
+  .quotehero{background:#fffdf9;border:1px solid rgba(184,134,11,0.18);border-left:4px solid var(--gold);border-radius:14px;padding:30px 28px;margin:0 0 24px;box-shadow:0 10px 30px rgba(92,58,41,0.06);}
+  .quotehero p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.4rem,3.6vw,1.95rem);line-height:1.35;color:var(--brown);margin:0;text-align:center;}
+  .quotehero .src{display:block;margin-top:14px;font-family:'Lora',serif;font-style:normal;font-size:0.8rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);text-align:center;}
 </style>
 </head>
 <body>
@@ -160,6 +186,7 @@
 
   <div class="jump">
     <a href="#flatwhite">☕ Der Flat White</a>
+    <a href="#datumsgrenze">🌅 Wo beginnt der neue Tag?</a>
   </div>
 
   <div class="rule"></div>
@@ -186,6 +213,35 @@
     <p>Und so hatte mein erster Flat White in Sydney tatsächlich etwas Zeremonielles: ein winziges, unscheinbares Getränk, über das zwei Länder streiten, hinter dem eine ganze Einwanderungsgeschichte steht – und das einen Weltkonzern in die Knie gezwungen hat. Ich habe ihn langsam getrunken und an unseren Kaffeetisch gedacht. Von Kopi zu Flat White – das Kaffee-Kapitel reist einfach weiter. 💛</p>
 
     <p class="punch">Ein schlichter Milchkaffee, über den sich zwei Länder streiten, hinter dem eine ganze Einwanderungswelle steht – und vor dem sogar Starbucks kapitulieren musste. Wer hätte das gedacht?</p>
+  </article>
+
+  <!-- ====================== GESCHICHTE 2: DATUMSGRENZE ====================== -->
+  <article class="story" id="datumsgrenze">
+    <div class="kicker">🌅 Wo der Tag beginnt</div>
+    <h2>Wer hat eigentlich bestimmt, dass in Australien die Sonne zuerst aufgeht?</h2>
+
+    <div class="agecard">
+      <div class="ah">Wer sieht den neuen Tag zuerst? Der Vorsprung zur Weltzeit (UTC):</div>
+      <div class="arow">
+        <div class="ai hot"><span class="n">+14</span><span class="l">🇰🇮 Kiribati<br>die vorderste Zeitzone der Welt</span></div>
+        <div class="ai"><span class="n">+13</span><span class="l">🇳🇿 Neuseeland<br>(Südsommer)</span></div>
+        <div class="ai"><span class="n">+11</span><span class="l">🇦🇺 Sydney<br>(Südsommer)</span></div>
+      </div>
+    </div>
+
+    <p class="lead">In Australien hört man es mit einem gewissen Stolz: Hier ist man „der Welt einen Schritt voraus". Sydney feiert als eine der ersten Großstädte ins neue Jahr, und die Sonne des neuen Tages scheint hier früher als fast überall sonst. Da fragte ich mich, ganz gegen die Anonymen Deutisten: Wer hat das eigentlich so bestimmt – dass der Tag ausgerechnet hier beginnt? 😄</p>
+
+    <p>Die Antwort beginnt überraschend weit weg von Australien, nämlich in <strong>Washington, D.C.</strong>, im Oktober <strong>1884</strong>. Lange hatte jede Stadt ihre eigene Zeit: Mittag war, wenn die Sonne am höchsten stand – in jedem Ort ein paar Minuten anders. Für Eisenbahnen und Schiffe war das ein heilloses Durcheinander. Also trafen sich Vertreter aus <strong>25 Nationen</strong> zur „Internationalen Meridiankonferenz" und stimmten – mit 22 zu 1 Stimmen, bei zwei Enthaltungen – dafür, eine einzige Linie zur Null zu erklären: den Meridian, der durch die Sternwarte von <strong>Greenwich</strong> bei London läuft. Der Hauptgrund war ganz praktisch: Die meisten Seekarten der Welt rechneten ohnehin schon von Greenwich aus.</p>
+
+    <p>Nicht alle waren begeistert. <strong>Frankreich</strong> fand, eine neutrale Linie wäre gerechter gewesen (am liebsten eine durch Paris 😉), enthielt sich der Stimme und hielt noch jahrzehntelang am Pariser Meridian fest. Erst 1911 übernahm es die Greenwich-Zeit – im Gesetzestext peinlich darauf bedacht, das Wort „Greenwich" kein einziges Mal auszusprechen.</p>
+
+    <p>Und jetzt kommt Australien ins Spiel – ganz ohne eigenes Zutun. Denn wenn Greenwich die Null ist, dann liegt genau <strong>gegenüber</strong>, auf der anderen Seite der Erdkugel bei 180 Grad, die Linie, an der das Datum umspringt: die <strong>Internationale Datumsgrenze</strong>. Die hat die Konferenz gar nicht eigens festgelegt – sie ergab sich von selbst. Und durch einen glücklichen Zufall verläuft diese Linie fast nur durch <strong>offenen Pazifik</strong>, gleich neben Australien und Neuseeland. Dort, am westlichen Rand der Linie, wird jeder neue Tag zuerst geboren. Niemand hat „Australien" gewählt – es saß nur zufällig an der richtigen Stelle.</p>
+
+    <p>Die schönste Pointe aber ist: <strong>Australien ist gar nicht Erster.</strong> 🙈 Den allerersten Sonnenaufgang des neuen Tages erleben winzige Inseln noch ein Stück weiter östlich – allen voran <strong>Kiribati</strong> und <strong>Neuseeland</strong>. Und Kiribati hat sich diesen Titel sogar selbst zurechtgebogen: Weil die Datumsgrenze mitten durch das Inselreich lief und im Land zwei verschiedene Wochentage galten, verschob die Regierung <strong>1995</strong> die Linie kurzerhand um das ganze Land herum nach Osten. Seither liegen Kiribatis östlichste Inseln auf <strong>UTC+14</strong> – der am weitesten „vorgestellten" Uhrzeit der Erde. Prompt konnte die kleine Caroline-Insel (flugs in „Millennium-Insel" umbenannt) für sich beanspruchen, als erstes Land überhaupt die Sonne des Jahres 2000 zu sehen.</p>
+
+    <p>Dahinter steckt also keine Laune der Natur, sondern eine Reihe sehr menschlicher Entscheidungen: ein Komitee von 1884, eine unsichtbare Linie im Meer – und Länder, die diese Linie bis heute mal hierhin, mal dorthin zupfen, nur um die Ersten zu sein. Die Zeit, so lerne ich, ist am Ende verhandelbar. Und für mich im australischen Frühsommer heißt das ganz praktisch: Während ihr in Europa noch schlaft, habe ich das Morgen hier längst in der Tasse. ☕</p>
+
+    <p class="punch">Niemand hat bestimmt, dass in Australien die Sonne zuerst aufgeht – es ist der Nebeneffekt einer Konferenz von 1884 und einer Linie im leeren Pazifik. Und streng genommen stimmt es nicht einmal: Die Ersten sind ein paar winzige Inseln, von denen eine sich den Titel sogar selbst zurechtgerückt hat. Wer hätte das gedacht?</p>
   </article>
 
   <p style="text-align:center;color:var(--text-light);font-style:italic;">Fortsetzung folgt – Australien fängt gerade erst an. 🦘<br>
